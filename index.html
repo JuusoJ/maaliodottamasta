@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maaliodottama kulmasta käsin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F8F6; --ink:#15233B; --ink-2:#4A5669; --rule:#D5DCD8;
+  --line:#2F5D46; --panel:#FFFFFF; --accent:#1F6E8C;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --cond:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#101A24;--ink:#E4EAE6;--ink-2:#9FACB8;--rule:#2A3947;--line:#7FB59A;--panel:#16222E;--accent:#6FB7D2;}
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.125rem/1.72 var(--serif);-webkit-font-smoothing:antialiased}
+main{padding:3rem 1.25rem 5rem}
+.prose{max-width:40rem;margin:0 auto}
+h1{font:600 clamp(2.6rem,8vw,4.4rem)/0.95 var(--cond);letter-spacing:-0.01em;margin:0 0 1.25rem}
+h2{font:600 1.9rem/1.1 var(--cond);margin:3rem 0 0.75rem}
+p{margin:0 0 1.1rem}
+.lede{font-size:1.3rem;line-height:1.55;color:var(--ink-2)}
+.byline{font:400 0.95rem/1.4 var(--sans);color:var(--ink-2);margin-bottom:2.5rem}
+.eq{font:400 1.05rem/1.9 var(--serif);background:var(--panel);border-left:3px solid var(--line);padding:1rem 1.25rem;margin:1.25rem 0 1.5rem;overflow-x:auto;white-space:nowrap}
+.eq .big{font-size:1.3rem}
+var{font-style:italic}
+a{color:var(--accent)}
+.lab{max-width:62rem;margin:2.5rem auto;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1.75rem;align-items:start}
+@media (max-width:820px){.lab{grid-template-columns:minmax(0,1fr)}}
+.pitchwrap{position:relative}
+canvas{width:100%;display:block;border-radius:6px;background:var(--panel);touch-action:none;cursor:crosshair}
+.readout{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:0.6rem;font:400 0.95rem/1.4 var(--sans);color:var(--ink-2)}
+.readout strong{font:600 2.2rem/1 var(--cond);color:var(--ink)}
+.detail{font:400 0.9rem/1.5 var(--sans);color:var(--ink-2);min-height:1.4em}
+.legend{display:flex;flex-wrap:wrap;gap:0.4rem 0.9rem;margin-top:0.75rem;font:400 0.85rem/1.3 var(--sans);color:var(--ink-2)}
+.legend i{display:inline-block;width:0.85rem;height:0.85rem;border-radius:2px;vertical-align:-0.1rem;margin-right:0.3rem;border:1px solid var(--rule)}
+.controls{font-family:var(--sans)}
+fieldset{border:0;border-top:2px solid var(--line);margin:0 0 1.25rem;padding:0.75rem 0 0}
+legend{font:600 1.35rem/1 var(--cond);padding:0 0.5rem 0 0}
+.row{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 2.2rem;align-items:center;gap:0.6rem;margin:0.55rem 0}
+.row label{font-size:0.95rem}
+.row output{font:500 1rem/1 var(--cond);text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--line)}
+.btns{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
+button{font:500 0.9rem/1 var(--sans);color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:4px;padding:0.55rem 0.8rem;cursor:pointer}
+button:hover{border-color:var(--ink-2)}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{font:400 0.85rem/1.5 var(--sans);color:var(--ink-2);margin-top:0.75rem}
+footer{max-width:40rem;margin:4rem auto 0;border-top:1px solid var(--rule);padding-top:1rem;font:400 0.9rem/1.5 var(--sans);color:var(--ink-2)}
+</style>
+</head>
+<body>
+<main>
+<article class="prose">
+<h1>Maaliodottama kulmasta käsin</h1>
+<p class="lede">Yksikään laukaus ei toistu. Silti miljoonista laukauksista piirtyy maalin eteen kartta, joka ennustaa seuraavan lopputuloksen yllättävän hyvin. Tässä kirjoituksessa rakennetaan tuo kartta neljästä fysikaalisesta osasta.</p>
+<p class="byline">Kirjoittaja · <time datetime="2026-09-26">26.9.2026</time></p>
+
+<h2>Todennäköisyys, jota yksittäisellä laukauksella ei ole</h2>
+<p>Kun laukauksen maaliodottama on 0,03, se ei kerro mitään tästä nimenomaisesta vedosta. Se kertoo, että samankaltaisista laukauksista noin kolme sadasta päätyy verkkoon. Luku on olemassa vain joukolle.</p>
+<p>Fysiikassa samaa ajatusta kutsutaan ensemble-tulkinnaksi: kvanttimekaniikan aaltofunktio kuvaa samalla tavalla valmisteltujen systeemien joukkoa, ei yksittäistä hiukkasta. Palaan lopussa siihen, missä vertaus pitää ja missä se murtuu.</p>
+
+<h2>Kulma, josta maali näkyy</h2>
+<p>Tärkein yksittäinen tekijä on kulma, jossa tolppaväli näkyy laukaisupisteestä. Kun <var>x</var> on etäisyys päätyrajasta ja <var>y</var> sivuttaissiirtymä maalin keskeltä, kulma saadaan suljetussa muodossa:</p>
+<div class="eq">θ = atan2( <var>w</var>·<var>x</var>, <var>x</var>² + <var>y</var>² − (<var>w</var>/2)² ),&nbsp;&nbsp; <var>w</var> = 7,32 m</div>
+<p>Kehäkulmalauseen mukaan pisteet, joista kulma on sama, muodostavat ympyränkaaria, jotka kulkevat molempien tolppien kautta. Siksi maaliodottaman "renkaat" eivät ole maalin ympärillä olevia ympyröitä, vaan kaaria, jotka puristuvat päätyrajaa kohti. Päätyrajalla tolppien ulkopuolella kulma on nolla.</p>
+
+<h2>Malli neljässä osassa</h2>
+<div class="eq"><span class="big">xG = <var>p</var>₀ + (1 − <var>p</var>₀) · min(1, <var>A</var>·<var>T</var>·<var>R</var>·<var>M</var>)</span></div>
+<p><strong>Pohja <var>p</var>₀ = 0,02.</strong> Kimmokkeet, maalivahdin virheet ja muut sattumat. Koska muut tekijät menevät päätyrajalla nollaan, xG on siellä täsmälleen 2 %, ei koskaan vähemmän.</p>
+<p><strong>Osuma aukkoon <var>A</var>.</strong> Maalivahti peittää leveyden 2<var>r</var>, joten avoin kulma on θ<sub>eff</sub> = max(0, θ − 2·arctan(<var>r</var>/<var>d</var>)). Jos laukojan suuntavirhe on normaalijakautunut hajonnalla σ, osuman todennäköisyys on <var>A</var> = erf(θ<sub>eff</sub> / (2√2·σ)).</p>
+<p><strong>Ohitus <var>T</var> = e<sup>−<var>d</var>/λ</sup>.</strong> Mitä pidemmän matkan pallo kulkee, sitä todennäköisemmin maalivahti ehtii väliin. Muoto on sama kuin valon vaimenemisessa väliaineessa.</p>
+<p><strong>Reaktio <var>R</var> ja sijoittelu <var>M</var>.</strong> Nopea maalivahti leikkaa läheltä tulevia laukauksia, ja vaikutus on suurin noin viiden metrin päässä. Laukojan älykkyys nostaa todennäköisyyttä tasaisesti koko kentällä.</p>
+<div class="eq">
+σ = 0,30 − 0,16·<var>tekniikka</var><br>
+λ = 10 m · (0,85 + 0,3·<var>voima</var>) · (1,2 − 0,4·<var>taito</var>) · (1,07 − 0,14·<var>koko</var>)<br>
+<var>r</var> = 0,7 m + 0,2 m·<var>koko</var><br>
+<var>R</var> = 1 − 0,5·(<var>reaktio</var> − ½)·<var>g</var>(<var>d</var>),&nbsp;&nbsp; <var>g</var>(<var>d</var>) = (<var>d</var>/5)·e<sup>1 − <var>d</var>/5</sup><br>
+<var>M</var> = 1 + 0,2·(<var>älykkyys</var> − ½)
+</div>
+<p>Kaikki säätimet ovat välillä 0–1, ja arvolla 0,5 jokainen kerroin on yksi. Kertoimet ovat havainnollistavia: ne tuottavat julkaistujen mallien suuruusluokkaa olevia arvoja, mutta niitä ei ole sovitettu oikeaan dataan.</p>
+</article>
+
+<section class="lab" aria-label="Interaktiivinen maaliodottamamalli">
+  <div class="pitchwrap">
+    <canvas id="pitch" tabindex="0" aria-label="Lämpökartta maaliodottamasta. Napauta tai vedä nähdäksesi arvon."></canvas>
+    <div class="readout"><span id="where">Napauta tai vedä kentällä</span><strong id="xg">–</strong></div>
+    <div class="detail" id="parts"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="controls">
+    <fieldset>
+      <legend>Laukoja</legend>
+      <div class="row"><label for="tek">Tekniikka</label><input type="range" id="tek" min="0" max="1" step="0.05" value="0.5"><output for="tek"></output></div>
+      <div class="row"><label for="voi">Voima</label><input type="range" id="voi" min="0" max="1" step="0.05" value="0.5"><output for="voi"></output></div>
+      <div class="row"><label for="aly">Älykkyys</label><input type="range" id="aly" min="0" max="1" step="0.05" value="0.5"><output for="aly"></output></div>
+    </fieldset>
+    <fieldset>
+      <legend>Maalivahti</legend>
+      <div class="row"><label for="kok">Koko ja peitto</label><input type="range" id="kok" min="0" max="1" step="0.05" value="0.5"><output for="kok"></output></div>
+      <div class="row"><label for="rea">Reaktiokyky</label><input type="range" id="rea" min="0" max="1" step="0.05" value="0.5"><output for="rea"></output></div>
+      <div class="row"><label for="tai">Taito</label><input type="range" id="tai" min="0" max="1" step="0.05" value="0.5"><output for="tai"></output></div>
+    </fieldset>
+    <div class="btns">
+      <button type="button" id="diff" aria-pressed="false">Näytä ero keskitasoon</button>
+      <button type="button" id="reset">Palauta keskitaso</button>
+    </div>
+    <div class="btns" aria-label="Esimerkkiasetelmat">
+      <button type="button" data-p="0.5,0.5,0.5,0.15,0.9,0.6">Pieni ja nopea vahti</button>
+      <button type="button" data-p="0.5,0.5,0.5,0.95,0.35,0.6">Iso seinä</button>
+      <button type="button" data-p="0.9,0.9,0.5,0.5,0.5,0.5">Kaukolaukoja</button>
+      <button type="button" data-p="0.6,0.3,0.95,0.5,0.5,0.5">Viimeistelijä</button>
+    </div>
+    <p class="note">Eronäkymässä sininen tarkoittaa, että maaliodottama on keskitasoa pienempi, ja punainen, että se on suurempi. Näin kunkin säätimen oma jalanjälki näkyy kentällä.</p>
+  </div>
+</section>
+
+<article class="prose">
+<h2>Jokaisella säätimellä oma jalanjälki</h2>
+<p>Kuusi säädintä ei ole liikaa, koska jokainen vaikuttaa kenttään eri tavalla. Tekniikka pienentää hajontaa, mikä auttaa eniten kaukaa ja ahtaista kulmista, missä aukko on kapea. Voima pidentää vaimenemismatkaa λ, joten sen vaikutus kasvaa etäisyyden mukana. Älykkyys nostaa kaikkea saman verran.</p>
+<p>Pienellä maalivahdilla peitto <var>r</var> on kapeampi, mikä avaa kulmaa lähellä, ja pieni λ-lisä päästää kaukolaukauksia hieman helpommin sisään. Reaktiokyky vaikuttaa kyhmymäisesti noin viiden metrin kohdalla. Taito lyhentää λ:aa, jolloin koko rengasrakenne kutistuu kohti maalia muotonsa säilyttäen.</p>
+<p>Yksi rakenteellinen huomio: laukojan voima ja maalivahdin taito kertovat samaa λ:aa. Ne ovat siis kaksintaistelu, ja datasta voisi estimoida vain niiden suhteen, ei kumpaakin erikseen. Opetusmallissa tämä on hyvä asia, koska se näyttää, että maaliodottama on aina kahden osapuolen ominaisuus.</p>
+
+<h2>Missä vertaus kvanttimekaniikkaan pitää</h2>
+<p>Maaliodottama on ensemblen ominaisuus, kuten aaltofunktiokin. Kumpikin syntyy vasta, kun ainutkertaiset tapahtumat ryhmitellään joukoksi, ja kumpikin ennustaa joukkoa eikä yksilöä.</p>
+<p>Ero on siinä, mistä satunnaisuus tulee. Tässä mallissa se on klassista tietämättömyyttä: jokaisen laukauksen suuntavirhe on olemassa, emme vain tiedä sitä. Jos tietäisimme kaiken, todennäköisyys katoaisi. Kvanttimekaniikassa täydellisinkin tilan kuvaus jättää todennäköisyydet, ja Bellin epäyhtälöitä rikkovat kokeet sulkevat pois paikalliset piilomuuttujat. Lisäksi xG-kartta on sileä: siinä ei ole interferenssijuovia, joita kaksoisrakokokeessa yksittäisistä elektroneista piirtyy.</p>
+
+<h2>Rajoitukset</h2>
+<p>Malli ei tunne puolustajia, laukauksen tyyppiä (pusku, volley, ensikosketus) eikä edeltävää syöttöä. Parametrit voisi sovittaa oikeaan laukausdataan suurimman uskottavuuden menetelmällä. Silloin tuhansista laukauksista estimoitaisiin muutama luku, jotka eivät kuvaa yhtäkään laukausta mutta ennustavat niiden joukkoa. Kannattaa myös muistaa, että tutkimuksissa pelaajien viimeistelytaito näkyy yllättävän heikosti: harva ylittää odottamansa johdonmukaisesti kausi toisensa jälkeen.</p>
+</article>
+
+<footer>Malli ja kuvat on laskettu selaimessa. Lähdekoodi on tämän sivun HTML-tiedostossa.</footer>
+</main>
+
+<script>
+(() => {
+  const W = 68, DEPTH = 40, GOAL = 7.32, P0 = 0.02;
+  const cv = document.getElementById('pitch'), ctx = cv.getContext('2d');
+  const ids = ['tek','voi','aly','kok','rea','tai'];
+  const el = Object.fromEntries(ids.map(k => [k, document.getElementById(k)]));
+  const base = {tek:.5,voi:.5,aly:.5,kok:.5,rea:.5,tai:.5};
+  let diffMode = false, mark = null, raf = 0;
+
+  const bands = [[.40,'#8E2A1B','yli 0,40'],[.20,'#D2552F','0,20–0,40'],[.10,'#EE9A6B','0,10–0,20'],[.05,'#F6C9A6','0,05–0,10'],[.03,'#FBE6D4','0,03–0,05'],[0,null,'0,02–0,03']];
+  const dbands = [[.05,'#B3261E','yli +0,05'],[.015,'#E88A7A','+0,015…+0,05'],[.004,'#F7D2CA','+0,004…+0,015'],[-.004,null,'±0,004'],[-.015,'#C9DDF0','−0,004…−0,015'],[-.05,'#6FA3D2','−0,015…−0,05'],[-1,'#1F5A94','alle −0,05']];
+
+  function erf(x){const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+0.3275911*x);
+    return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x));}
+
+  function model(x, y, p){
+    const d = Math.max(Math.hypot(x, y), 0.1);
+    const theta = Math.atan2(GOAL * x, x*x + y*y - (GOAL/2)**2);
+    const sigma = 0.30 - 0.16 * p.tek;
+    const lambda = 10 * (0.85 + 0.3*p.voi) * (1.2 - 0.4*p.tai) * (1.07 - 0.14*p.kok);
+    const r = 0.7 + 0.2 * p.kok;
+    const thEff = Math.max(0, theta - 2*Math.atan(r/d));
+    const A = erf(thEff / (2*Math.SQRT2*sigma));
+    const T = Math.exp(-d/lambda);
+    const g = (d/5) * Math.exp(1 - d/5);
+    const R = 1 - 0.5*(p.rea - 0.5)*g;
+    const M = 1 + 0.2*(p.aly - 0.5);
+    return {xg: P0 + (1-P0)*Math.min(1, A*T*R*M), A, T, R, M, d};
+  }
+
+  const params = () => Object.fromEntries(ids.map(k => [k, parseFloat(el[k].value)]));
+  const pick = (v, list) => { for (const b of list) if (v >= b[0]) return b[1]; return list[list.length-1][1]; };
+  const fmt = v => v.toFixed(2).replace('.', ',');
+
+  function legend(){
+    const list = diffMode ? dbands : bands;
+    document.getElementById('legend').innerHTML = list.map(b =>
+      `<span><i style="background:${b[1]||'transparent'}"></i>${b[2]}</span>`).join('');
+  }
+
+  function draw(){
+    raf = 0;
+    const w = cv.clientWidth, h = w * DEPTH / W, dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.height = h + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+    const s = w / W, step = w > 600 ? 4 : 3, p = params();
+    for (let px = 0; px < w; px += step){
+      for (let py = 0; py < h; py += step){
+        const y = (px + step/2)/s - W/2, x = (py + step/2)/s;
+        const v = model(x, y, p).xg;
+        const c = diffMode ? pick(v - model(x, y, base).xg, dbands) : pick(v, bands);
+        if (c){ ctx.fillStyle = c; ctx.fillRect(px, py, step, step); }
+      }
+    }
+    const lc = getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
+    ctx.strokeStyle = lc; ctx.fillStyle = lc; ctx.lineWidth = 1.25;
+    const box = (x0,y0,x1,y1) => ctx.strokeRect((W/2+x0)*s, y0*s, (x1-x0)*s, (y1-y0)*s);
+    box(-20.16,0,20.16,16.5); box(-9.16,0,9.16,5.5);
+    ctx.beginPath(); ctx.arc(W/2*s, 11*s, 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(W/2*s, 11*s, 9.15*s, Math.asin(5.5/9.15), Math.PI - Math.asin(5.5/9.15)); ctx.stroke();
+    ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo((W/2-3.66)*s, 1.5); ctx.lineTo((W/2+3.66)*s, 1.5); ctx.stroke();
+    if (mark){ ctx.lineWidth = 2; ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+      ctx.beginPath(); ctx.arc(mark.x*s + W/2*s, mark.xd*s, 7, 0, Math.PI*2); ctx.stroke(); }
+  }
+  const schedule = () => { if (!raf) raf = requestAnimationFrame(draw); };
+
+  function readout(){
+    if (!mark){ return; }
+    const p = params(), m = model(mark.xd, mark.x, p), b = model(mark.xd, mark.x, base);
+    document.getElementById('where').textContent = `${(Math.round(m.d*10)/10).toString().replace('.', ',')} m maalista`;
+    document.getElementById('xg').textContent = 'xG ' + m.xg.toFixed(3).replace('.', ',');
+    const delta = m.xg - b.xg;
+    document.getElementById('parts').textContent =
+      `A ${fmt(m.A)} · T ${fmt(m.T)} · R ${fmt(m.R)} · M ${fmt(m.M)} · ero keskitasoon ${delta >= 0 ? '+' : '−'}${Math.abs(delta).toFixed(3).replace('.', ',')}`;
+  }
+
+  function point(e){
+    const b = cv.getBoundingClientRect(), s = b.width / W;
+    mark = { x: (e.clientX - b.left)/s - W/2, xd: Math.max(0, (e.clientY - b.top)/s) };
+    readout(); schedule();
+  }
+  let down = false;
+  cv.addEventListener('pointerdown', e => { down = true; cv.setPointerCapture(e.pointerId); point(e); });
+  cv.addEventListener('pointermove', e => { if (down) point(e); });
+  cv.addEventListener('pointerup', () => { down = false; });
+
+  cv.addEventListener('keydown', e => {
+    const k = {ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+    if (!k) return; e.preventDefault();
+    mark = mark || {x:0, xd:11};
+    mark.x = Math.max(-W/2, Math.min(W/2, mark.x + k[0])); mark.xd = Math.max(0, Math.min(DEPTH, mark.xd + k[1]));
+    readout(); schedule();
+  });
+
+  function syncOutputs(){ ids.forEach(k => el[k].nextElementSibling.textContent = fmt(parseFloat(el[k].value))); }
+  ids.forEach(k => el[k].addEventListener('input', () => { syncOutputs(); readout(); schedule(); }));
+
+  document.getElementById('diff').addEventListener('click', e => {
+    diffMode = !diffMode; e.currentTarget.setAttribute('aria-pressed', diffMode); legend(); schedule();
+  });
+  document.getElementById('reset').addEventListener('click', () => {
+    ids.forEach(k => el[k].value = 0.5); syncOutputs(); readout(); schedule();
+  });
+  document.querySelectorAll('[data-p]').forEach(btn => btn.addEventListener('click', () => {
+    btn.dataset.p.split(',').forEach((v, i) => el[ids[i]].value = v); syncOutputs(); readout(); schedule();
+  }));
+
+  window.addEventListener('resize', schedule);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', schedule);
+  syncOutputs(); legend(); draw();
+})();
+</script>
+</body>
+</html>
