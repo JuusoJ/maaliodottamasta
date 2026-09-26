@@ -31,7 +31,7 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 1.125rem/1.72 var(--serif);-webkit-font-smoothing:antialiased}
 main{padding:3rem 1rem 5rem}
-.prose{max-width:40rem;margin:0 auto}
+.prose{max-width:50rem;margin:0 auto}
 h1{font:600 clamp(2.6rem,8vw,4.4rem)/0.95 var(--cond);letter-spacing:-0.01em;margin:0 0 1.25rem}
 h2{font:600 1.9rem/1.1 var(--cond);margin:3rem 0 0.75rem}
 h3{font:600 1.4rem/1.15 var(--cond);margin:2.25rem 0 0.5rem}
@@ -119,7 +119,7 @@ button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid 
   #hint{display:none}
 }
 /* Kenttäruudukko */
-.gridfig{max-width:44rem;margin:1.25rem auto 1.75rem;padding:0}
+.gridfig{max-width:50rem;margin:1.25rem auto 1.75rem;padding:0}
 .gridbar{display:flex;justify-content:center;margin-bottom:0.6rem}
 #grid{display:block;width:100%;height:auto;background:var(--panel);border-radius:6px}
 #grid text{font-family:var(--sans);font-variant-numeric:tabular-nums}
@@ -127,7 +127,7 @@ button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid 
 @media (max-width:600px){#grid .gn{display:none}}
 table.cmp td:last-child,table.cmp th:last-child{text-align:right;white-space:nowrap;padding-right:0}
 table.cmp td:first-child{width:30%}
-footer{max-width:40rem;margin:4rem auto 0;border-top:1px solid var(--rule);padding-top:1rem;font:400 0.9rem/1.5 var(--sans);color:var(--ink-2)}
+footer{max-width:50rem;margin:4rem auto 0;border-top:1px solid var(--rule);padding-top:1rem;font:400 0.9rem/1.5 var(--sans);color:var(--ink-2)}
 footer p{margin:0 0 0.4rem}
 </style>
 </head>
@@ -172,7 +172,10 @@ footer p{margin:0 0 0.4rem}
         <div class="chips presets" data-pgroup="laukoja">
           <button type="button" data-preset="Keskitaso">Keskitaso</button>
           <button type="button" data-preset="Szoboszlai">Szoboszlai</button>
+          <button type="button" data-preset="Palmer">Palmer</button>
+          <button type="button" data-preset="Haaland">Haaland</button>
           <button type="button" data-preset="Delap">Delap</button>
+          <button type="button" data-preset="WanBissaka">Wan-Bissaka</button>
         </div>
       </div>
       <div class="group">
@@ -184,6 +187,7 @@ footer p{margin:0 0 0.4rem}
           <button type="button" data-preset="Keskitaso">Keskitaso</button>
           <button type="button" data-preset="Raya">Raya</button>
           <button type="button" data-preset="Donnarumma">Donnarumma</button>
+          <button type="button" data-preset="Sa">José Sá</button>
           <button type="button" data-preset="Divari">Divarin varavahti</button>
         </div>
       </div>
@@ -224,8 +228,8 @@ footer p{margin:0 0 0.4rem}
           <button type="button" data-group="syotto" data-value="oma" aria-pressed="true">Oma kuljetus</button>
           <button type="button" data-group="syotto" data-value="lapi" aria-pressed="false">Läpisyöttö</button>
           <button type="button" data-group="syotto" data-value="keskitys" aria-pressed="false">Keskitys</button>
-          <button type="button" data-group="syotto" data-value="takaisin" aria-pressed="false">Takaisinveto</button>
-          <button type="button" data-group="syotto" data-value="irto" aria-pressed="false">Irtopallo</button>
+          <button type="button" data-group="syotto" data-value="takaisin" aria-pressed="false">Rajalta taakse</button>
+          <button type="button" data-group="syotto" data-value="irto" aria-pressed="false">Paluupallo</button>
         </div>
       </div>
       <div class="group">
@@ -281,16 +285,16 @@ footer p{margin:0 0 0.4rem}
 <tr><td>Etäisyys</td><td><var>d</var></td><td>10,9 %</td></tr>
 <tr><td>Kulma</td><td>θ</td><td>10,4 %</td></tr>
 <tr><td>Perusfunktio</td><td>θ ja <var>d</var></td><td>11,8 %</td></tr>
-<tr><td>Simulaattori, keskitaso</td><td>paikka, maalivahti aina parhaassa paikassa</td><td>9,6 %</td></tr>
-<tr><td>Simulaattori, todellinen tilanne</td><td>paikka, maalivahdin ja puolustajien todelliset paikat, paine, pusku, volley, vapaapotku</td><td>18,1 %</td></tr>
+<tr><td>Simulaattori, keskitaso</td><td>paikka, maalivahti aina parhaassa paikassa</td><td>8,6 %</td></tr>
+<tr><td>Simulaattori, todellinen tilanne</td><td>paikka, maalivahdin ja puolustajien todelliset paikat, paine, pusku, volley, vapaapotku</td><td>19,5 %</td></tr>
 <tr><td>StatsBombin xG</td><td>kymmeniä muuttujia, koneoppiminen</td><td>21,0 %</td></tr>
 </tbody>
 </table>
-<p>Pelkällä paikalla fysiikkamalli häviää kolmen luvun käyrälle, koska se olettaa maalivahdin olevan aina parhaassa paikassa. Kun sille kerrotaan, missä maalivahti ja puolustajat oikeasti olivat, se ohittaa käyrän selvästi ja jää StatsBombin koneoppimismallista vajaat kolme prosenttiyksikköä.</p>
+<p>Pelkällä paikalla fysiikkamalli häviää kolmen luvun käyrälle, koska se olettaa maalivahdin olevan aina parhaassa paikassa. Kun sille kerrotaan, missä maalivahti ja puolustajat oikeasti olivat, se ohittaa käyrän selvästi ja jää StatsBombin koneoppimismallista vain 1,5 prosenttiyksikköä.</p>
 
 <h2>Keskiarvo kätkee yksilöt</h2>
 <p>xG:tä on tutkittu pitkään yleisenä ilmiönä, ikään kuin laukauksen arvo riippuisi vain paikasta. Todellisuudessa se riippuu tilanteeseen osallistuvista ihmisistä: laukojan tekniikasta ja voimasta, maalivahdin ulottuvuudesta ja reaktioista, puolustajista laukojan ympärillä ja vetolinjalla, maalivahdin eteen tulevista näköesteistä ja siitä, kuinka paljon ottelussa on pelissä.</p>
-<p>Simulaattori kertoo tämän luvuin. Rangaistusalueen rajalta keskeltä ammuttu veto on Rayaa vastaan 0,037 ja divarin varamaalivahtia vastaan 0,097, siis lähes kolminkertainen. Rayaa vastaan tehty maali on eri saavutus kuin maali alasarjan kakkosvahtia vastaan, ja hyvän xG-mallin pitää näyttää se.</p>
+<p>Simulaattori kertoo tämän luvuin. Rangaistusalueen rajalta keskeltä ammuttu veto on Rayaa vastaan 0,039 ja divarin varamaalivahtia vastaan 0,087, siis yli kaksinkertainen. Rayaa vastaan tehty maali on eri saavutus kuin maali alasarjan kakkosvahtia vastaan, ja hyvän xG-mallin pitää näyttää se.</p>
 <p>Tämä sivu on harrastajan mallinrakennusharjoitus teoreettisen fysiikan hengessä: rakennetaan mekanismi, sovitetaan muutama vakio dataan ja katsotaan, mitä jää selittämättä. Selitysvoima on rajallinen ja kaukana totuudesta. Malli auttaa silti kysymään, mitä laskettu xG oikeastaan tarkoittaa. Joskus loistava pelaaja tekee olemattomasta paikasta maalin monta kertaa kaudessa. Toinen tuhlaa loistopaikkoja ja jää selvästi alle odottamansa. Kumpikaan ei ole ristiriidassa xG:n kanssa, koska xG kuvaa joukkoa, ei yksilöä.</p>
 
 <h2>xG on tila</h2>
@@ -298,9 +302,9 @@ footer p{margin:0 0 0.4rem}
 <p>Maaliodottama 0,03 ei siis kerro, meneekö seuraava veto sisään. Se kertoo, että sadasta samassa tilassa olevasta vedosta kolme menee. Kvanttimekaniikan ensemble-tulkinta sanoo saman aaltofunktiosta: se kuvaa samalla tavalla valmisteltujen systeemien joukkoa, ei yhtä hiukkasta. Vertaus pitää yhdessä asiassa ja pettää kahdessa. Niistä lopussa.</p>
 
 <h2>Malli yhdellä rivillä</h2>
-<div class="eq"><span class="big">xG = <var>p</var>₀ + (1 − <var>p</var>₀) · <var>B</var> · max(<var>P</var><sub>laukaus</sub>, <var>P</var><sub>lob</sub>, <var>P</var><sub>ohitus</sub>)</span></div>
-<p>Maaliin on neljä reittiä. Sattuma <var>p</var>₀ kattaa kimmokkeet ja maalivahdin virheet. Muuten pallon on ensin päästävä puolustajien ohi (todennäköisyys <var>B</var>), ja sen jälkeen laukoja valitsee parhaan kolmesta keinosta: laukaus maalivahdin ohi, lob hänen ylitseen tai kuljetus hänen ohitseen.</p>
-<p>Kuusi vakiota on sovitettu suurimman uskottavuuden menetelmällä edellä kuvattuihin 38 318 laukaukseen. Jokaisessa laukauksessa oli mukana maalivahdin ja puolustajien todellinen paikka laukaisuhetkellä. Sovitettuja ovat keskimääräinen suuntahajonta, torjunnan pettämisen suuruus ja aikavakio, sattumien taso, puskun hajontakerroin ja paineen vaikutus. Reaktioaika, syöksynopeus, blokkaus, rimaehto ja ilmanvastus ovat fysikaalisia arvioita. Henkistä painetta ja maalivahdin häirintää aineistossa ei ole, joten niiden vaikutus on arvio.</p>
+<div class="eq"><span class="big">xG = <var>p</var>₀ + (1 − <var>p</var>₀) · <var>B</var> · max(<var>P</var><sub>laukaus</sub>, <var>P</var><sub>lob</sub>)</span></div>
+<p>Maaliin on kolme reittiä. Sattuma <var>p</var>₀ kattaa kimmokkeet ja maalivahdin virheet. Muuten pallon on ensin päästävä puolustajien ohi (todennäköisyys <var>B</var>), ja sen jälkeen laukoja valitsee paremman kahdesta keinosta: laukaus maalivahdin ohi tai lob hänen ylitseen.</p>
+<p>Kahdeksan vakiota on sovitettu suurimman uskottavuuden menetelmällä edellä kuvattuihin 38 318 laukaukseen. Jokaisessa laukauksessa oli mukana maalivahdin ja puolustajien todellinen paikka laukaisuhetkellä. Sovitettuja ovat keskimääräinen suuntahajonta, torjunnan pettämisen suuruus ja aikavakio, sattumien taso, puskun hajontakerroin, paineen vaikutus, tyhjän maalin hajonta ja ulos tulleen maalivahdin ohitus läheltä. Reaktioaika, syöksynopeus, blokkaus, rimaehto ja ilmanvastus ovat fysikaalisia arvioita. Henkistä painetta ja maalivahdin häirintää aineistossa ei ole, joten niiden vaikutus on arvio.</p>
 
 <h3>Suureet</h3>
 <p>Alaindeksi <var>p</var> tarkoittaa laukojaa (player) ja <var>k</var> maalivahtia (keeper).</p>
@@ -314,7 +318,7 @@ footer p{margin:0 0 0.4rem}
   </dl>
   <h4>Laukoja</h4>
   <dl>
-    <dt>σ<sub>p</sub></dt><dd>Suuntahajonta eli tyypillinen suuntavirhe kulmana. Sovitettu keskiarvo on 15°, huippulaukojalla 12° ja heikolla 19°. Kulma on luonteva mitta, koska sama virhe jalassa tuottaa sitä suuremman ohituksen, mitä kauempaa lyödään: 15° on 11 metristä noin 3 m ja 25 metristä 6,8 m. Kiväärin tarkkuuskin ilmoitetaan kulmana. Säädin: potkutekniikka.</dd>
+    <dt>σ<sub>p</sub></dt><dd>Suuntahajonta eli tyypillinen suuntavirhe kulmana. Sovitettu keskiarvo on 18,5°, huippulaukojalla 15° ja heikolla 22°. Kulma on luonteva mitta, koska sama virhe jalassa tuottaa sitä suuremman ohituksen, mitä kauempaa lyödään: 18,5° on 11 metristä 3,7 m ja 25 metristä 8,4 m. Kiväärin tarkkuuskin ilmoitetaan kulmana. Säädin: potkutekniikka.</dd>
     <dt>v<sub>p</sub></dt><dd>Suurin lähtönopeus. Ammattilaisilla tyypillisesti 30–35 m/s, maailmanennätys noin 59 m/s. Säädin: potkuvoima.</dd>
     <dt>v₀</dt><dd>Laukauksen todellinen nopeus, 85 % suurimmasta: <var>v</var>₀ = 0,85·<var>v</var><sub>p</sub>. Keskitasolla 27 m/s.</dd>
     <dt>i<sub>p</sub></dt><dd>Laukaisuäly asteikolla 0–1. Se määrää päätöksen heiton <var>h</var><sub>p</sub> ja sen, kuinka paljon paine häiritsee.</dd>
@@ -330,7 +334,7 @@ footer p{margin:0 0 0.4rem}
   </dl>
   <h4>Maalivahti</h4>
   <dl>
-    <dt>r<sub>k</sub></dt><dd>Syliväli, 1,75–2,20 m. Säädin: ulottuvuus.</dd>
+    <dt>r<sub>k</sub></dt><dd>Syliväli, 1,75–2,20 m. Säädin: ulottuvuus. Syliväli ratkaisee erityisesti kaukolaukauksissa.</dd>
     <dt>r₀</dt><dd>Valmiusasennon peittämä puolileveys ilman syöksyä, <var>r</var>₀ = 0,35·<var>r</var><sub>k</sub>. Kädet ovat valmiusasennossa noin 70 % täydestä sivuttaisulottuvuudesta.</dd>
     <dt>t<sub>k</sub></dt><dd>Reaktioaika. Keskitasolla 0,23 s. Säädin: reaktiokyky. Iso maalivahti on hieman hitaampi maahan.</dd>
     <dt>v<sub>k</sub></dt><dd>Syöksynopeus sivulle. Keskitasolla 5,5 m/s. Säädin: taito.</dd>
@@ -339,7 +343,8 @@ footer p{margin:0 0 0.4rem}
     <dt>R</dt><dd>Ulottuvuus hetkellä, jolloin pallo ohittaa maalivahdin.</dd>
     <dt>α</dt><dd>Maalivahdin peittämä puolikulma laukojan silmin.</dd>
     <dt>ε</dt><dd>Todennäköisyys, että torjunta pettää, vaikka maalivahti ehtii palloon.</dd>
-    <dt>τ</dt><dd>Torjunnan aikavakio, sovitettu arvo 0,64 s.</dd>
+    <dt>τ</dt><dd>Torjunnan aikavakio, sovitettu arvo 1,0 s.</dd>
+    <dt>x<sub>k</sub></dt><dd>Maalivahdin etäisyys maaliviivasta.</dd>
   </dl>
   <h4>Tilanne</h4>
   <dl>
@@ -363,80 +368,96 @@ footer p{margin:0 0 0.4rem}
 Δ<var>t</var> = <var>t</var><sub>f</sub> − <var>t</var><sub>k</sub>,&nbsp;&nbsp; <var>R</var> = <var>r</var>₀ + <var>v</var><sub>k</sub>·Δ<var>t</var>,&nbsp;&nbsp; α = arctan( <var>R</var> / <var>s</var> )
 </div>
 <p>Ilmanvastus jarruttaa palloa sitä enemmän, mitä kovempaa se lentää. Nopeus pienenee eksponentiaalisesti matkan funktiona, <var>v</var> = <var>v</var>₀e<sup>−<var>s</var>/<var>L</var></sup>, ja integroimalla saadaan lentoaika. Keskitasoisen laukojan 11 metrin veto on maalivahdin kohdalla 0,42 sekunnissa, 25 metrin veto 1,06 sekunnissa ja keskiviivalta ammuttu 2,7 sekunnissa. Ilman ilmanvastusta ajat olisivat 0,39, 0,91 ja 1,92 sekuntia.</p>
-<p>Maalivahti käyttää ensimmäiset <var>t</var><sub>k</sub> sekuntia reagointiin ja loput syöksyyn. Laukojan silmin hän peittää kulman ±α oman suuntansa ympärillä. Jos hän on sivussa vetolinjasta, peitetty kulma siirtyy mukana ja toiselle puolelle aukeaa rako. Jos hän on pallon takana, maali on tyhjä.</p>
-<p>Yhtälöistä seuraa mallin kiinnostavin tulos. Kun maalivahti astuu eteenpäin, kulma pienenee mutta aikaa jää vähemmän. Valmiusasennon peitto <var>r</var>₀ ≈ 0,7 m on pienempi kuin reaktioaikana menetetty syöksymatka <var>v</var><sub>k</sub>·<var>t</var><sub>k</sub> ≈ 1,3 m, joten ajan menetys painaa enemmän: askel eteen heikentää torjuntaa. Suunta kääntyy vasta, kun maalivahti on laukojaa lähempänä kuin <var>v</var>₀·<var>t</var><sub>k</sub> ≈ 6 metriä. Silloin kukaan ei ehdi reagoida, ja ratkaisee pelkkä vartalo. Maalivahdilla on siis kaksi hyvää paikkaa, maaliviiva ja laukojan jalat. Välimaasto on huonoin.</p>
+<p>Maalivahti käyttää ensimmäiset <var>t</var><sub>k</sub> sekuntia reagointiin ja loput syöksyyn. Laukojan silmin hän peittää kulman ±α oman suuntansa ympärillä. Jos hän on sivussa vetolinjasta, peitetty kulma siirtyy mukana ja toiselle puolelle aukeaa rako.</p>
+<p>Kun maalivahti astuu eteenpäin, kulma pienenee mutta aikaa jää vähemmän. Valmiusasennon peitto <var>r</var>₀ ≈ 0,7 m on pienempi kuin reaktioaikana menetetty syöksymatka <var>v</var><sub>k</sub>·<var>t</var><sub>k</sub> ≈ 1,3 m, joten pelkän ajan ja kulman perusteella askel eteen heikentäisi torjuntaa. Maaliviiva ei silti ole paras paikka, koska viivalla tehty osittainen torjunta jatkaa maaliin (kohta 3). Näiden kahden vaikutuksen tasapaino vie parhaan paikan noin metrin päähän viivasta keskeltä ammuttuja 6–17 metrin vetoja vastaan. Kun parhaat paikat piirretään eri laukaisupisteille, ne muodostavat kaaren tolpalta tolpalle. Toinen hyvä paikka on laukojan jaloissa: kun maalivahti on laukojaa lähempänä kuin <var>v</var>₀·<var>t</var><sub>k</sub> ≈ 6 metriä, kukaan ei ehdi reagoida, ja ratkaisee vartalo, joka peittää läheltä lähes koko maalin.</p>
 
 <h3>3. Torjunta</h3>
-<div class="eq"><var>ε</var> = <var>ε</var><sub>max</sub> · e<sup>−<var>m</var><sub>aika</sub>/τ</sup></div>
-<p>Palloon ehtiminen ei vielä tarkoita torjuntaa. Mitä lähempänä ulottuvuuden reunaa pallo menee, sitä pienempi on aikamarginaali <var>m</var><sub>aika</sub> ja sitä useammin torjunta pettää. Simulaattori laskee tämän kahdessa vyöhykkeessä: syöksyn sisäpuoliskolla <var>m</var><sub>aika</sub> = 0,75·Δ<var>t</var>, ulkopuoliskolla 0,25·Δ<var>t</var>. Suoraan vartaloon osuva laukaus menee sisään 4 prosentin todennäköisyydellä. Keskitasoisella maalivahdilla <var>ε</var><sub>max</sub> = 0,27. Taito ja syliväli pienentävät sitä, koska ne auttavat ulottumaan yläkulmiin ja pitämään pallon.</p>
+<div class="eq">
+<var>ε</var> = <var>ε</var><sub>max</sub> · e<sup>−<var>m</var><sub>aika</sub>/τ</sup><br>
+<var>ε</var> → <var>ε</var> + (1 − <var>ε</var>) · <var>q</var> · e<sup>−<var>x</var><sub>k</sub>/0,6 m</sup>,&nbsp;&nbsp; <var>q</var> = 0,05 / 0,15 / 0,30
+</div>
+<p>Palloon ehtiminen ei vielä tarkoita torjuntaa. Mitä lähempänä ulottuvuuden reunaa pallo menee, sitä pienempi on aikamarginaali <var>m</var><sub>aika</sub> ja sitä useammin torjunta pettää. Simulaattori laskee tämän kahdessa vyöhykkeessä: syöksyn sisäpuoliskolla <var>m</var><sub>aika</sub> = 0,75·Δ<var>t</var>, ulkopuoliskolla 0,25·Δ<var>t</var>. Keskitasoisella maalivahdilla <var>ε</var><sub>max</sub> = 0,23 ja sovitettu τ = 1,0 s. Syliväli pienentää <var>ε</var><sub>max</sub>:ia selvästi, koska kaukolaukauksiin maalivahti ehtii aina ja torjunnan ratkaisee ulottuminen yläkulmiin täydellä venytyksellä.</p>
+<p>Jälkimmäinen rivi kuvaa maaliviivan vaaraa. Jos maalivahti on <var>x</var><sub>k</sub> metrin päässä viivasta, osittainen torjunta jatkaa viivan yli sitä todennäköisemmin, mitä lähempänä viiva on. Osuus <var>q</var> on vartalolle 0,05, syöksyn sisäpuoliskolle 0,15 ja ulkopuoliskolle 0,30, koska sormenpäätorjunta hidastaa palloa vähiten. Aineisto tukee suuntaa: keskeltä ammutuista 14–20 metrin vedoista meni sisään 17 %, kun maalivahti oli alle puolen metrin päässä viivasta, mutta 5–6 %, kun hän oli 0,5–2,5 metriä ulkona. Viivalla seisoneita tapauksia on kuitenkin vain 23.</p>
+<p>Ulos tulleen maalivahdin ohi pääsee läheltä myös ali tai yli: jalkojen välistä tai sipaisemalla. Tämä läpimeno on suurimmillaan, kun maalivahti on tullut yli neljä metriä ulos ja on 4–6 metrin päässä laukojasta. Kun hän on aivan jaloissa, sitä ei ole. Aineistossa ulos tulleen maalivahdin ohi meni 20 %, kun hän oli alle metrin päässä laukojasta, ja 35 %, kun hän oli 3–4 metrin päässä.</p>
 
 <h3>4. Valinta</h3>
 <div class="eq">
 <var>P</var><sub>laukaus</sub> = <var>V</var> · Σ<sub><var>i</var></sub> <var>ε</var><sub><var>i</var></sub> · [ Φ((<var>b</var><sub><var>i</var></sub> − μ)/σ<sub>tot</sub>) − Φ((<var>a</var><sub><var>i</var></sub> − μ)/σ<sub>tot</sub>) ]<br>
 σ<sub>tot</sub> = √( σ<sub>p</sub>² + (<var>h</var><sub>p</sub>/<var>D</var>)² ),&nbsp;&nbsp; <var>V</var> = Φ( 0,6·arctan(<var>H</var>/<var>d</var>) / 0,7σ<sub>p</sub> )
 </div>
-<p>Maalin näkökulma jakautuu väleihin [<var>a</var><sub><var>i</var></sub>, <var>b</var><sub><var>i</var></sub>]: vapaa maali (<var>ε</var> = 1), syöksyn ulko- ja sisäpuolisko, vartalo ja vapaapotkussa muuri. Laukoja valitsee suunnan μ, joka tekee summasta suurimman. Toteutus heittää hajonnalla σ<sub>p</sub> ja päätös <var>h</var><sub>p</sub> metriä maaliviivalla, missä <var>D</var> on matka tähtäyspisteeseen (vähintään 4 m). <var>V</var> on todennäköisyys, että pallo pysyy riman alla. Aivan maalin suulla pallo vain ohjataan sisään, joten kulmavirhe kutistuu kertoimella <var>d</var>/(<var>d</var> + 0,5 m). Tyhjään maaliin pallon voi sijoittaa rauhassa, ja hajonta pienenee 40 %.</p>
+<p>Maalin näkökulma jakautuu väleihin [<var>a</var><sub><var>i</var></sub>, <var>b</var><sub><var>i</var></sub>]: vapaa maali (<var>ε</var> = 1), syöksyn ulko- ja sisäpuolisko, vartalo ja vapaapotkussa muuri. Laukoja valitsee suunnan μ, joka tekee summasta suurimman. Toteutus heittää hajonnalla σ<sub>p</sub> ja päätös <var>h</var><sub>p</sub> metriä maaliviivalla, missä <var>D</var> on matka tähtäyspisteeseen (vähintään 4 m). <var>V</var> on todennäköisyys, että pallo pysyy riman alla. Aivan maalin suulla pallo vain ohjataan sisään, joten kulmavirhe kutistuu kertoimella <var>d</var>/(<var>d</var> + 0,5 m).</p>
+<p>Kun maalivahti on pallon takana, pelataan eri säännöillä. Maali on tyhjä, rimaa ei tarvitse pelätä, koska pallon voi vetää maata pitkin, ja hajonta pienenee kertoimella 0,87 (sovitettu). Alle kolmen metrin päässä selän takana oleva maalivahti kuitenkin painostaa kuten puolustaja. Aineistossa 87 laukausta ammuttiin maalivahdin ollessa yli kolme metriä pallon takana, ja niistä 55 % meni sisään keskimäärin kymmenestä metristä. Tyhjä maali on siis datassa vaikeampi kuin mielikuvissa: usein kyse on sekasorrosta, jossa puolustajia on maaliviivalla.</p>
 
-<h3>5. Lob ja ohitus</h3>
+<h3>5. Lob</h3>
 <div class="eq">
-<var>P</var><sub>lob</sub> = <var>q</var><sub>lob</sub> · e<sup>−<var>d</var>/30 m</sup> · Φ( (<var>x</var><sub>k</sub> − 1 m − <var>v</var><sub>taakse</sub>·(<var>t</var><sub>lob</sub> − <var>t</var><sub>k</sub>)) / 0,8 m ) · min(1, (<var>s</var> − 2 m)/3 m)<br>
-<var>t</var><sub>lob</sub> = <var>d</var> / (0,55·<var>v</var>₀),&nbsp;&nbsp; <var>P</var><sub>ohitus</sub> = 0,45 · (1 − 0,5·paine) · max(0, 1 − <var>s</var>/3,5 m)
+<var>P</var><sub>lob</sub> = <var>q</var><sub>lob</sub> · e<sup>−<var>d</var>/30 m</sup> · Φ( (<var>x</var><sub>k</sub> − 1 m − <var>v</var><sub>taakse</sub>·(<var>t</var><sub>lob</sub> − <var>t</var><sub>k</sub>)) / 0,8 m ) · min(1, (<var>s</var> − 2 m)/3 m),&nbsp;&nbsp; <var>t</var><sub>lob</sub> = <var>d</var> / (0,55·<var>v</var>₀)
 </div>
-<p>Ulos tuleva maalivahti maksaa ulostulostaan. Lob onnistuu, jos maalivahti ei ehdi perääntyä maaliviivalle nopeudella <var>v</var><sub>taakse</sub> = 4,5 m/s ennen kuin pallo putoaa (<var>x</var><sub>k</sub> on hänen etäisyytensä maaliviivasta). Nosto vaatii myös tilaa: alle kahden metrin päässä oleva maalivahti blokkaa sen. Aivan jalkoihin tulleen maalivahdin voi kiertää. Lobin tarkkuus heikkenee matkan kasvaessa, ja <var>q</var><sub>lob</sub> kasvaa potkutekniikan myötä.</p>
+<p>Ulos tuleva maalivahti maksaa ulostulostaan. Lob onnistuu, jos maalivahti ei ehdi perääntyä maaliviivalle nopeudella <var>v</var><sub>taakse</sub> = 4,5 m/s ennen kuin pallo putoaa. Nosto vaatii myös tilaa: alle kahden metrin päässä oleva maalivahti blokkaa sen. Lobin tarkkuus heikkenee matkan kasvaessa, ja <var>q</var><sub>lob</sub> kasvaa potkutekniikan myötä. Erillistä termiä maalivahdin kiertämiselle kuljettamalla kokeilin, mutta data ei tukenut sitä, joten se jäi pois.</p>
 
 <h3>6. Puolustajat, paine ja häirintä</h3>
 <div class="eq">
 <var>B</var> = (1 − <var>b</var>)<sup><var>n</var></sup>,&nbsp;&nbsp; <var>b</var> = 0,5 · (1 − e<sup>−<var>d</var>/10 m</sup>)<br>
-σ<sub>p</sub> → σ<sub>p</sub> · (1 + 0,77·paine) · (1 + 0,35·<var>m</var>),&nbsp;&nbsp; <var>r</var><sub>vapaa</sub> = 0,3 m + 4 m · (1 − paine)<br>
+σ<sub>p</sub> → σ<sub>p</sub> · (1 + 0,51·paine) · (1 + 0,35·<var>m</var>),&nbsp;&nbsp; <var>r</var><sub>vapaa</sub> = 0,3 m + 4 m · (1 − paine)<br>
 <var>t</var><sub>k</sub> → <var>t</var><sub>k</sub> + 0,12 s · <var>h</var><sub>k</sub> + 0,03 s · <var>n</var>
 </div>
-<p>Puolustaja blokkaa sitä todennäköisemmin, mitä pidempi matka hänellä on asettua väliin: maalin edestä noin 7 prosenttia, rangaistusalueen rajalta 40 prosenttia. Paine kasvattaa hajontaa. Sen kerroin 0,77 on sovitettu dataan, jossa neljäsosa laukauksista ammuttiin paineen alla. Vapaan tilan säde on paineettomassa tilanteessa 4,3 m ja ahdistettuna 0,3 m. Älykäs laukoja luo itselleen aikaa, joten sama paine ahdistaa häntä vähemmän.</p>
+<p>Puolustaja blokkaa sitä todennäköisemmin, mitä pidempi matka hänellä on asettua väliin: maalin edestä noin 7 prosenttia, rangaistusalueen rajalta 40 prosenttia. Paine kasvattaa hajontaa. Sen kerroin 0,51 on sovitettu dataan, jossa neljäsosa laukauksista ammuttiin paineen alla. Vapaan tilan säde on paineettomassa tilanteessa 4,3 m ja ahdistettuna 0,3 m. Älykäs laukoja luo itselleen aikaa, joten sama paine ahdistaa häntä vähemmän.</p>
 <p>Henkinen paine kasvattaa hajontaa enintään 35 prosenttia. Rangaistuspotkukilpailuista tiedetään, että potkun merkitys heikentää onnistumista, ja mallissa ratkaisevan potkun maaliodottama putoaa 0,75:stä 0,62:een. Maalivahdin häirintä, kuten eteen tuleva pelaaja, lisää hänen reaktioaikaansa. Jokainen puolustaja vetolinjalla peittää näkyvyyttä hieman.</p>
 
 <h3>7. Sattuma ja kantama</h3>
 <div class="eq">
-<var>p</var>₀ = 0,0175 · e<sup>−<var>d</var>/50 m</sup> · e<sup>−(Δ<var>y</var>/15 m)²</sup> · Φ( (<var>R</var><sub>max</sub> − <var>d</var>) / 5 m )<br>
+<var>p</var>₀ = 0,0098 · e<sup>−<var>d</var>/50 m</sup> · e<sup>−(Δ<var>y</var>/15 m)²</sup> · Φ( (<var>R</var><sub>max</sub> − <var>d</var>) / 5 m )<br>
 <var>R</var><sub>max</sub> = <var>L</var> · ln( 1 + <var>v</var>₀² / (<var>g</var><var>L</var>) )
 </div>
-<p>Kimmokkeet ja maalivahdin virheet antavat jokaiselle laukaukselle pienen pohjan, joka hiipuu etäisyyden ja sivusiirtymän myötä. Δ<var>y</var> on matka tolppalinjasta sivulle. Siksi päätyrajalla maalin vieressä xG on noin 0,02 mutta kulmalipulla nolla.</p>
+<p>Kimmokkeet ja maalivahdin virheet antavat jokaiselle laukaukselle pienen pohjan, joka hiipuu etäisyyden ja sivusiirtymän myötä. Δ<var>y</var> on matka tolppalinjasta sivulle.</p>
 <p>Kaukana ratkaisee kantama. Kun ilmanvastus hidastaa vaakaliikettä eksponentiaalisesti ja lentoaika määräytyy pystysuunnasta (2<var>v</var>₀ sin β / <var>g</var>, kun β on lähtökulma), kantamaksi tulee <var>L</var>·ln(1 + <var>v</var>₀² sin 2β / (<var>gL</var>)). Se on suurimmillaan 45°:n kulmassa. Tyhjiössä kantama kasvaisi nopeuden neliönä, ilmanvastuksen kanssa se kasvaa vain logaritmisesti. Keskitasoisella laukojalla (<var>v</var><sub>p</sub> = 32 m/s) kantama on 53 m, heikoimmalla (23 m/s) 32 m ja maailmanennätysvoimalla (59 m/s) 115 m. Tyhjiössä viimeinen olisi 256 m.</p>
-<p>Maailmanennätysvoimalla pallo siis ylettyisi toiseen maaliin, mutta keskiviivalta xG on silti vain 0,009, koska maalivahdilla on aikaa puolitoista sekuntia. Keskitasoisella laukojalla keskiviivalta tulee 0,004 ja 60 metristä alle 0,001. Aineiston 353 vähintään 35 metristä ammutusta laukauksesta maaliin meni 8.</p>
+<p>Maailmanennätysvoimalla pallo siis ylettyisi toiseen maaliin, mutta keskiviivalta xG on silti vain 0,007, koska maalivahdilla on aikaa puolitoista sekuntia. Keskitasoisella laukojalla keskiviivalta tulee 0,003 ja 60 metristä alle 0,001. Aineiston 353 vähintään 35 metristä ammutusta laukauksesta maaliin meni 8.</p>
 
 <h2>Tilanne muuttaa vain muutamaa suuretta</h2>
 <p>Opta kertoo <a href="https://theanalyst.com/articles/what-is-expected-goals-xg">xG-mallinsa esittelyssä</a> käyttävänsä yli kahtakymmentä muuttujaa, muun muassa maalivahdin sijaintia, painetta, laukaisutapaa, pelitilannetta ja edeltävää syöttöä. Tässä mallissa jokainen niistä kytkeytyy samoihin fysikaalisiin suureisiin. Yksikään ei ole irrallinen kerroin.</p>
 <table>
 <thead><tr><th>Muuttuja</th><th>Mekanismi</th></tr></thead>
 <tbody>
-<tr><td>Laukaisutapa</td><td>Heikompi jalka: σ<sub>p</sub> × 1,15 ja <var>v</var>₀ × 0,9. Suoraan syötöstä: σ<sub>p</sub> × 1,2. Volley: σ<sub>p</sub> × 1,5 ja <var>v</var>₀ × 1,1. Pusku: σ<sub>p</sub> × 2,8 (sovitettu) ja <var>v</var>₀ × 0,65, joten maalivahti ehtii ja kantama jää 27 metriin.</td></tr>
-<tr><td>Pelitilanne</td><td>Nopea hyökkäys: vähemmän painetta ja puolustajia. Kulmapotku: enemmän painetta ja yksi puolustaja lisää. Suora vapaapotku: ei painetta eikä blokkeja, mutta muuri peittää lähitolpan puolen ja maalivahti näkee pallon 0,25 s myöhemmin. Arvot on sovitettu aineiston 1 801 vapaapotkuun, joista 6,4 % meni sisään. Rangaistuspotku: hajonta on kalibroitu niin, että xG on 0,75 kuten aineiston 410 rangaistuspotkussa (Opta käyttää 0,79).</td></tr>
-<tr><td>Edeltävä toiminta</td><td>Läpisyöttö antaa aikaa (σ<sub>p</sub> × 0,8), mutta maalivahti ehtii jopa 6 m ulos. Keskitys: σ<sub>p</sub> × 1,15, ja maalivahti myöhästyy 0,05 s. Takaisinveto ja irtopallo myöhästyttävät maalivahtia 0,12 ja 0,2 s ja pitävät hänet lähellä viivaa.</td></tr>
-<tr><td>Ulostulon raja</td><td>Avoin peli: enintään 3 m ja alle puolet matkasta palloon. Nopea hyökkäys 5 m, läpisyöttö 6 m, keskitys 1,5 m, takaisinveto 1 m, irtopallo ja vapaapotku alle metri.</td></tr>
+<tr><td>Laukaisutapa</td><td>Heikompi jalka: σ<sub>p</sub> × 1,15 ja <var>v</var>₀ × 0,9. Suoraan syötöstä: σ<sub>p</sub> × 1,2. Volley: σ<sub>p</sub> × 1,5 ja <var>v</var>₀ × 1,1. Pusku: σ<sub>p</sub> × 2,5 (sovitettu) ja <var>v</var>₀ × 0,65, joten maalivahti ehtii ja kantama jää 27 metriin.</td></tr>
+<tr><td>Pelitilanne</td><td>Nopea hyökkäys: vähemmän painetta ja puolustajia. Kulmapotku: enemmän painetta ja yksi puolustaja lisää. Suora vapaapotku: ei painetta eikä blokkeja, mutta muuri peittää lähitolpan puolen ja maalivahti näkee pallon 0,3 s myöhemmin. Arvot on sovitettu aineiston 1 801 vapaapotkuun, joista 6,4 % meni sisään. Rangaistuspotku: hajonta on kalibroitu niin, että xG on 0,75 kuten aineiston 410 rangaistuspotkussa (Opta käyttää 0,79).</td></tr>
+<tr><td>Edeltävä toiminta</td><td>Läpisyöttö antaa aikaa (σ<sub>p</sub> × 0,8), mutta maalivahti ehtii jopa 6 m ulos. Keskitys: σ<sub>p</sub> × 1,15, ja maalivahti myöhästyy 0,05 s. Syöttö rajalta taakse ja paluupallo myöhästyttävät maalivahtia 0,12 ja 0,2 s ja pitävät hänet lähellä viivaa. Nämä arvot ovat arvioita, koska syötön tyyppiä ei ollut mukana sovituksessa.</td></tr>
+<tr><td>Ulostulon raja</td><td>Avoin peli: enintään 3 m ja alle puolet matkasta palloon. Nopea hyökkäys 5 m, läpisyöttö 6 m, keskitys 1,5 m, syöttö rajalta taakse 1 m, paluupallo ja vapaapotku alle metri.</td></tr>
 </tbody>
 </table>
 
-<h2>Mitä simulaattori paljastaa</h2>
+<h2>Mitä simulaattori ennustaa</h2>
 <div class="findings">
-<p><strong>Maaliviiva voittaa välimaaston.</strong> 18 metrin keskeistä laukausta vastaan maalivahti on paras maaliviivalla: xG 0,051. Kaksi metriä ulkona arvo on 0,056 ja kymmenen metriä ulkona 0,096. Vasta noin kolmen metrin päässä laukojasta ulostulo on yhtä hyvä kuin viiva (0,046), mutta avoimessa pelissä maalivahti ei ehdi sinne. Yhdeksästä metristä ero on suuri: viivalla 0,28, laukojan jaloissa 0,11. Todelliset maalivahdit seisovat metrin tai kaksi ulkona muista syistä: he varautuvat syöttöihin ja keskityksiin, joita tämä malli ei näe.</p>
-<p><strong>Sivusuunnan virhe on kalliimpi kuin syvyyden.</strong> Samassa 18 metrin tilanteessa metrin sivuun vetolinjasta siirtynyt maalivahti nostaa maaliodottaman 0,051:stä 0,065:een (+27 %), kahden metrin siirtymä 0,087:ään (+71 %). Kahden metrin virhe syvyydessä maksaa vain 10 %.</p>
-<p><strong>Maalivahti ratkaisee enemmän kuin ruutu.</strong> Rangaistusalueen rajalta Raya päästää sisään 3,7 % ja divarin varamaalivahti 9,7 %. Donnarumman syliväli ratkaisee lähellä: kolmesta metristä hän päästää 50 % ja Raya 54 %. Rayan reaktiot ratkaisevat keskimatkalla: 11 metristä 0,15 vastaan 0,18. Kaukana ero katoaa.</p>
-<p><strong>Voima on kaukolaukojan resurssi.</strong> Potkuvoiman nosto 23 m/s:sta 59 m/s:iin nostaa 11 metrin arvon 0,13:sta 0,25:een ja 25 metrin arvon 0,016:sta 0,058:aan. 40 metristä heikko laukoja ei ylety maaliin lainkaan, maailmanennätysvoimalla xG on 0,015. Potkutekniikka vaikuttaa kaikkialla: kuudesta metristä 0,30 vastaan 0,39. Älykkyys näkyy lähellä, kolmesta metristä 0,48 vastaan 0,56, mutta 25 metristä ei juuri lainkaan. Szoboszlai tekee kuudesta metristä 0,42 ja Delap 0,31.</p>
-<p><strong>Vapaapotku kertaa neljä.</strong> 20 metristä vapaapotkun maaliodottama on 0,130 ja avoimen pelin laukauksen 0,034. Muuri peittää lähitolpan, mutta paineen ja blokkien puuttuminen sekä maalivahdin estetty näkyvyys painavat enemmän.</p>
-<p><strong>Tyhjä maali on nelinkertainen.</strong> Kun maalivahti jää pallon taakse, 15 metrin keskeinen laukaus nousee 0,10:stä 0,38:aan, ja ilman puolustajaa linjalla 0,61:een. Loput hukkuvat tähtäysvirheeseen ja rimaan.</p>
-<p><strong>Näköeste on kallis.</strong> Täysi häirintä lisää maalivahdin reaktioaikaan 0,12 s ja nostaa rangaistusalueen rajan laukauksen 0,071:stä 0,100:aan (+41 %).</p>
+<p><strong>Paras paikka on noin metri irti viivasta.</strong> 18 metrin keskeistä laukausta vastaan maalivahti päästää maaliviivalta 0,060, metrin päästä viivasta 0,046 ja kolmen metrin päästä 0,059. Laukojan jaloissa arvo romahtaa 0,03:een, mutta avoimessa pelissä maalivahti ei ehdi sinne. Yhdeksän metrin vedossa jalkoihin ehtiminen pudottaa arvon neljäsosaan: viivan tuntumassa 0,26, puolen metrin päässä laukojasta 0,06.</p>
+<p><strong>Sivusuunnan virhe on kallis.</strong> Samassa 18 metrin tilanteessa metrin sivuun vetolinjasta siirtynyt maalivahti nostaa maaliodottaman 0,046:sta 0,058:aan (+26 %), kahden metrin siirtymä 0,077:ään (+67 %).</p>
+<p><strong>Maalivahti ratkaisee enemmän kuin ruutu.</strong> Rangaistusalueen rajalta keskitasoinen maalivahti päästää sisään 6,4 %, José Sá 7,6 % ja divarin varamaalivahti 8,7 %. Donnarumman syliväli ratkaisee kaukana: 25 metristä hän päästää 0,9 % ja Raya 1,7 %. Rayan reaktiot ratkaisevat lähempänä: kahdeksasta metristä 0,27 vastaan 0,31 ja 11 metristä 0,15 vastaan 0,16.</p>
+<p><strong>Voima on kaukolaukojan resurssi.</strong> Potkuvoiman nosto 23 m/s:sta 59 m/s:iin nostaa 11 metrin arvon 0,12:sta 0,23:een ja 25 metrin arvon 0,014:stä 0,049:ään. 40 metristä heikko laukoja ei ylety maaliin lainkaan. Rangaistusalueen rajalta keskitasoinen laukoja tekee 0,064, Szoboszlai 0,105, Haaland 0,102, Palmer 0,082, Delap 0,073 ja Wan-Bissaka 0,044.</p>
+<p><strong>Vapaapotku kertaa viisi.</strong> 20 metristä vapaapotkun maaliodottama on 0,140 ja avoimen pelin laukauksen 0,027. Muuri peittää lähitolpan, mutta paineen ja blokkien puuttuminen sekä maalivahdin estetty näkyvyys painavat enemmän.</p>
+<p><strong>Tyhjä maali on nelinkertainen, ei varma.</strong> Kun maalivahti jää viisi metriä pallon taakse, 15 metrin keskeinen laukaus nousee 0,086:sta 0,35:een. Ilman puolustajaa ja painetta rangaistusalueen rajalta tulee 0,58 ja 30 metristä 0,35.</p>
+<p><strong>Näköeste on kallis.</strong> Täysi häirintä lisää maalivahdin reaktioaikaan 0,12 s ja nostaa rangaistusalueen rajan laukauksen 0,064:stä 0,089:ään (+39 %).</p>
 </div>
+
+<h3>Missä ennusteet ovat epäfysikaalisia</h3>
+<p><strong>Tyhjä maali on kytkin.</strong> Kun maalivahti ohittaa pallon linjan, malli vaihtaa sääntöjä hyppäyksellä: peitto katoaa kokonaan ja rimaehto poistuu. Todellisuudessa siirtymä on liukuva, koska sivussa oleva maalivahti voi vielä heittäytyä.</p>
+<p><strong>Torjunta on portaittainen.</strong> Vartalo, syöksyn sisäpuolisko ja ulkopuolisko ovat kolme vyöhykettä, joilla on kullakin yksi läpimenoprosentti. Todellinen torjuntatodennäköisyys vaihtelee jatkuvasti, ja portaat näkyvät kartan tasa-arvokäyrissä pieninä kulmina.</p>
+<p><strong>Ulottuvuus kasvaa rajatta.</strong> Kaukolaukauksessa maalivahti ehtii mallin mukaan 14 metriä sivulle. Luku kuvaa aikaa siirtyä, ei syöksyä, mutta ylärajan puuttuminen tekee kaukaisista vedoista liian helppoja torjua ja siirtää vastuun läpimenoprosentille.</p>
+<p><strong>Laukoja on täydellinen päättäjä.</strong> Malli valitsee aina parhaan suunnan ja paremman kahdesta keinosta. Oikea pelaaja ei tee niin, ja osa huonoista laukauksista johtuu juuri huonoista valinnoista, joita heitto <var>h</var><sub>p</sub> kuvaa vain osittain.</p>
+<p><strong>Lähelle tullut maalivahti on liian hyvä.</strong> Aineistossa alle metrin päähän ulos tulleen maalivahdin ohi meni 20 %, malli antaa 11 %. Maalivahdin jalkoihin sukeltaminen ei siis romahduta todennäköisyyttä niin rajusti kuin malli ja intuitio olettavat.</p>
 
 <h2>Missä vertaus kvanttimekaniikkaan pitää ja missä pettää</h2>
 <p>Vertaus pitää yhdessä asiassa. Maaliodottama on joukon ominaisuus kuten aaltofunktiokin: kumpikin ennustaa, miten suuri joukko käyttäytyy, eikä kerro, mitä yksittäinen tapaus tekee.</p>
 <p>Ensimmäinen ero on satunnaisuuden lähde. Tässä mallissa satunnaisuus on tietämättömyyttä: jokaisen laukauksen suuntavirhe ja jokaisen maalivahdin reaktio ovat olemassa, emme vain tunne niitä. Jos tuntisimme, todennäköisyys katoaisi. Kvanttimekaniikassa täydellisinkin tilan kuvaus jättää todennäköisyydet, ja Bellin epäyhtälöitä rikkovat kokeet sulkevat pois paikalliset piilomuuttujat.</p>
 <p>Toinen ero näkyy kartan muodossa. Maaliodottaman kartta on sileä, eikä siinä ole juovia. Kaksoisrakokokeessa yksittäisistä elektroneista kertyy interferenssijuovia, koska kvanttimekaniikassa summautuvat todennäköisyyksien sijaan amplitudit, jotka voivat kumota toisensa.</p>
 
-<h2>Rajoitukset</h2>
+<h2>Rajoitukset ja kritiikki</h2>
+<p>Malli yrittää kuvata matemaattisesti tärkeimmät asiat: kulman, ajan, torjunnan, valinnan ja sattuman. Kaikkea se ei tavoita, ja osa sen rakenteesta on enemmän sovitettua kuin johdettua.</p>
 <ul class="limits">
-<li>Kuusi vakiota on sovitettu dataan, ja samalla datalla malli myös arvioitiin. Erillisellä testiaineistolla parannus olisi hieman pienempi.</li>
-<li>Simulaattorin kartassa maalivahti on aina parhaassa mahdollisessa paikassa, joten kartan luvut ovat alarajoja. Todellinen maalivahti ei ehdi joka kerta optimiin.</li>
-<li>Pystysuunta on mukana vain rimaehtona ja lobina. Kierrettä, pomppivia palloja ja laukojan liikettä malli ei tunne.</li>
-<li>Pelaajien arvot sekä henkisen paineen ja häirinnän vaikutukset ovat havainnollistavia arvioita, eivät mittauksia.</li>
-<li>Tutkimuksissa viimeistelytaito näkyy datassa heikosti: harva pelaaja ylittää odottamansa johdonmukaisesti kausi toisensa jälkeen. Laukojan säätimet ovat siis todennäköisesti todellisuutta jyrkempiä.</li>
+<li><strong>Hyvä sovitus ei todista mekanismia.</strong> Malli pienentää ennustevirhettä 19,5 %, lähes yhtä paljon kuin StatsBombin koneoppimismalli. Siinä on kuitenkin kymmeniä vakioita, joista kahdeksan on sovitettu. Toisenlainen mekanismi samalla parametrimäärällä voisi sopia dataan yhtä hyvin.</li>
+<li><strong>Sama data sovitukseen ja arviointiin.</strong> Vakiot on sovitettu samaan aineistoon, jolla malli arvioitiin. Erillisellä testiaineistolla parannus olisi pienempi. Aineisto on yhdeltä kaudelta, ja Bundesligasta mukana on vain 34 ottelua.</li>
+<li><strong>Osa termeistä on keksittyjä.</strong> Sattumien pohja, lob, maaliviivan läpimeno ja ulos tulleen maalivahdin ohitus läheltä ovat muodoltaan arvauksia. Sattumien ja ohituksen suuruus on sovitettu, lobin ja maaliviivan ei. Ohitustermin kerroin asettui sallitun välin ylärajalle, mikä kertoo, että rakenteesta puuttuu jotain. Maaliviivan läpimenon tukena on vain 23 laukausta.</li>
+<li><strong>Maali on yksiulotteinen.</strong> Malli laskee vain vaakasuuntaa. Korkeus näkyy vain rimaehtona, lobina ja sylivälin vaikutuksena läpimenoon. Kierrettä, pudottavaa palloa, pomppua ja tuulta malli ei tunne. Ilmanvastus on vakio, vaikka pallon vastuskerroin todellisuudessa muuttuu nopeuden mukana.</li>
+<li><strong>Puolustajat ovat lukumäärä.</strong> Malli tietää, montako puolustajaa on vetolinjalla, mutta ei missä he ovat. Paine on aineistossa kyllä tai ei -tieto.</li>
+<li><strong>Arvioita ilman dataa.</strong> Henkinen paine, maalivahdin häirintä, syötön tyyppi ja pelaajaprofiilit ovat havainnollistavia arvioita. Laukauksen nopeus on aina 85 % suurimmasta, eikä nopeuden ja tarkkuuden vaihtokauppaa ole mallinnettu.</li>
+<li><strong>Kartan maalivahti on optimaalinen.</strong> Simulaattorin kartassa maalivahti on aina parhaassa paikassa, joten kartan luvut ovat alarajoja. Siksi pelkällä paikalla laskettu simulaattori häviää datassa perusfunktiolle.</li>
+<li><strong>Taito näkyy datassa heikosti.</strong> Harva pelaaja ylittää odottamansa johdonmukaisesti kausi toisensa jälkeen. Laukojan säätimet ovat siis todennäköisesti todellisuutta jyrkempiä.</li>
 </ul>
 </article>
 
@@ -445,6 +466,7 @@ footer p{margin:0 0 0.4rem}
 <p>Data: <a href="https://github.com/statsbomb/open-data">StatsBomb Open Data</a>, kausi 2015/16 (Valioliiga, La Liga, Serie A, Ligue 1 ja 34 Bundesliga-ottelua). Muuttujaluettelo ja rangaistuspotkun 0,79: <a href="https://theanalyst.com/articles/what-is-expected-goals-xg">Opta Analyst, What Is Expected Goals (xG)?</a></p>
 </footer>
 
+
 </main>
 
 <script>
@@ -452,11 +474,12 @@ footer p{margin:0 0 0.4rem}
   /* ================= Malli ================= */
   const HALF = 3.66, SQ2 = Math.SQRT2, LD = 80, G = 9.81;
   const C = {
-    P0: 0.0175, P0L: 50, P0Y: 15, RS: 5,     // sattumat ja kantaman hajonta
-    S0: 0.3253, S1: 0.12,                   // suuntahajonta (rad)
-    EB: 0.04, EMAX: 0.3667, EMT: 0.2, TAU: 0.6379,   // torjunnan pettäminen
+    P0: 0.0098, P0L: 50, P0Y: 15, RS: 5,     // sattumat ja kantaman hajonta
+    S0: 0.3822, S1: 0.12,                   // suuntahajonta (rad)
+    EB: 0.04, EMAX: 0.3272, EMT: 0.2, TAU: 1.0127,   // torjunnan pettäminen
     BK: 0.5, BL: 10,                             // blokkaus
-    SD0: 0.15, SD1: 0.7, DT: 0.5, MV: 0.6, VD0: 4.5, TR0: 0.30, EMK: 0.1, TRK: 0.08, MP: 0.35, HK: 0.12, PR: 0.7739, OPEN: 0.6,
+    SD0: 0.15, SD1: 0.7, DT: 0.5, MV: 0.6, VD0: 4.5, TR0: 0.30, EMK: 0.3, TRK: 0.08, MP: 0.35, HK: 0.12, PR: 0.5063, OPEN: 0.8652,
+    QB: 0.05, QI: 0.15, QO: 0.3, QL: 0.6, QS: 1, ONE: 0.8997,
     LOBV: 0.55, VBACK: 4.5, LOBL: 30,
   };
 
@@ -470,14 +493,14 @@ footer p{margin:0 0 0.4rem}
     heikko: {s:1.15, v:0.90, lob:0.6},
     ensi:   {s:1.20, v:1.00, lob:0.4},
     volley: {s:1.50, v:1.10, lob:0.2},
-    pusku:  {s:2.786, v:0.65, lob:0},
+    pusku:  {s:2.537, v:0.65, lob:0},
   };
   const PLAY = {
     avoin:  {s:1.00, paine:0,    blok:0,  tr:0,    kmax:3,   fr:0.45},
     nopea:  {s:1.00, paine:-0.2, blok:-1, tr:0.05, kmax:5,   fr:0.6},
     kulma:  {s:1.05, paine:0.3,  blok:1,  tr:0.03, kmax:1.2, fr:0.3},
-    vapaa:  {s:0.60, paine:-1,   blok:-9, tr:0.25, kmax:0.8, fr:0.1, fk:true},
-    pilkku: {s:0.28, paine:-1,   blok:-9, tr:0,    kmax:0.2, fr:0.05, pen:true},
+    vapaa:  {s:0.60, paine:-1,   blok:-9, tr:0.30, kmax:0.8, fr:0.1, fk:true},
+    pilkku: {s:0.24, paine:-1,   blok:-9, tr:0,    kmax:0.2, fr:0.05, pen:true},
   };
   const PASS = {
     oma:      {s:1.00, paine:0,    blok:0,  tr:0,    kmax:99},
@@ -503,7 +526,6 @@ footer p{margin:0 0 0.4rem}
       emax: C.EMAX - C.EMT*p.tai - C.EMK*kn,
       sdec: (C.SD0 + C.SD1*(1 - p.aly)) * (pl.pen ? 0.5 : 1),
       lobq: (0.15 + 0.35*p.tek) * sh.lob * (1 - 0.6*paine),
-      roundq: 0.45 * (1 - 0.5*paine),
       kmax: pa.kmax < 99 ? pa.kmax : pl.kmax,
       fr: pa.fr || pl.fr,
       fk: !!pl.fk, pen: !!pl.pen, qwall: 0.3 + 0.4*p.tek,
@@ -517,20 +539,28 @@ footer p{margin:0 0 0.4rem}
   function xgAt(S0, K, k){
     const S = {x: Math.max(S0.x, 0.05), y: S0.y};
     const d = Math.hypot(S.x, S.y);
+    // aivan maalin suulla pallo vain ohjataan sisään: kulmavirhe kutistuu
     let sg = k.sigma * d / (d + C.DT);
     const g1 = ang(S, {x:0, y:-HALF}), g2 = ang(S, {x:0, y:HALF});
     const lo = Math.min(g1,g2), hi = Math.max(g1,g2), gc = ang(S, {x:0,y:0});
     const sk = Math.hypot(S.x-K.x, S.y-K.y), c = ang(S, K);
     const front = Math.abs(c) < Math.PI/2 && sk > 0.15;
-    if (!front) sg *= C.OPEN;   // tyhjään maaliin pallon voi sijoittaa rauhassa
+    if (!front) sg *= C.OPEN * (1 + C.PR*clamp(1 - sk/3, 0, 1));   // tyhjä maali: rauhallinen sijoitus, mutta selän takana oleva maalivahti painostaa
     const cuts = [lo, hi];
-    let zb = 0, zm = 0, zr = 0, eIn = 1, eOut = 1, dt = 0, R = 0, tf = 0;
+    let zb = 0, zm = 0, zr = 0, eB = 1, eIn = 1, eOut = 1, dt = 0, R = 0, tf = 0;
     if (front){
       tf = flight(sk, k.v0); dt = tf - k.tr;
-      R = k.r0 + k.vd*Math.max(0, dt);
-      zb = Math.atan(k.r0/sk); zm = Math.atan((k.r0 + R)/2/sk); zr = Math.atan(R/sk);
-      eIn = k.emax*Math.exp(-0.75*Math.max(0,dt)/C.TAU);
-      eOut = k.emax*Math.exp(-0.25*Math.max(0,dt)/C.TAU);
+      const r0 = k.r0;
+      R = r0 + k.vd*Math.max(0, dt);
+      zb = Math.atan(r0/sk); zm = Math.atan((r0 + R)/2/sk); zr = Math.atan(R/sk);
+      // viivan lähellä osittainenkin torjunta jatkaa maaliin: läpimeno kasvaa, kun maalivahti on lähellä maaliviivaa
+      const over = Math.exp(-Math.max(0, K.x)/C.QL);
+      eB = C.EB + (1 - C.EB)*C.QS*C.QB*over;
+      // ulos tulleen maalivahdin ohi pääsee läheltä myös ali tai yli (jalkojen välistä, sipaisu)
+      const one = C.ONE * clamp((K.x - 1)/3, 0, 1) * clamp(sk/4, 0, 1) * clamp(1.5 - sk/12, 0, 1);
+      eB += (1 - eB)*one;
+      eIn = k.emax*Math.exp(-0.75*Math.max(0,dt)/C.TAU); eIn += (1 - eIn)*C.QS*C.QI*over; eIn += (1 - eIn)*one;
+      eOut = k.emax*Math.exp(-0.25*Math.max(0,dt)/C.TAU); eOut += (1 - eOut)*C.QS*C.QO*over;
       cuts.push(c-zr, c-zm, c-zb, c+zb, c+zm, c+zr);
     }
     let m1 = 9, m2 = 9;
@@ -541,34 +571,34 @@ footer p{margin:0 0 0.4rem}
     }
     const val = t => {
       let v = 1;
-      if (front){ const u = Math.abs(t - c); v = u <= zb ? C.EB : u <= zm ? eIn : u <= zr ? eOut : 1; }
+      if (front){ const u = Math.abs(t - c); v = u <= zb ? eB : u <= zm ? eIn : u <= zr ? eOut : 1; }
       if (t >= m1 && t <= m2) v *= k.qwall;
       return v;
     };
     const cs = cuts.filter(t => t >= lo && t <= hi).sort((a,b)=>a-b);
     const segs = [];
     for (let i=0;i<cs.length-1;i++){ const a=cs[i], b=cs[i+1]; if (b-a>1e-7) segs.push([a,b,val((a+b)/2)]); }
-    const EV = (mu, s) => { let t = 0; for (const [a,b,v] of segs) t += v*(Phi((b-mu)/s) - Phi((a-mu)/s)); return t; };
+    const EV = (mu, sg) => { let s = 0; for (const [a,b,v] of segs) s += v*(Phi((b-mu)/sg) - Phi((a-mu)/sg)); return s; };
     let best = gc, bestV = EV(gc, sg), vmax = 0, bi = -1;
     for (const q of segs) if (q[2] > vmax) vmax = q[2];
     for (let i=0;i<segs.length;i++){ const [a,b,v] = segs[i]; if (v >= 0.5*vmax){ const mu = 0.5*(a+b), e = EV(mu, sg); if (e > bestV){ bestV = e; best = mu; bi = i; } } }
     if (bi >= 0){ const [a,b] = segs[bi]; for (const f of [0.3, 0.7]){ const mu = a + f*(b-a), e = EV(mu, sg); if (e > bestV){ bestV = e; best = mu; } } }
+    // päätöksen heitto sdec metriä maaliviivalla -> kulmaksi (etäisyys vähintään 4 m)
     const yb = S.y + Math.tan(best)*S.x, Da2 = Math.max(16, S.x*S.x + (yb - S.y)**2);
     const sTot = Math.hypot(sg, k.sdec*S.x/Da2);
-    const V = Phi(C.MV*Math.atan(2.44 / d) / (0.7*sg));
+    const V = front ? Phi(C.MV*Math.atan(2.44 / d) / (0.7*sg)) : 1;   // tyhjään maaliin voi vetää maata pitkin
     const shot = EV(best, sTot) * V;
-    let lob = 0, round = 0;
+    let lob = 0;
     if (front && !k.fk && !k.pen){
       const tl = d / (C.LOBV * k.v0), back = C.VBACK * Math.max(0, tl - k.tr);
       lob = k.lobq * Math.exp(-d / C.LOBL) * Phi((K.x - 1.0 - back)/0.8) * clamp((sk - 2)/3, 0, 1);
-      round = k.roundq * clamp(1 - sk/3.5, 0, 1);
     }
     const reach = Phi((k.range - d)/C.RS);
     const B = Math.pow(1 - C.BK*(1 - Math.exp(-d/C.BL)), k.blok);
-    const P = B * Math.max(reach*shot, reach*lob, round);
+    const P = B * reach * Math.max(shot, lob);
     const dy = Math.max(0, Math.abs(S.y) - HALF);
     const p0 = C.P0 * Math.exp(-d/C.P0L) * Math.exp(-((dy/C.P0Y)**2)) * reach;
-    return {xg: p0 + (1-p0)*P, p0, B, reach, shot, lob, round, aim: best, lo, hi, c, zb, zm, zr, R, sk, d, dt, tf, m1, m2, front};
+    return {xg: p0 + (1-p0)*P, p0, B, reach, shot, lob, aim: best, lo, hi, c, zb, zm, zr, R, sk, d, dt, tf, m1, m2, front};
   }
 
   // Kulmanpuolittaja: G on puolittajan ja maaliviivan leikkaus, maalivahti etäisyydellä t siitä
@@ -583,7 +613,7 @@ footer p{margin:0 0 0.4rem}
     return {x: G0.x + (sx-G0.x)*t/L, y: G0.y + (S0.y-G0.y)*t/L, L, G: G0};
   }
   const lineLength = (S, k) => keeperAt(S, 0, k).L;
-  const tRange = (S, k) => { const L = lineLength(S, k), tmin = clamp(L - 0.9, 0.05, 0.3); return [tmin, Math.max(tmin, Math.min(k.kmax, k.fr*L, L - 1.0)), L]; };
+  const tRange = (S, k) => { const L = lineLength(S, k), tmin = 0.05; return [tmin, Math.max(tmin, Math.min(k.kmax, k.fr*L, L - 1.0)), L]; };
   // Paras paikka vetolinjalla: karkea haku ja kaksi tarkennusaskelta parhaan pisteen ympärillä
   function optimal(S, k, n){
     const [tmin, tmax, L] = tRange(S, k);
@@ -602,8 +632,8 @@ footer p{margin:0 0 0.4rem}
   const GR = ['laukaus','tilanne','syotto'];
   const BASE = {tek:.5,voi:32,aly:.5,kok:1.95,rea:.5,tai:.5,paine:.3,henk:0,hair:0,blok:1,laukaus:'jalka',tilanne:'avoin',syotto:'oma'};
   const PRESETS = {
-    laukoja: {Keskitaso:{tek:.5,voi:32,aly:.5}, Szoboszlai:{tek:1,voi:38,aly:.9}, Delap:{tek:.3,voi:36,aly:.4}},
-    maalivahti: {Keskitaso:{kok:1.95,rea:.5,tai:.5}, Raya:{kok:1.85,rea:.85,tai:.9}, Donnarumma:{kok:2.1,rea:.6,tai:.9}, Divari:{kok:1.9,rea:.2,tai:.15}},
+    laukoja: {Keskitaso:{tek:.5,voi:32,aly:.5}, Szoboszlai:{tek:1,voi:38,aly:.9}, Palmer:{tek:.95,voi:33,aly:.95}, Haaland:{tek:.75,voi:40,aly:.95}, Delap:{tek:.3,voi:36,aly:.4}, WanBissaka:{tek:.05,voi:29,aly:.2}},
+    maalivahti: {Keskitaso:{kok:1.95,rea:.5,tai:.5}, Raya:{kok:1.85,rea:.85,tai:.9}, Donnarumma:{kok:2.1,rea:.6,tai:.9}, Sa:{kok:1.95,rea:.35,tai:.3}, Divari:{kok:1.9,rea:.2,tai:.15}},
   };
   const VIEWS = {full:{W:68, D:64, TOP:3}, box:{W:54, D:30, TOP:2}};
   const st = {S:{x:14, y:-5}, K:{x:1, y:-0.4}, manual:false, diff:false, view:VIEWS.full};
@@ -946,7 +976,7 @@ footer p{margin:0 0 0.4rem}
     $('cover').textContent = cover;
     const m0 = st.manual; st.manual = false; const b = optimal(st.S, knobs(BASE), 12); st.manual = m0;
     const dl = r.xg - b.xg;
-    let t = `Laukaus ${f2(r.shot)}, lob ${f2(r.lob)}, ohitus ${f2(r.round)}. Ohi puolustajista ${Math.round(r.B*100)} %, sattumat ${f3(r.p0)}.`;
+    let t = `Laukaus ${f2(r.shot)}, lob ${f2(r.lob)}. Ohi puolustajista ${Math.round(r.B*100)} %, sattumat ${f3(r.p0)}.`;
     if (!k.fk && !k.pen) t += ` Vapaata tilaa ${f1(k.free)} m.`;
     t += ` Ero keskitasoon ${dl >= 0 ? '+' : '−'}${f3(Math.abs(dl))}.`;
     if (k.pen) t += ' Opta käyttää rangaistuspotkulle vakiota 0,79.';
@@ -1109,7 +1139,7 @@ footer p{margin:0 0 0.4rem}
 
   /* ================= Kenttäruudukko (StatsBomb Open Data 2015/16) ================= */
   // [laukauksia, maaliosuus (-1 = ei laukauksia), perusfunktio, simulaattorin keskitaso]
-  const CELLS = [[[7,0.1429,0.014,0.0008],[15,0,0.0268,0.0029],[139,0.0288,0.0653,0.0169],[1182,0.1557,0.1615,0.1329],[1718,0.3789,0.3788,0.3613],[1074,0.1518,0.1579,0.1278],[150,0.0133,0.0665,0.0177],[8,0,0.0268,0.0029],[7,0.1429,0.014,0.0008]],[[3,0,0.0134,0.0016],[50,0.1,0.0298,0.0075],[811,0.0271,0.0591,0.0249],[2777,0.1332,0.117,0.1387],[4488,0.172,0.1904,0.2624],[2670,0.1382,0.1176,0.1407],[838,0.0358,0.0593,0.0249],[25,0.08,0.0258,0.0055],[3,0,0.0134,0.0016]],[[4,0.5,0.0116,0.0022],[63,0.0476,0.0255,0.0086],[1155,0.0372,0.043,0.021],[2153,0.0748,0.0689,0.0581],[2150,0.12,0.0906,0.1089],[2059,0.085,0.0689,0.0584],[1086,0.0267,0.0439,0.0214],[49,0.0612,0.0257,0.0088],[0,-1,0.0116,0.0022]],[[3,0.3333,0.0093,0.0023],[61,0.0656,0.019,0.0075],[1068,0.0253,0.0293,0.0158],[2006,0.0439,0.0407,0.0271],[2035,0.0472,0.0471,0.0343],[1849,0.0433,0.0408,0.0271],[988,0.0162,0.0295,0.016],[40,0,0.0194,0.0078],[2,0,0.0093,0.0023]],[[6,0.1667,0.0069,0.002],[21,0.0476,0.0114,0.0048],[383,0.0157,0.0195,0.012],[1116,0.0152,0.0252,0.0186],[1429,0.0161,0.0278,0.0214],[1070,0.0234,0.0251,0.0187],[348,0.0086,0.0199,0.0123],[15,0,0.0114,0.0048],[4,0,0.0069,0.002]],[[1,0,0.0049,0.0016],[14,0.0714,0.0077,0.0038],[65,0.0308,0.0124,0.0094],[201,0.005,0.0157,0.0137],[343,0.0058,0.0167,0.0149],[245,0.0122,0.0158,0.0138],[49,0,0.013,0.0097],[4,0,0.0077,0.0038],[2,0,0.0049,0.0016]],[[1,0,0.0034,0.0011],[4,0,0.005,0.0029],[11,0,0.0069,0.0065],[26,0.0385,0.0084,0.0103],[42,0,0.0099,0.0116],[26,0.0385,0.0084,0.0103],[17,0,0.0069,0.0065],[3,0,0.005,0.0029],[6,0,0.0034,0.0011]],[[1,0,0.0023,0.0005],[3,0,0.0032,0.0019],[4,0,0.0042,0.0048],[6,0,0.005,0.0081],[5,0,0.0054,0.0088],[15,0.0667,0.005,0.0081],[7,0,0.0042,0.0048],[2,0,0.0032,0.0019],[6,0,0.0023,0.0005]],[[0,-1,0.0015,0.0001],[4,0,0.002,0.0008],[4,0,0.0026,0.0027],[4,0,0.003,0.0051],[11,0,0.0032,0.0058],[7,0,0.003,0.0051],[2,0,0.0026,0.0027],[1,0,0.002,0.0008],[2,0,0.0015,0.0001]],[[0,-1,0.001,0],[2,0,0.0013,0.0001],[4,0,0.0016,0.0007],[5,0,0.0018,0.0017],[7,0,0.0019,0.0021],[1,0,0.0018,0.0017],[1,0,0.0016,0.0007],[2,0,0.0013,0.0001],[1,0,0.001,0]],[[0,-1,0.0006,0],[4,0,0.0008,0],[1,0,0.001,0.0001],[3,0,0.0011,0.0002],[2,0,0.0011,0.0003],[0,-1,0.0011,0.0002],[2,0,0.001,0.0001],[0,-1,0.0008,0],[2,0,0.0006,0]]];
+  const CELLS = [[[7,0.1429,0.014,0.0008],[15,0,0.0268,0.0022],[139,0.0288,0.0653,0.0128],[1182,0.1557,0.1615,0.1439],[1718,0.3789,0.3788,0.3771],[1074,0.1518,0.1579,0.1365],[150,0.0133,0.0665,0.0135],[8,0,0.0268,0.0022],[7,0.1429,0.014,0.0008]],[[3,0,0.0134,0.0018],[50,0.1,0.0298,0.0065],[811,0.0271,0.0591,0.0211],[2777,0.1332,0.117,0.1305],[4488,0.172,0.1904,0.2687],[2670,0.1382,0.1176,0.1319],[838,0.0358,0.0593,0.021],[25,0.08,0.0258,0.0049],[3,0,0.0134,0.0018]],[[4,0.5,0.0116,0.0027],[63,0.0476,0.0255,0.008],[1155,0.0372,0.043,0.018],[2153,0.0748,0.0689,0.052],[2150,0.12,0.0906,0.0977],[2059,0.085,0.0689,0.0522],[1086,0.0267,0.0439,0.0184],[49,0.0612,0.0257,0.0081],[0,-1,0.0116,0.0027]],[[3,0.3333,0.0093,0.003],[61,0.0656,0.019,0.0074],[1068,0.0253,0.0293,0.0137],[2006,0.0439,0.0407,0.0221],[2035,0.0472,0.0471,0.0287],[1849,0.0433,0.0408,0.0222],[988,0.0162,0.0295,0.0138],[40,0,0.0194,0.0075],[2,0,0.0093,0.003]],[[6,0.1667,0.0069,0.0028],[21,0.0476,0.0114,0.0052],[383,0.0157,0.0195,0.0107],[1116,0.0152,0.0252,0.0155],[1429,0.0161,0.0278,0.0175],[1070,0.0234,0.0251,0.0155],[348,0.0086,0.0199,0.0109],[15,0,0.0114,0.0052],[4,0,0.0069,0.0028]],[[1,0,0.0049,0.0023],[14,0.0714,0.0077,0.0042],[65,0.0308,0.0124,0.0084],[201,0.005,0.0157,0.0114],[343,0.0058,0.0167,0.0124],[245,0.0122,0.0158,0.0115],[49,0,0.013,0.0086],[4,0,0.0077,0.0042],[2,0,0.0049,0.0023]],[[1,0,0.0034,0.0016],[4,0,0.005,0.0033],[11,0,0.0069,0.0058],[26,0.0385,0.0084,0.0084],[42,0,0.0099,0.0094],[26,0.0385,0.0084,0.0084],[17,0,0.0069,0.0058],[3,0,0.005,0.0033],[6,0,0.0034,0.0016]],[[1,0,0.0023,0.0008],[3,0,0.0032,0.0021],[4,0,0.0042,0.0042],[6,0,0.005,0.0064],[5,0,0.0054,0.0069],[15,0.0667,0.005,0.0064],[7,0,0.0042,0.0042],[2,0,0.0032,0.0021],[6,0,0.0023,0.0008]],[[0,-1,0.0015,0.0002],[4,0,0.002,0.0008],[4,0,0.0026,0.0022],[4,0,0.003,0.0039],[11,0,0.0032,0.0044],[7,0,0.003,0.0039],[2,0,0.0026,0.0022],[1,0,0.002,0.0008],[2,0,0.0015,0.0002]],[[0,-1,0.001,0],[2,0,0.0013,0.0001],[4,0,0.0016,0.0006],[5,0,0.0018,0.0013],[7,0,0.0019,0.0015],[1,0,0.0018,0.0013],[1,0,0.0016,0.0006],[2,0,0.0013,0.0001],[1,0,0.001,0]],[[0,-1,0.0006,0],[4,0,0.0008,0],[1,0,0.001,0.0001],[3,0,0.0011,0.0002],[2,0,0.0011,0.0002],[0,-1,0.0011,0.0002],[2,0,0.001,0.0001],[0,-1,0.0008,0],[2,0,0.0006,0]]];
   const BETA = [-1.693, 1.2181, -0.0854];
   let gview = 'd';
   const CAPS = {
