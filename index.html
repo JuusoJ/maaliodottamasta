@@ -10,7 +10,9 @@
 <style>
 :root{
   --paper:#F6F8F6; --ink:#15233B; --ink-2:#4A5669; --rule:#D5DCD8;
-  --line:#2F5D46; --panel:#FFFFFF; --accent:#1F6E8C;
+  --line:#2F5D46; --panel:#FFFFFF; --accent:#1F6E8C; --keeper:#1F6E8C;
+  --h1:#FBE6D4; --h2:#F6C9A6; --h3:#EE9A6B; --h4:#D2552F; --h5:#8E2A1B;
+  --n3:#1F5A94; --n2:#6FA3D2; --n1:#C9DDF0; --p1:#F7D2CA; --p2:#E88A7A; --p3:#B3261E;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
   --cond:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -19,44 +21,71 @@
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
-  :root{--paper:#101A24;--ink:#E4EAE6;--ink-2:#9FACB8;--rule:#2A3947;--line:#7FB59A;--panel:#16222E;--accent:#6FB7D2;}
+  :root{--paper:#101A24;--ink:#E4EAE6;--ink-2:#9FACB8;--rule:#2A3947;--line:#7FB59A;--panel:#16222E;--accent:#6FB7D2;--keeper:#6FB7D2;
+    --h1:#3B2A26;--h2:#6A3524;--h3:#A4432A;--h4:#DA6A40;--h5:#F6A57A;
+    --n3:#8DBBE8;--n2:#4F86BD;--n1:#2A4460;--p1:#5E2E28;--p2:#B0513F;--p3:#F09483;}
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 1.125rem/1.72 var(--serif);-webkit-font-smoothing:antialiased}
-main{padding:3rem 1.25rem 5rem}
+main{padding:3rem 1rem 5rem}
 .prose{max-width:40rem;margin:0 auto}
 h1{font:600 clamp(2.6rem,8vw,4.4rem)/0.95 var(--cond);letter-spacing:-0.01em;margin:0 0 1.25rem}
 h2{font:600 1.9rem/1.1 var(--cond);margin:3rem 0 0.75rem}
+h3{font:600 1.35rem/1.15 var(--cond);margin:2rem 0 0.5rem}
 p{margin:0 0 1.1rem}
 .lede{font-size:1.3rem;line-height:1.55;color:var(--ink-2)}
 .byline{font:400 0.95rem/1.4 var(--sans);color:var(--ink-2);margin-bottom:2.5rem}
 .eq{font:400 1.05rem/1.9 var(--serif);background:var(--panel);border-left:3px solid var(--line);padding:1rem 1.25rem;margin:1.25rem 0 1.5rem;overflow-x:auto;white-space:nowrap}
-.eq .big{font-size:1.3rem}
+.eq .big{font-size:1.25rem}
 var{font-style:italic}
 a{color:var(--accent)}
-.lab{max-width:62rem;margin:2.5rem auto;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1.75rem;align-items:start}
-@media (max-width:820px){.lab{grid-template-columns:minmax(0,1fr)}}
-.pitchwrap{position:relative}
-canvas{width:100%;display:block;border-radius:6px;background:var(--panel);touch-action:none;cursor:crosshair}
-.readout{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:0.6rem;font:400 0.95rem/1.4 var(--sans);color:var(--ink-2)}
-.readout strong{font:600 2.2rem/1 var(--cond);color:var(--ink)}
-.detail{font:400 0.9rem/1.5 var(--sans);color:var(--ink-2);min-height:1.4em}
-.legend{display:flex;flex-wrap:wrap;gap:0.4rem 0.9rem;margin-top:0.75rem;font:400 0.85rem/1.3 var(--sans);color:var(--ink-2)}
-.legend i{display:inline-block;width:0.85rem;height:0.85rem;border-radius:2px;vertical-align:-0.1rem;margin-right:0.3rem;border:1px solid var(--rule)}
-.controls{font-family:var(--sans)}
-fieldset{border:0;border-top:2px solid var(--line);margin:0 0 1.25rem;padding:0.75rem 0 0}
-legend{font:600 1.35rem/1 var(--cond);padding:0 0.5rem 0 0}
-.row{display:grid;grid-template-columns:8.5rem minmax(0,1fr) 2.2rem;align-items:center;gap:0.6rem;margin:0.55rem 0}
+table{width:100%;border-collapse:collapse;font:400 0.95rem/1.45 var(--sans);margin:1rem 0 1.5rem}
+th,td{text-align:left;vertical-align:top;padding:0.5rem 0.6rem 0.5rem 0;border-bottom:1px solid var(--rule)}
+th{font-weight:500;color:var(--ink-2)}
+td:first-child{font-weight:500;width:38%}
+
+/* Laboratorio */
+.lab{max-width:64rem;margin:2.5rem auto;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-areas:"stage side" "depth side";gap:1.25rem 1.75rem;align-items:start}
+.stage{grid-area:stage}.side{grid-area:side}.depth{grid-area:depth}
+@media (max-width:820px){
+  .lab{grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "side" "depth"}
+  .stage{position:sticky;top:0;z-index:3;background:var(--paper);padding:0.5rem 0 0.4rem;border-bottom:1px solid var(--rule)}
+}
+canvas{width:100%;display:block;border-radius:6px;background:var(--panel);touch-action:none}
+#pitch{cursor:crosshair}
+.readout{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:0.45rem;font:400 0.95rem/1.35 var(--sans);color:var(--ink-2)}
+.readout strong{font:600 2.1rem/1 var(--cond);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.detail{font:400 0.86rem/1.45 var(--sans);color:var(--ink-2);margin-top:0.2rem}
+.detail p{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:0.25rem 0.8rem;margin-top:0.45rem;font:400 0.8rem/1.3 var(--sans);color:var(--ink-2)}
+.legend i{display:inline-block;width:0.8rem;height:0.8rem;border-radius:2px;vertical-align:-0.1rem;margin-right:0.3rem;border:1px solid var(--rule)}
+@media (max-width:820px){.detail{font-size:0.8rem}.readout strong{font-size:1.8rem}}
+
+.side{font-family:var(--sans)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--line);margin-bottom:0.75rem}
+.tabs button{font:600 1.4rem/1 var(--cond);border:0;border-radius:4px 4px 0 0;padding:0.7rem 0.5rem 0.55rem;background:transparent;color:var(--ink-2)}
+.tabs button[aria-selected=true]{background:var(--line);color:var(--paper)}
+.group{margin:0 0 1.1rem}
+.group h3{font:600 1.15rem/1 var(--cond);margin:0 0 0.35rem;color:var(--ink)}
+.row{display:grid;grid-template-columns:7.8rem minmax(0,1fr) 4.6rem;align-items:center;gap:0.6rem;margin:0.4rem 0}
 .row label{font-size:0.95rem}
 .row output{font:500 1rem/1 var(--cond);text-align:right;font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;accent-color:var(--line)}
-.btns{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
-button{font:500 0.9rem/1 var(--sans);color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:4px;padding:0.55rem 0.8rem;cursor:pointer}
+.row.off{opacity:0.45}
+input[type=range]{width:100%;accent-color:var(--line);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:0.4rem}
+.chips.off{opacity:0.45}
+button{font:500 0.9rem/1 var(--sans);color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:4px;padding:0.55rem 0.75rem;cursor:pointer}
 button:hover{border-color:var(--ink-2)}
 button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button:disabled{cursor:not-allowed}
 button:focus-visible,input:focus-visible,canvas:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.note{font:400 0.85rem/1.5 var(--sans);color:var(--ink-2);margin-top:0.75rem}
+.btns{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.4rem}
+.note{font:400 0.85rem/1.5 var(--sans);color:var(--ink-2);margin:0.6rem 0 0}
+.depth h3{font:600 1.35rem/1.1 var(--cond);margin:0 0 0.2rem}
+.depth p{font:400 0.86rem/1.5 var(--sans);color:var(--ink-2);margin:0 0 0.5rem}
+#depthc{height:200px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 footer{max-width:40rem;margin:4rem auto 0;border-top:1px solid var(--rule);padding-top:1rem;font:400 0.9rem/1.5 var(--sans);color:var(--ink-2)}
 </style>
 </head>
@@ -64,195 +93,615 @@ footer{max-width:40rem;margin:4rem auto 0;border-top:1px solid var(--rule);paddi
 <main>
 <article class="prose">
 <h1>Maaliodottama kulmasta käsin</h1>
-<p class="lede">Yksikään laukaus ei toistu. Silti miljoonista laukauksista piirtyy maalin eteen kartta, joka ennustaa seuraavan lopputuloksen yllättävän hyvin. Tässä kirjoituksessa rakennetaan tuo kartta neljästä fysikaalisesta osasta.</p>
-<p class="byline">Kirjoittaja · <time datetime="2026-09-26">26.9.2026</time></p>
+<p class="lede">Yksikään laukaus ei toistu. Silti miljoonista laukauksista piirtyy maalin eteen kartta, joka ennustaa seuraavan lopputuloksen yllättävän hyvin. Tässä kirjoituksessa rakennetaan tuo kartta fysiikasta: kulmasta, ajasta ja siitä, minne laukoja päättää lyödä.</p>
+<p class="byline">Kirjoittaja, <time datetime="2026-09-26">26.9.2026</time></p>
 
 <h2>Todennäköisyys, jota yksittäisellä laukauksella ei ole</h2>
 <p>Kun laukauksen maaliodottama on 0,03, se ei kerro mitään tästä nimenomaisesta vedosta. Se kertoo, että samankaltaisista laukauksista noin kolme sadasta päätyy verkkoon. Luku on olemassa vain joukolle.</p>
 <p>Fysiikassa samaa ajatusta kutsutaan ensemble-tulkinnaksi: kvanttimekaniikan aaltofunktio kuvaa samalla tavalla valmisteltujen systeemien joukkoa, ei yksittäistä hiukkasta. Palaan lopussa siihen, missä vertaus pitää ja missä se murtuu.</p>
 
 <h2>Kulma, josta maali näkyy</h2>
-<p>Tärkein yksittäinen tekijä on kulma, jossa tolppaväli näkyy laukaisupisteestä. Kun <var>x</var> on etäisyys päätyrajasta ja <var>y</var> sivuttaissiirtymä maalin keskeltä, kulma saadaan suljetussa muodossa:</p>
+<p>Kun <var>x</var> on etäisyys päätyrajasta ja <var>y</var> sivuttaissiirtymä maalin keskeltä, kulma, jossa tolppaväli näkyy laukaisupisteestä, saadaan suljetussa muodossa:</p>
 <div class="eq">θ = atan2( <var>w</var>·<var>x</var>, <var>x</var>² + <var>y</var>² − (<var>w</var>/2)² ),&nbsp;&nbsp; <var>w</var> = 7,32 m</div>
-<p>Kehäkulmalauseen mukaan pisteet, joista kulma on sama, muodostavat ympyränkaaria, jotka kulkevat molempien tolppien kautta. Siksi maaliodottaman "renkaat" eivät ole maalin ympärillä olevia ympyröitä, vaan kaaria, jotka puristuvat päätyrajaa kohti. Päätyrajalla tolppien ulkopuolella kulma on nolla.</p>
+<p>Kehäkulmalauseen mukaan pisteet, joista kulma on sama, muodostavat ympyränkaaria, jotka kulkevat molempien tolppien kautta. Siksi maaliodottaman "renkaat" puristuvat päätyrajaa kohti, ja päätyrajalla tolppien ulkopuolella kulma on nolla.</p>
 
-<h2>Malli neljässä osassa</h2>
-<div class="eq"><span class="big">xG = <var>p</var>₀ + (1 − <var>p</var>₀) · min(1, <var>A</var>·<var>T</var>·<var>R</var>·<var>M</var>)</span></div>
-<p><strong>Pohja <var>p</var>₀ = 0,02.</strong> Kimmokkeet, maalivahdin virheet ja muut sattumat. Koska muut tekijät menevät päätyrajalla nollaan, xG on siellä täsmälleen 2 %, ei koskaan vähemmän.</p>
-<p><strong>Osuma aukkoon <var>A</var>.</strong> Maalivahti peittää leveyden 2<var>r</var>, joten avoin kulma on θ<sub>eff</sub> = max(0, θ − 2·arctan(<var>r</var>/<var>d</var>)). Jos laukojan suuntavirhe on normaalijakautunut hajonnalla σ, osuman todennäköisyys on <var>A</var> = erf(θ<sub>eff</sub> / (2√2·σ)).</p>
-<p><strong>Ohitus <var>T</var> = e<sup>−<var>d</var>/λ</sup>.</strong> Mitä pidemmän matkan pallo kulkee, sitä todennäköisemmin maalivahti ehtii väliin. Muoto on sama kuin valon vaimenemisessa väliaineessa.</p>
-<p><strong>Reaktio <var>R</var> ja sijoittelu <var>M</var>.</strong> Nopea maalivahti leikkaa läheltä tulevia laukauksia, ja vaikutus on suurin noin viiden metrin päässä. Laukojan älykkyys nostaa todennäköisyyttä tasaisesti koko kentällä.</p>
+<h2>Malli: kulma, aika ja valinta</h2>
+<p>Opta kertoo <a href="https://theanalyst.com/articles/what-is-expected-goals-xg">xG-mallinsa esittelyssä</a>, että se käyttää yli kahtakymmentä muuttujaa. Maalivahdin osalta malli katsoo maalivahdin etäisyyttä laukaisupisteestä, joka toimii reaktioajan välityssuureena, sekä hänen sijaintiaan suhteessa vetolinjaan. Lisäksi malli päättelee, minne laukoja todennäköisesti tähtää. Alla oleva malli rakentaa samat ideat auki yhtälöiksi.</p>
+<div class="eq"><span class="big">xG = <var>p</var>₀ + (1 − <var>p</var>₀) · <var>B</var> · max(laukaus, lob, ohitus)</span></div>
+<p><strong>Pohja <var>p</var>₀ = 0,02</strong> kattaa kimmokkeet, maalivahdin virheet ja muut sattumat, joten mikään laukaus ei ole täysin toivoton. <strong><var>B</var> = (1 − <var>b</var>(<var>d</var>))<sup><var>n</var></sup></strong> on todennäköisyys, että laukaus pääsee <var>n</var> vetolinjalla olevan puolustajan ohi. Yksi puolustaja blokkaa sitä useammin, mitä pidempi matka hänellä on asettua väliin: <var>b</var>(<var>d</var>) = 0,35·(1 − e<sup>−<var>d</var>/6</sup>), eli maalin edestä noin 5 % ja rangaistusalueen rajalta noin 30 %.</p>
+
+<h3>Maalivahti peittää kulman, jonka koko riippuu ajasta</h3>
+<p>Olkoon <var>s</var> maalivahdin etäisyys pallosta. Pallo lentää hänen kohdalleen ajassa <var>s</var>/<var>v</var><sub>b</sub>. Hän reagoi ajan <var>t</var><sub>r</sub> kuluttua ja syöksyy sivulle nopeudella <var>v</var><sub>d</sub>. Vartalo peittää leveyden <var>r</var>₀ ilman aikaakin, ja ulottuvuudella on yläraja <var>R</var><sub>max</sub>:</p>
 <div class="eq">
-σ = 0,30 − 0,16·<var>tekniikka</var><br>
-λ = 10 m · (0,85 + 0,3·<var>voima</var>) · (1,2 − 0,4·<var>taito</var>) · (1,07 − 0,14·<var>koko</var>)<br>
-<var>r</var> = 0,7 m + 0,2 m·<var>koko</var><br>
-<var>R</var> = 1 − 0,5·(<var>reaktio</var> − ½)·<var>g</var>(<var>d</var>),&nbsp;&nbsp; <var>g</var>(<var>d</var>) = (<var>d</var>/5)·e<sup>1 − <var>d</var>/5</sup><br>
-<var>M</var> = 1 + 0,2·(<var>älykkyys</var> − ½)
+<var>R</var> = min( <var>R</var><sub>max</sub>, <var>r</var>₀ + <var>v</var><sub>d</sub>·max(0, <var>s</var>/<var>v</var><sub>b</sub> − <var>t</var><sub>r</sub>) )<br>
+α = arctan( <var>R</var> / <var>s</var> )
 </div>
-<p>Kaikki säätimet ovat välillä 0–1, ja arvolla 0,5 jokainen kerroin on yksi. Kertoimet ovat havainnollistavia: ne tuottavat julkaistujen mallien suuruusluokkaa olevia arvoja, mutta niitä ei ole sovitettu oikeaan dataan.</p>
+<p>Maalivahti peittää laukojan näkökulmasta kulman ±α oman suuntansa ympärillä. Kun hän siirtyy sivuun vetolinjasta, peitetty kulma siirtyy mukana ja toiselle puolelle aukeaa rako.</p>
+<p>Yhtälöstä seuraa yllättävä tulos. Kun ulottuvuus ei ole ylärajalla, <var>R</var>/<var>s</var> = <var>v</var><sub>d</sub>/<var>v</var><sub>b</sub> + (<var>r</var>₀ − <var>v</var><sub>d</sub><var>t</var><sub>r</sub>)/<var>s</var>. Koska vartalon peitto <var>r</var>₀ on pienempi kuin reaktioaikana menetetty syöksymatka <var>v</var><sub>d</sub><var>t</var><sub>r</sub>, askel eteenpäin <em>pienentää</em> peittoa: maalivahti voittaa kulmaa mutta menettää enemmän aikaa. Tämä jatkuu, kunnes pallo on niin lähellä, ettei kukaan ehdi reagoida (noin <var>s</var> &lt; <var>v</var><sub>b</sub><var>t</var><sub>r</sub> ≈ 6 m). Siitä eteenpäin ratkaisee pelkkä vartalo, ja α = arctan(<var>r</var>₀/<var>s</var>) kasvaa jyrkästi. Syntyy kaksi kuoppaa: pysy lähellä viivaa tai mene laukojan jalkoihin asti. Välimaasto on huonoin paikka.</p>
+
+<h3>Laukoja tähtää suurimpaan aukkoon</h3>
+<p>Laukoja valitsee kulman μ, joka maksimoi maalin todennäköisyyden. Toteutus heittää normaalijakautuneesti hajonnalla σ, ja päätös itsessään heittää <var>s</var><sub>päätös</sub> metriä maaliviivalla. Kulmavälit [<var>a</var>, <var>b</var>] saavat arvon <var>v</var>: vapaa maali 1, maalivahdin ulottuvilla 0,18 (tai vähemmän, jos hänellä on aikaa), muurin takana vapaapotkussa 0,2–0,55.</p>
+<div class="eq">
+laukaus = <var>V</var> · Σ <var>v</var><sub><var>i</var></sub>·[ Φ((<var>b</var><sub><var>i</var></sub> − μ)/σ<sub>tot</sub>) − Φ((<var>a</var><sub><var>i</var></sub> − μ)/σ<sub>tot</sub>) ]<br>
+<var>V</var> = Φ( 0,6·arctan(2,44/<var>d</var>) / 0,7σ )&nbsp;&nbsp; (pallo ei nouse riman yli)
+</div>
+
+<h3>Ulostulon hinta: lob ja ohitus</h3>
+<p>Maalivahti ei voi rynnätä ulos ilmaiseksi. Mitä kauempana maaliviivalta hän on, sitä enemmän tilaa jää nostaa pallo yli, ja jalkoihin asti tultuaan hänet voi kiertää:</p>
+<div class="eq">
+lob = <var>q</var><sub>lob</sub> · (1 − e<sup>−(<var>x</var><sub>mv</sub> − 1,5)/3</sup>) · min(1, (<var>s</var> − 2)/3)<br>
+ohitus = 0,45 · (1 − 0,5·paine) · max(0, 1 − <var>s</var>/3,5)
+</div>
+<p>Lisäksi jokaisella tilanteella on raja sille, kuinka kauas maalivahti ehtii asettua ennen laukausta. Avoimessa pelissä hän ehtii enintään 3 m ja alle puolet matkasta palloon, nopeassa hyökkäyksessä 5 m, läpisyötössä 6 m ja 70 % matkasta. Keskityksessä raja on 1,5 m, takaisinvedossa 1 m, ja irtopallossa ja vapaapotkussa alle metri. Juuri tämä raja ratkaisee, pääseekö maalivahti hyödyntämään etumaisen kuopan.</p>
+
+<h3>Tilanne muuttaa vain muutamaa nuppia</h3>
+<p>Kaikki Optan luettelemat tilannemuuttujat kytkeytyvät samoihin fysikaalisiin suureisiin. Jokaiselle on siis selitys, eikä yksikään ole pelkkä kerroin.</p>
+<table>
+<thead><tr><th>Muuttuja</th><th>Mekanismi mallissa</th></tr></thead>
+<tbody>
+<tr><td>Etäisyys ja kulma</td><td>Maalin kulma θ ja pallon lentoaika <var>s</var>/<var>v</var><sub>b</sub></td></tr>
+<tr><td>Maalivahdin sijainti</td><td>Peitetty kulma ±α ja sen keskikohta. Sijainnin voi vetää kentällä itse.</td></tr>
+<tr><td>Muiden pelaajien paikat</td><td>Blokkaus (1 − <var>b</var>(<var>d</var>))<sup><var>n</var></sup> ja näköeste: jokainen puolustaja linjalla lisää maalivahdin reaktioaikaan 0,03 s</td></tr>
+<tr><td>Paine</td><td>Hajonta σ kasvaa enintään 60 %, ja lob sekä ohitus vaikeutuvat</td></tr>
+<tr><td>Laukaisutapa</td><td>Heikompi jalka σ × 1,15 ja nopeus × 0,9. Suoraan syötöstä σ × 1,2. Volley σ × 1,5 ja nopeus × 1,1. Pusku σ × 1,3 ja nopeus × 0,65, joten maalivahti ehtii.</td></tr>
+<tr><td>Pelitilanne</td><td>Paine, blokkaajat, maalivahdin valmius ja ulostulon raja. Suorassa vapaapotkussa ei ole painetta, mutta muuri peittää lähitolpan puolen.</td></tr>
+<tr><td>Edeltävä toiminta</td><td>Läpisyöttö antaa aikaa (σ × 0,8) mutta myös maalivahdille luvan tulla ulos. Takaisinveto ja irtopallo myöhästyttävät maalivahtia 0,12–0,2 s.</td></tr>
+<tr><td>Rangaistuspotku</td><td>Opta käyttää vakiota 0,79. Tässä mallissa rangaistuspotkun hajonta on kalibroitu niin, että tulos on sama.</td></tr>
+</tbody>
+</table>
+<p>Pelaajien ominaisuudet vaikuttavat samoihin suureisiin: tekniikka pienentää σ:aa, voima kasvattaa pallon nopeutta, älykkyys pienentää päätöksen heittoa ja ajoittaa laukauksen ennen kuin paine ehtii päälle. Maalivahdin koko kasvattaa <var>r</var>₀:aa ja <var>R</var><sub>max</sub>:ia, reaktiokyky lyhentää <var>t</var><sub>r</sub>:ää, ja taito nopeuttaa syöksyä <var>v</var><sub>d</sub>.</p>
 </article>
 
 <section class="lab" aria-label="Interaktiivinen maaliodottamamalli">
-  <div class="pitchwrap">
-    <canvas id="pitch" tabindex="0" aria-label="Lämpökartta maaliodottamasta. Napauta tai vedä nähdäksesi arvon."></canvas>
-    <div class="readout"><span id="where">Napauta tai vedä kentällä</span><strong id="xg">–</strong></div>
-    <div class="detail" id="parts"></div>
+  <div class="stage">
+    <canvas id="pitch" tabindex="0" aria-label="Lämpökartta maaliodottamasta. Vedä palloa tai maalivahtia. Nuolinäppäimet liikuttavat palloa, vaihto ja nuolet maalivahtia."></canvas>
+    <div class="readout"><span id="where"></span><strong id="xg">–</strong></div>
+    <div class="detail"><p id="cover"></p><p id="parts"></p></div>
     <div class="legend" id="legend"></div>
   </div>
-  <div class="controls">
-    <fieldset>
-      <legend>Laukoja</legend>
-      <div class="row"><label for="tek">Tekniikka</label><input type="range" id="tek" min="0" max="1" step="0.05" value="0.5"><output for="tek"></output></div>
-      <div class="row"><label for="voi">Voima</label><input type="range" id="voi" min="0" max="1" step="0.05" value="0.5"><output for="voi"></output></div>
-      <div class="row"><label for="aly">Älykkyys</label><input type="range" id="aly" min="0" max="1" step="0.05" value="0.5"><output for="aly"></output></div>
-    </fieldset>
-    <fieldset>
-      <legend>Maalivahti</legend>
-      <div class="row"><label for="kok">Koko ja peitto</label><input type="range" id="kok" min="0" max="1" step="0.05" value="0.5"><output for="kok"></output></div>
-      <div class="row"><label for="rea">Reaktiokyky</label><input type="range" id="rea" min="0" max="1" step="0.05" value="0.5"><output for="rea"></output></div>
-      <div class="row"><label for="tai">Taito</label><input type="range" id="tai" min="0" max="1" step="0.05" value="0.5"><output for="tai"></output></div>
-    </fieldset>
-    <div class="btns">
+
+  <div class="side">
+    <div class="tabs" role="tablist" aria-label="Säädinryhmät">
+      <button type="button" role="tab" id="tab-p" aria-selected="true" aria-controls="panel-p">Pelaajat</button>
+      <button type="button" role="tab" id="tab-t" aria-selected="false" aria-controls="panel-t" tabindex="-1">Tilanne</button>
+    </div>
+
+    <div role="tabpanel" id="panel-p" aria-labelledby="tab-p">
+      <div class="group">
+        <h3>Laukoja</h3>
+        <div class="row"><label for="tek">Tekniikka</label><input type="range" id="tek" min="0" max="1" step="0.05" value="0.5"><output for="tek"></output></div>
+        <div class="row"><label for="voi">Voima</label><input type="range" id="voi" min="0" max="1" step="0.05" value="0.5"><output for="voi"></output></div>
+        <div class="row"><label for="aly">Älykkyys</label><input type="range" id="aly" min="0" max="1" step="0.05" value="0.5"><output for="aly"></output></div>
+      </div>
+      <div class="group">
+        <h3>Maalivahti</h3>
+        <div class="row"><label for="kok">Koko ja peitto</label><input type="range" id="kok" min="0" max="1" step="0.05" value="0.5"><output for="kok"></output></div>
+        <div class="row"><label for="rea">Reaktiokyky</label><input type="range" id="rea" min="0" max="1" step="0.05" value="0.5"><output for="rea"></output></div>
+        <div class="row"><label for="tai">Taito</label><input type="range" id="tai" min="0" max="1" step="0.05" value="0.5"><output for="tai"></output></div>
+      </div>
+      <div class="btns" aria-label="Esimerkkipelaajat">
+        <button type="button" data-preset="kok:0.15,rea:0.9,tai:0.6">Pieni ja nopea vahti</button>
+        <button type="button" data-preset="kok:0.95,rea:0.35,tai:0.6">Iso seinä</button>
+        <button type="button" data-preset="tek:0.9,voi:0.95,aly:0.5">Kaukolaukoja</button>
+        <button type="button" data-preset="tek:0.6,voi:0.35,aly:0.95">Viimeistelijä</button>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="panel-t" aria-labelledby="tab-t" hidden>
+      <div class="group">
+        <div class="row" id="row-paine"><label for="paine">Paine</label><input type="range" id="paine" min="0" max="1" step="0.05" value="0.3"><output for="paine"></output></div>
+        <div class="row" id="row-blok"><label for="blok">Puolustajia linjalla</label><input type="range" id="blok" min="0" max="3" step="1" value="1"><output for="blok"></output></div>
+      </div>
+      <div class="group">
+        <h3>Laukaisutapa</h3>
+        <div class="chips" data-chips="laukaus">
+          <button type="button" data-group="laukaus" data-value="jalka" aria-pressed="true">Vahvempi jalka</button>
+          <button type="button" data-group="laukaus" data-value="heikko" aria-pressed="false">Heikompi jalka</button>
+          <button type="button" data-group="laukaus" data-value="ensi" aria-pressed="false">Suoraan syötöstä</button>
+          <button type="button" data-group="laukaus" data-value="volley" aria-pressed="false">Volley</button>
+          <button type="button" data-group="laukaus" data-value="pusku" aria-pressed="false">Pusku</button>
+        </div>
+      </div>
+      <div class="group">
+        <h3>Pelitilanne</h3>
+        <div class="chips" data-chips="tilanne">
+          <button type="button" data-group="tilanne" data-value="avoin" aria-pressed="true">Avoin peli</button>
+          <button type="button" data-group="tilanne" data-value="nopea" aria-pressed="false">Nopea hyökkäys</button>
+          <button type="button" data-group="tilanne" data-value="kulma" aria-pressed="false">Kulmapotku</button>
+          <button type="button" data-group="tilanne" data-value="vapaa" aria-pressed="false">Suora vapaapotku</button>
+          <button type="button" data-group="tilanne" data-value="pilkku" aria-pressed="false">Rangaistuspotku</button>
+        </div>
+      </div>
+      <div class="group">
+        <h3>Edeltävä toiminta</h3>
+        <div class="chips" data-chips="syotto" id="chips-syotto">
+          <button type="button" data-group="syotto" data-value="oma" aria-pressed="true">Oma kuljetus</button>
+          <button type="button" data-group="syotto" data-value="lapi" aria-pressed="false">Läpisyöttö</button>
+          <button type="button" data-group="syotto" data-value="keskitys" aria-pressed="false">Keskitys</button>
+          <button type="button" data-group="syotto" data-value="takaisin" aria-pressed="false">Takaisinveto</button>
+          <button type="button" data-group="syotto" data-value="irto" aria-pressed="false">Irtopallo</button>
+        </div>
+      </div>
+      <div class="group">
+        <h3>Maalivahdin paikka</h3>
+        <div class="chips">
+          <button type="button" id="mode-auto" aria-pressed="true">Paras mahdollinen</button>
+          <button type="button" id="mode-manual" aria-pressed="false">Vedä itse</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="btns" style="margin-top:1rem">
       <button type="button" id="diff" aria-pressed="false">Näytä ero keskitasoon</button>
       <button type="button" id="reset">Palauta keskitaso</button>
     </div>
-    <div class="btns" aria-label="Esimerkkiasetelmat">
-      <button type="button" data-p="0.5,0.5,0.5,0.15,0.9,0.6">Pieni ja nopea vahti</button>
-      <button type="button" data-p="0.5,0.5,0.5,0.95,0.35,0.6">Iso seinä</button>
-      <button type="button" data-p="0.9,0.9,0.5,0.5,0.5,0.5">Kaukolaukoja</button>
-      <button type="button" data-p="0.6,0.3,0.95,0.5,0.5,0.5">Viimeistelijä</button>
-    </div>
-    <p class="note">Eronäkymässä sininen tarkoittaa, että maaliodottama on keskitasoa pienempi, ja punainen, että se on suurempi. Näin kunkin säätimen oma jalanjälki näkyy kentällä.</p>
+    <p class="note">Vedä palloa tai maalivahtia kentällä. Kun maalivahti on paikallaan, kartta näyttää maaliodottaman jokaisesta laukaisupisteestä häntä vastaan. Eronäkymässä sininen tarkoittaa keskitasoa pienempää ja punainen suurempaa maaliodottamaa.</p>
+  </div>
+
+  <div class="depth">
+    <h3>Kuinka kauas maalivahdin kannattaa tulla?</h3>
+    <p>Maaliodottama tälle laukaukselle, kun maalivahti seisoo kulmanpuolittajalla eri etäisyyksillä maalista. Varjostettuun osaan hän ei tässä tilanteessa ehdi. Napauta käyrää, niin maalivahti siirtyy siihen kohtaan.</p>
+    <canvas id="depthc" aria-label="Käyrä maaliodottamasta maalivahdin etäisyyden funktiona"></canvas>
   </div>
 </section>
 
 <article class="prose">
-<h2>Jokaisella säätimellä oma jalanjälki</h2>
-<p>Kuusi säädintä ei ole liikaa, koska jokainen vaikuttaa kenttään eri tavalla. Tekniikka pienentää hajontaa, mikä auttaa eniten kaukaa ja ahtaista kulmista, missä aukko on kapea. Voima pidentää vaimenemismatkaa λ, joten sen vaikutus kasvaa etäisyyden mukana. Älykkyys nostaa kaikkea saman verran.</p>
-<p>Pienellä maalivahdilla peitto <var>r</var> on kapeampi, mikä avaa kulmaa lähellä, ja pieni λ-lisä päästää kaukolaukauksia hieman helpommin sisään. Reaktiokyky vaikuttaa kyhmymäisesti noin viiden metrin kohdalla. Taito lyhentää λ:aa, jolloin koko rengasrakenne kutistuu kohti maalia muotonsa säilyttäen.</p>
-<p>Yksi rakenteellinen huomio: laukojan voima ja maalivahdin taito kertovat samaa λ:aa. Ne ovat siis kaksintaistelu, ja datasta voisi estimoida vain niiden suhteen, ei kumpaakin erikseen. Opetusmallissa tämä on hyvä asia, koska se näyttää, että maaliodottama on aina kahden osapuolen ominaisuus.</p>
+<h2>Mitä kokeilemalla näkee</h2>
+<p><strong>Kaksi kuoppaa.</strong> Siirrä pallo keskelle yhdeksään metriin. Käyrä on korkeimmillaan, kun maalivahti on pari metriä ulkona (0,39), ja matalimmillaan, kun hän on noin seitsemän metriä ulkona eli kahden metrin päässä laukojasta (0,15). Avoimessa pelissä hän ei ehdi sinne, mutta läpisyötössä ehtii lähelle. Kahdeksantoista metrin laukauksessa käyrä on alussa lähes tasainen: viivalla xG on 0,092 ja kaksi metriä ulkona 0,099. Sivusuunnassa virhe maksaa enemmän. Metrin sivuun vetolinjasta siirtynyt maalivahti nostaa samassa laukauksessa maaliodottaman noin 15 %, kahden metrin siirtymä yli 50 %.</p>
+<p><strong>Kulmanpuolittaja eikä keskilinja.</strong> Maalivahdin paras linja ei ole suora maalin keskipisteeseen vaan tolppiin suuntautuvien linjojen välinen puolittaja. Keskeltä ammuttaessa ne ovat sama asia, mutta ahtaasta kulmasta puolittaja vie maalivahdin lähitolpalle.</p>
+<p><strong>Reaktiokyky vaikuttaa keskimatkoilla.</strong> Aivan läheltä kukaan ei ehdi reagoida, ja kaukaa kaikki ehtivät. Nopean maalivahdin etu näkyy siksi noin 8–20 metrin vyöhykkeellä. Pieni maalivahti päästää kaukolaukauksia hieman useammin, koska hänen ulottuvuutensa yläraja on pienempi.</p>
+<p><strong>Älykkyys näkyy lähellä.</strong> Tähtäyspisteen valinnalla on eniten merkitystä silloin, kun maalivahti peittää keskustan ja tarjolla on selvä rako. Kaukaa toteutuksen hajonta on niin suuri, ettei tarkka valinta ehdi vaikuttaa.</p>
 
 <h2>Missä vertaus kvanttimekaniikkaan pitää</h2>
 <p>Maaliodottama on ensemblen ominaisuus, kuten aaltofunktiokin. Kumpikin syntyy vasta, kun ainutkertaiset tapahtumat ryhmitellään joukoksi, ja kumpikin ennustaa joukkoa eikä yksilöä.</p>
-<p>Ero on siinä, mistä satunnaisuus tulee. Tässä mallissa se on klassista tietämättömyyttä: jokaisen laukauksen suuntavirhe on olemassa, emme vain tiedä sitä. Jos tietäisimme kaiken, todennäköisyys katoaisi. Kvanttimekaniikassa täydellisinkin tilan kuvaus jättää todennäköisyydet, ja Bellin epäyhtälöitä rikkovat kokeet sulkevat pois paikalliset piilomuuttujat. Lisäksi xG-kartta on sileä: siinä ei ole interferenssijuovia, joita kaksoisrakokokeessa yksittäisistä elektroneista piirtyy.</p>
+<p>Ero on siinä, mistä satunnaisuus tulee. Tässä mallissa se on klassista tietämättömyyttä: jokaisen laukauksen suuntavirhe ja jokaisen maalivahdin reaktio ovat olemassa, emme vain tiedä niitä. Jos tietäisimme kaiken, todennäköisyys katoaisi. Kvanttimekaniikassa täydellisinkin tilan kuvaus jättää todennäköisyydet, ja Bellin epäyhtälöitä rikkovat kokeet sulkevat pois paikalliset piilomuuttujat. Lisäksi xG-kartta on sileä: siinä ei ole interferenssijuovia, joita kaksoisrakokokeessa yksittäisistä elektroneista piirtyy.</p>
 
 <h2>Rajoitukset</h2>
-<p>Malli ei tunne puolustajia, laukauksen tyyppiä (pusku, volley, ensikosketus) eikä edeltävää syöttöä. Parametrit voisi sovittaa oikeaan laukausdataan suurimman uskottavuuden menetelmällä. Silloin tuhansista laukauksista estimoitaisiin muutama luku, jotka eivät kuvaa yhtäkään laukausta mutta ennustavat niiden joukkoa. Kannattaa myös muistaa, että tutkimuksissa pelaajien viimeistelytaito näkyy yllättävän heikosti: harva ylittää odottamansa johdonmukaisesti kausi toisensa jälkeen.</p>
+<p>Kertoimet ovat havainnollistavia. Ne tuottavat julkaistujen mallien suuruusluokkaa olevia arvoja, mutta niitä ei ole sovitettu oikeaan dataan. Mallin maalivahti asettuu aina täydellisesti, joten sen luvut ovat alarajoja: todelliset maalivahdit eivät ehdi joka kerta parhaaseen kohtaan. Korkeussuunta on mukana vain rimaehtona, eikä malli tunne kierrettä, pompahtavia palloja eikä pelaajien liikettä laukaisuhetkellä.</p>
+<p>Parametrit voisi sovittaa oikeaan laukausdataan suurimman uskottavuuden menetelmällä. Silloin tuhansista laukauksista estimoitaisiin kourallinen lukuja, jotka eivät kuvaa yhtäkään laukausta mutta ennustavat niiden joukkoa. Kannattaa myös muistaa, että tutkimuksissa pelaajien viimeistelytaito näkyy yllättävän heikosti: harva ylittää odottamansa johdonmukaisesti kausi toisensa jälkeen.</p>
 </article>
 
-<footer>Malli ja kuvat on laskettu selaimessa. Lähdekoodi on tämän sivun HTML-tiedostossa.</footer>
+<footer>Malli ja kuvat lasketaan selaimessa, ja lähdekoodi on tämän sivun HTML-tiedostossa. Muuttujien lista ja rangaistuspotkun arvo 0,79: <a href="https://theanalyst.com/articles/what-is-expected-goals-xg">Opta Analyst, What Is Expected Goals (xG)?</a></footer>
 </main>
 
 <script>
 (() => {
-  const W = 68, DEPTH = 40, GOAL = 7.32, P0 = 0.02;
-  const cv = document.getElementById('pitch'), ctx = cv.getContext('2d');
-  const ids = ['tek','voi','aly','kok','rea','tai'];
-  const el = Object.fromEntries(ids.map(k => [k, document.getElementById(k)]));
-  const base = {tek:.5,voi:.5,aly:.5,kok:.5,rea:.5,tai:.5};
-  let diffMode = false, mark = null, raf = 0;
-
-  const bands = [[.40,'#8E2A1B','yli 0,40'],[.20,'#D2552F','0,20–0,40'],[.10,'#EE9A6B','0,10–0,20'],[.05,'#F6C9A6','0,05–0,10'],[.03,'#FBE6D4','0,03–0,05'],[0,null,'0,02–0,03']];
-  const dbands = [[.05,'#B3261E','yli +0,05'],[.015,'#E88A7A','+0,015…+0,05'],[.004,'#F7D2CA','+0,004…+0,015'],[-.004,null,'±0,004'],[-.015,'#C9DDF0','−0,004…−0,015'],[-.05,'#6FA3D2','−0,015…−0,05'],[-1,'#1F5A94','alle −0,05']];
-
+  /* ---------- Malli ---------- */
+  const W = 54, DEPTH = 30, TOP = 2, HALF = 3.66, P0 = 0.02, SQ2 = Math.SQRT2;
   function erf(x){const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+0.3275911*x);
     return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x));}
+  const Phi = z => 0.5*(1+erf(z/SQ2));
+  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
 
-  function model(x, y, p){
-    const d = Math.max(Math.hypot(x, y), 0.1);
-    const theta = Math.atan2(GOAL * x, x*x + y*y - (GOAL/2)**2);
-    const sigma = 0.30 - 0.16 * p.tek;
-    const lambda = 10 * (0.85 + 0.3*p.voi) * (1.2 - 0.4*p.tai) * (1.07 - 0.14*p.kok);
-    const r = 0.7 + 0.2 * p.kok;
-    const thEff = Math.max(0, theta - 2*Math.atan(r/d));
-    const A = erf(thEff / (2*Math.SQRT2*sigma));
-    const T = Math.exp(-d/lambda);
-    const g = (d/5) * Math.exp(1 - d/5);
-    const R = 1 - 0.5*(p.rea - 0.5)*g;
-    const M = 1 + 0.2*(p.aly - 0.5);
-    return {xg: P0 + (1-P0)*Math.min(1, A*T*R*M), A, T, R, M, d};
+  // s = hajonnan kerroin, v = pallon nopeuden kerroin, lob = kyky nostaa yli,
+  // paine/blok = lisäys, tr = lisä maalivahdin reaktioaikaan (s),
+  // kmax = ulostulon raja (m), fr = kuinka suuren osan matkasta maalivahti ehtii tulla vastaan
+  const SHOT = {
+    jalka:  {s:1.00, v:1.00, lob:1},
+    heikko: {s:1.15, v:0.90, lob:0.6},
+    ensi:   {s:1.20, v:1.00, lob:0.4},
+    volley: {s:1.50, v:1.10, lob:0.2},
+    pusku:  {s:1.30, v:0.65, lob:0},
+  };
+  const PLAY = {
+    avoin:  {s:1.00, paine:0,    blok:0,  tr:0,    kmax:3,   fr:0.45},
+    nopea:  {s:1.00, paine:-0.2, blok:-1, tr:0.05, kmax:5,   fr:0.6},
+    kulma:  {s:1.05, paine:0.3,  blok:1,  tr:0.03, kmax:1.2, fr:0.3},
+    vapaa:  {s:0.80, paine:-1,   blok:-9, tr:0,    kmax:0.8, fr:0.1, fk:true},
+    pilkku: {s:0.34, paine:-1,   blok:-9, tr:0,    kmax:0.2, fr:0.05, pen:true},
+  };
+  const PASS = {
+    oma:      {s:1.00, paine:0,    blok:0,  tr:0,    kmax:99},
+    lapi:     {s:0.80, paine:-0.3, blok:-9, tr:0,    kmax:6,   fr:0.7},
+    keskitys: {s:1.15, paine:0.1,  blok:0,  tr:0.05, kmax:1.5},
+    takaisin: {s:1.05, paine:0,    blok:0,  tr:0.12, kmax:1.0},
+    irto:     {s:1.10, paine:0.1,  blok:0,  tr:0.20, kmax:0.8},
+  };
+
+  function knobs(p){
+    const sh = SHOT[p.laukaus], pl = PLAY[p.tilanne], pa = (pl.fk||pl.pen) ? PASS.oma : PASS[p.syotto];
+    const paine = clamp((p.paine + pl.paine + pa.paine) * (1.25 - 0.5*p.aly), 0, 1);
+    const blok = clamp(p.blok + pl.blok + pa.blok, 0, 4);
+    return {
+      paine, blok,
+      sigma: (0.26 - 0.10*p.tek) * sh.s * pl.s * pa.s * (1 + 0.6*paine),
+      vb: (24 + 6*p.voi) * sh.v,
+      tr: (0.32 - 0.14*p.rea) + pl.tr + pa.tr + 0.03*blok,
+      r0: 0.55 + 0.25*p.kok,
+      rmax: 3.0 + 0.4*p.kok + 0.4*p.tai,
+      vd: 4.0 + 2.0*p.tai,
+      sdec: (0.25 + 1.0*(1 - p.aly)) * (pl.pen ? 0.5 : 1),
+      lobq: (0.15 + 0.35*p.tek) * sh.lob * (1 - 0.6*paine),
+      roundq: 0.45 * (1 - 0.5*paine),
+      kmax: pa.kmax < 99 ? pa.kmax : pl.kmax,
+      fr: pa.fr || pl.fr,
+      fk: !!pl.fk, pen: !!pl.pen, qwall: 0.2 + 0.35*p.tek,
+    };
   }
 
-  const params = () => Object.fromEntries(ids.map(k => [k, parseFloat(el[k].value)]));
-  const pick = (v, list) => { for (const b of list) if (v >= b[0]) return b[1]; return list[list.length-1][1]; };
-  const fmt = v => v.toFixed(2).replace('.', ',');
+  const ang = (S, P) => Math.atan2(P.y - S.y, S.x - P.x);
 
+  function xgAt(S0, K, k){
+    const S = {x: Math.max(S0.x, 0.05), y: S0.y};
+    const d = Math.hypot(S.x, S.y);
+    const g1 = ang(S, {x:0, y:-HALF}), g2 = ang(S, {x:0, y:HALF});
+    const lo = Math.min(g1,g2), hi = Math.max(g1,g2), gc = ang(S, {x:0,y:0});
+    let k1 = 0, k2 = 0, leak = 0, R = 0;
+    const sk = Math.hypot(S.x-K.x, S.y-K.y);
+    if (K.x < S.x - 0.3 && sk > 0.2){
+      const spare = sk / k.vb - k.tr;
+      R = Math.min(k.rmax, k.r0 + k.vd*Math.max(0, spare));
+      const a = Math.atan(R / sk), c = ang(S, K);
+      k1 = c - a; k2 = c + a;
+      leak = 0.18 * Math.exp(-Math.max(0, spare)/0.25);
+    }
+    let m1 = 0, m2 = 0;
+    if (k.fk && d > 9.5){
+      const near = S.y >= 0 ? g2 : g1, dir = S.y >= 0 ? -1 : 1, wa = 2*Math.atan(1.0/9.15);
+      m1 = Math.min(near, near + dir*wa); m2 = Math.max(near, near + dir*wa);
+    }
+    const val = t => (t>=k1 && t<=k2) ? leak : (t>=m1 && t<=m2) ? k.qwall : 1;
+    const cuts = [k1, k2, m1, m2].filter(t => t>lo && t<hi).concat([lo,hi]).sort((a,b)=>a-b);
+    const segs = [];
+    for (let i=0;i<cuts.length-1;i++){ const a=cuts[i], b=cuts[i+1]; if (b-a>1e-9) segs.push([a,b,val((a+b)/2)]); }
+    const EV = (mu, sg) => { let s = 0; for (const [a,b,v] of segs) s += v*(Phi((b-mu)/sg) - Phi((a-mu)/sg)); return s; };
+    let best = gc, bestV = EV(gc, k.sigma);
+    for (const [a,b,v] of segs){ if (v > leak + 1e-9){ for (const f of [0.5, 0.3, 0.7]){ const mu = a + f*(b-a), e = EV(mu, k.sigma); if (e > bestV){ bestV = e; best = mu; } } } }
+    const yb = S.y + Math.tan(best)*S.x, dphi = S.x / (S.x*S.x + (yb - S.y)**2);
+    const sTot = Math.hypot(k.sigma, k.sdec*dphi);
+    const V = Phi(0.6*Math.atan(2.44 / d) / (0.7*k.sigma));
+    const shot = EV(best, sTot) * V;
+    const lob = (k.fk||k.pen) ? 0 : k.lobq * (1 - Math.exp(-Math.max(0, K.x - 1.5)/3)) * clamp((sk - 2)/3, 0, 1);
+    const round = (k.fk||k.pen) ? 0 : k.roundq * clamp(1 - sk/3.5, 0, 1);
+    const B = Math.pow(1 - 0.35*(1 - Math.exp(-d/6)), k.blok);
+    const P = B * Math.max(shot, lob, round);
+    return {xg: P0 + (1-P0)*P, B, shot, lob, round, aim: best, lo, hi, k1, k2, R, sk, d, m1, m2};
+  }
+
+  // Kulmanpuolittaja: G on puolittajan ja maaliviivan leikkaus, maalivahti etäisyydellä t siitä
+  function keeperAt(S0, t, k){
+    const sx = Math.max(S0.x, 0.05);
+    if (k.fk){ const yk = S0.y >= 0 ? -1.0 : 1.0; return {x: t, y: yk}; }
+    const a1x = -sx, a1y = -HALF - S0.y, a2x = -sx, a2y = HALF - S0.y;
+    const n1 = Math.hypot(a1x,a1y), n2 = Math.hypot(a2x,a2y);
+    const bx = a1x/n1 + a2x/n2, by = a1y/n1 + a2y/n2;
+    const G = {x:0, y:S0.y + by*(-sx/bx)};
+    const L = Math.hypot(sx - G.x, S0.y - G.y);
+    return {x: G.x + (sx-G.x)*t/L, y: G.y + (S0.y-G.y)*t/L, G, L};
+  }
+  function lineLength(S, k){ return k.fk ? Math.max(S.x, 0.05) : keeperAt(S, 0, k).L; }
+  function optimal(S, k, n){
+    const L = lineLength(S, k), tmax = Math.max(0.3, Math.min(k.kmax, k.fr*L, L - 1.0));
+    let best = null;
+    for (let i=0;i<=n;i++){ const t = 0.3 + (tmax-0.3)*i/n; const K = keeperAt(S, t, k); const r = xgAt(S, K, k);
+      if (!best || r.xg < best.xg){ r.t = t; r.K = K; best = r; } }
+    return best;
+  }
+
+  /* ---------- Tila ja säätimet ---------- */
+  const $ = id => document.getElementById(id);
+  const SL = ['tek','voi','aly','kok','rea','tai','paine','blok'];
+  const GR = ['laukaus','tilanne','syotto'];
+  const BASE = {tek:.5,voi:.5,aly:.5,kok:.5,rea:.5,tai:.5,paine:.3,blok:1,laukaus:'jalka',tilanne:'avoin',syotto:'oma'};
+  const st = {S:{x:14, y:-5}, K:{x:1, y:-0.5}, manual:false, diff:false};
+
+  function params(){
+    const p = {};
+    SL.forEach(id => p[id] = parseFloat($(id).value));
+    GR.forEach(g => p[g] = document.querySelector(`[data-group="${g}"][aria-pressed="true"]`).dataset.value);
+    return p;
+  }
+  const solve = (S, k, n) => st.manual ? Object.assign(xgAt(S, st.K, k), {K: st.K}) : optimal(S, k, n);
+
+  const f1 = v => (Math.round(v*10)/10).toFixed(1).replace('.', ',');
+  const f2 = v => v.toFixed(2).replace('.', ',');
+  const f3 = v => v.toFixed(3).replace('.', ',');
+  const PAINE = v => v < 0.15 ? 'vapaa' : v < 0.45 ? 'väljä' : v < 0.75 ? 'tiukka' : 'ahdistettu';
+
+  function syncOutputs(){
+    ['tek','voi','aly','kok','rea','tai'].forEach(id => $(id).nextElementSibling.textContent = f2(parseFloat($(id).value)));
+    $('paine').nextElementSibling.textContent = PAINE(parseFloat($('paine').value));
+    $('blok').nextElementSibling.textContent = $('blok').value;
+    const t = document.querySelector('[data-group="tilanne"][aria-pressed="true"]').dataset.value;
+    const dead = t === 'vapaa' || t === 'pilkku';
+    ['paine','blok'].forEach(id => { $(id).disabled = dead; $('row-'+id).classList.toggle('off', dead); });
+    $('chips-syotto').classList.toggle('off', dead);
+    $('chips-syotto').querySelectorAll('button').forEach(b => b.disabled = dead);
+    $('mode-auto').setAttribute('aria-pressed', !st.manual);
+    $('mode-manual').setAttribute('aria-pressed', st.manual);
+  }
+
+  /* ---------- Värit ---------- */
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const rgb = hex => { const h = hex.replace('#',''); return [0,2,4].map(i => parseInt(h.slice(i,i+2),16)); };
+  let pal = null;
+  function readPalette(){
+    pal = {
+      heat: [[0.40,'--h5','yli 0,40'],[0.20,'--h4','0,20–0,40'],[0.10,'--h3','0,10–0,20'],[0.05,'--h2','0,05–0,10'],[0.03,'--h1','0,03–0,05'],[-9,'--panel','alle 0,03']].map(([t,v,l]) => ({t, c:rgb(css(v)), hex:css(v), l})),
+      diff: [[0.05,'--p3','yli +0,05'],[0.015,'--p2','+0,015…0,05'],[0.004,'--p1','+0,004…0,015'],[-0.004,'--panel','±0,004'],[-0.015,'--n1','−0,004…0,015'],[-0.05,'--n2','−0,015…0,05'],[-9,'--n3','alle −0,05']].map(([t,v,l]) => ({t, c:rgb(css(v)), hex:css(v), l})),
+      ink: css('--ink'), ink2: css('--ink-2'), line: css('--line'), keeper: css('--keeper'), panel: css('--panel'), rule: css('--rule'),
+    };
+  }
   function legend(){
-    const list = diffMode ? dbands : bands;
-    document.getElementById('legend').innerHTML = list.map(b =>
-      `<span><i style="background:${b[1]||'transparent'}"></i>${b[2]}</span>`).join('');
+    const list = st.diff ? pal.diff : pal.heat;
+    $('legend').innerHTML = list.map(b => `<span><i style="background:${b.hex}"></i>${b.l}</span>`).join('');
+  }
+
+  /* ---------- Lämpökartta ---------- */
+  const cv = $('pitch'), ctx = cv.getContext('2d');
+  const heat = document.createElement('canvas');
+  let grid = null, baseGrid = null, needGrid = true, needHeat = true, fast = false, raf = 0, fullTimer = 0;
+
+  function computeGrid(k, nx, ny, useBase){
+    const g = new Float32Array((nx+1)*(ny+1));
+    const manual = st.manual;
+    if (useBase) st.manual = false;
+    for (let j=0;j<=ny;j++) for (let i=0;i<=nx;i++){
+      g[j*(nx+1)+i] = solve({x: j*DEPTH/ny, y: i*W/nx - W/2}, k, useBase ? 10 : (fast ? 6 : 10)).xg;
+    }
+    st.manual = manual;
+    // kevyt 1-2-1-tasoitus pehmentää ruudukon porrastusta; lukema lasketaan aina tarkasti
+    const n = nx+1, o = new Float32Array(g.length);
+    for (let j=0;j<=ny;j++) for (let i=0;i<=nx;i++){
+      let sum = 0, wsum = 0;
+      for (let dj=-1; dj<=1; dj++) for (let di=-1; di<=1; di++){
+        const jj = j+dj, ii = i+di; if (jj<0||jj>ny||ii<0||ii>nx) continue;
+        const wt = (dj ? 1 : 2)*(di ? 1 : 2); sum += wt*g[jj*n+ii]; wsum += wt;
+      }
+      o[j*n+i] = sum/wsum;
+    }
+    return {g: o, nx, ny};
+  }
+  function sample(G, fx, fy){
+    const i0 = Math.min(Math.floor(fx), G.nx-1), j0 = Math.min(Math.floor(fy), G.ny-1), tx = fx-i0, ty = fy-j0, n = G.nx+1, g = G.g;
+    const a = g[j0*n+i0], b = g[j0*n+i0+1], c = g[(j0+1)*n+i0], d = g[(j0+1)*n+i0+1];
+    return (a*(1-tx)+b*tx)*(1-ty) + (c*(1-tx)+d*tx)*ty;
+  }
+  function renderHeat(Wd, Hd, top, k){
+    heat.width = Wd; heat.height = Hd;
+    const hc = heat.getContext('2d'), img = hc.createImageData(Wd, Hd), D = img.data;
+    const bands = st.diff ? pal.diff : pal.heat, bg = rgb(pal.panel), span = Hd - top;
+    for (let py=0; py<Hd; py++){
+      const fx0 = (py - top + 0.5)/span*DEPTH;
+      const above = py < top, fy = (py - top + 0.5)/span*grid.ny, fyb = baseGrid ? (py - top + 0.5)/span*baseGrid.ny : 0;
+      for (let px=0; px<Wd; px++){
+        let c = bg;
+        // rangaistuspotku on yksi piste, ja suora vapaapotku rangaistusalueelta on rangaistuspotku
+        const masked = k.pen || (k.fk && fx0 < 16.5 && Math.abs((px+0.5)/Wd*W - W/2) < 20.16);
+        if (!above && !masked){
+          let v = sample(grid, (px+0.5)/Wd*grid.nx, fy);
+          if (st.diff) v -= sample(baseGrid, (px+0.5)/Wd*baseGrid.nx, fyb);
+          c = bands[bands.length-1].c;
+          for (const b of bands) if (v >= b.t){ c = b.c; break; }
+        }
+        const o = (py*Wd+px)*4; D[o]=c[0]; D[o+1]=c[1]; D[o+2]=c[2]; D[o+3]=255;
+      }
+    }
+    hc.putImageData(img, 0, 0);
   }
 
   function draw(){
     raf = 0;
-    const w = cv.clientWidth, h = w * DEPTH / W, dpr = window.devicePixelRatio || 1;
-    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); cv.style.height = h + 'px';
-    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
-    const s = w / W, step = w > 600 ? 4 : 3, p = params();
-    for (let px = 0; px < w; px += step){
-      for (let py = 0; py < h; py += step){
-        const y = (px + step/2)/s - W/2, x = (py + step/2)/s;
-        const v = model(x, y, p).xg;
-        const c = diffMode ? pick(v - model(x, y, base).xg, dbands) : pick(v, bands);
-        if (c){ ctx.fillStyle = c; ctx.fillRect(px, py, step, step); }
-      }
+    const w = cv.clientWidth, h = w*(DEPTH+TOP)/W, dpr = window.devicePixelRatio || 1;
+    const Wd = Math.round(w*dpr), Hd = Math.round(h*dpr);
+    if (cv.width !== Wd || cv.height !== Hd){ cv.width = Wd; cv.height = Hd; cv.style.height = h+'px'; needHeat = true; }
+    const p = params(), k = knobs(p);
+    if (needGrid){
+      const nx = Math.round(clamp(w/(fast ? 9 : 6), 40, 110)), ny = Math.round(nx*DEPTH/W);
+      grid = computeGrid(k, nx, ny, false);
+      if (st.diff && (!baseGrid || baseGrid.nx !== nx)) baseGrid = computeGrid(knobs(BASE), nx, ny, true);
+      needGrid = false; needHeat = true;
     }
-    const lc = getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
-    ctx.strokeStyle = lc; ctx.fillStyle = lc; ctx.lineWidth = 1.25;
-    const box = (x0,y0,x1,y1) => ctx.strokeRect((W/2+x0)*s, y0*s, (x1-x0)*s, (y1-y0)*s);
+    if (needHeat){ renderHeat(Wd, Hd, Math.round(TOP*w/W*dpr), k); needHeat = false; }
+    ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(heat, 0, 0);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const s = w/W, X = y => (y + W/2)*s, Y = x => (x + TOP)*s;
+
+    // kenttä
+    ctx.strokeStyle = pal.line; ctx.fillStyle = pal.line; ctx.lineWidth = 1.25;
+    const box = (y0,x0,y1,x1) => ctx.strokeRect(X(y0), Y(x0), (y1-y0)*s, (x1-x0)*s);
     box(-20.16,0,20.16,16.5); box(-9.16,0,9.16,5.5);
-    ctx.beginPath(); ctx.arc(W/2*s, 11*s, 2.5, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(W/2*s, 11*s, 9.15*s, Math.asin(5.5/9.15), Math.PI - Math.asin(5.5/9.15)); ctx.stroke();
-    ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo((W/2-3.66)*s, 1.5); ctx.lineTo((W/2+3.66)*s, 1.5); ctx.stroke();
-    if (mark){ ctx.lineWidth = 2; ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
-      ctx.beginPath(); ctx.arc(mark.x*s + W/2*s, mark.xd*s, 7, 0, Math.PI*2); ctx.stroke(); }
+    ctx.beginPath(); ctx.arc(X(0), Y(11), 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(X(0), Y(11), 9.15*s, Math.asin(5.5/9.15), Math.PI - Math.asin(5.5/9.15)); ctx.stroke();
+
+    // laukaus
+    const r = solve(st.S, k, 14), S = {x: Math.max(st.S.x, 0.05), y: st.S.y}, K = r.K;
+    const onLine = a => ({x:0, y: S.y + Math.tan(a)*S.x});
+    ctx.strokeStyle = pal.ink; ctx.globalAlpha = 0.55; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(X(S.y), Y(S.x)); ctx.lineTo(X(-HALF), Y(0)); ctx.moveTo(X(S.y), Y(S.x)); ctx.lineTo(X(HALF), Y(0)); ctx.stroke();
+    ctx.globalAlpha = 1;
+    if (r.k2 > r.k1){
+      const a = onLine(Math.max(r.k1, r.lo - 0.001)), b = onLine(Math.min(r.k2, r.hi + 0.001));
+      ctx.fillStyle = pal.keeper; ctx.globalAlpha = 0.28;
+      ctx.beginPath(); ctx.moveTo(X(S.y), Y(S.x)); ctx.lineTo(X(a.y), Y(0)); ctx.lineTo(X(b.y), Y(0)); ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    if (r.m2 > r.m1){ // muuri
+      const mid = (r.m1 + r.m2)/2, dx = -Math.cos(mid), dy = Math.sin(mid);
+      const cx = S.x + dx*9.15, cy = S.y + dy*9.15;
+      ctx.strokeStyle = pal.ink; ctx.lineWidth = 4; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(X(cy - dx*1.0), Y(cx + dy*1.0)); ctx.lineTo(X(cy + dx*1.0), Y(cx - dy*1.0)); ctx.stroke();
+      ctx.lineCap = 'butt';
+    }
+    // maali
+    ctx.strokeStyle = pal.line; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(X(-HALF), Y(0) - 2); ctx.lineTo(X(HALF), Y(0) - 2); ctx.stroke();
+    ctx.lineWidth = 1.25; ctx.beginPath(); ctx.moveTo(0, Y(0)); ctx.lineTo(w, Y(0)); ctx.stroke();
+    // tähtäyspiste
+    const aimP = onLine(r.aim);
+    ctx.fillStyle = pal.ink; ctx.beginPath(); ctx.moveTo(X(aimP.y), Y(0) - 12); ctx.lineTo(X(aimP.y)-4, Y(0) - 18); ctx.lineTo(X(aimP.y)+4, Y(0) - 18); ctx.closePath(); ctx.fill();
+    // maalivahti
+    ctx.lineWidth = 2; ctx.fillStyle = pal.keeper; ctx.strokeStyle = pal.panel;
+    ctx.beginPath(); ctx.arc(X(K.y), Y(K.x), 7, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    if (!st.manual){ ctx.strokeStyle = pal.keeper; ctx.setLineDash([3,3]); ctx.beginPath(); ctx.arc(X(K.y), Y(K.x), 11, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]); }
+    // pallo
+    ctx.fillStyle = pal.panel; ctx.strokeStyle = pal.ink; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(X(st.S.y), Y(st.S.x), 7, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+
+    readout(r, k, p);
+    drawDepth(k, r);
   }
   const schedule = () => { if (!raf) raf = requestAnimationFrame(draw); };
+  const regrid = (isFast) => {
+    fast = !!isFast; needGrid = true; schedule();
+    clearTimeout(fullTimer);
+    if (fast) fullTimer = setTimeout(() => { fast = false; needGrid = true; schedule(); }, 220);
+  };
 
-  function readout(){
-    if (!mark){ return; }
-    const p = params(), m = model(mark.xd, mark.x, p), b = model(mark.xd, mark.x, base);
-    document.getElementById('where').textContent = `${(Math.round(m.d*10)/10).toString().replace('.', ',')} m maalista`;
-    document.getElementById('xg').textContent = 'xG ' + m.xg.toFixed(3).replace('.', ',');
-    const delta = m.xg - b.xg;
-    document.getElementById('parts').textContent =
-      `A ${fmt(m.A)} · T ${fmt(m.T)} · R ${fmt(m.R)} · M ${fmt(m.M)} · ero keskitasoon ${delta >= 0 ? '+' : '−'}${Math.abs(delta).toFixed(3).replace('.', ',')}`;
+  function readout(r, k, p){
+    const deg = Math.round((r.hi - r.lo)*180/Math.PI);
+    $('where').textContent = `${f1(r.d)} m maalista, kulma ${deg}°`;
+    $('xg').textContent = 'xG ' + f3(r.xg);
+    const cov = r.k2 > r.k1 ? Math.max(0, Math.min(r.k2, r.hi) - Math.max(r.k1, r.lo)) / (r.hi - r.lo) : 0;
+    const off = r.K ? (r.K.x) : 0;
+    $('cover').textContent = `Maalivahti on ${f1(off)} m maaliviivalta ja ${f1(r.sk)} m pallosta. Hän ulottuu ${f1(r.R)} m ja peittää ${Math.round(cov*100)} % maalista.`;
+    const bst = knobs(BASE), baseR = (() => { const m = st.manual; st.manual = false; const v = optimal(st.S, bst, 14); st.manual = m; return v; })();
+    const dlt = r.xg - baseR.xg;
+    let txt = `Laukaus ${f2(r.shot)}, lob ${f2(r.lob)}, ohitus ${f2(r.round)}, blokkaamatta ${f2(r.B)}. Ero keskitasoon ${dlt >= 0 ? '+' : '−'}${f3(Math.abs(dlt))}.`;
+    if (k.pen) txt += ' Opta käyttää rangaistuspotkulle vakiota 0,79.';
+    $('parts').textContent = txt;
   }
 
-  function point(e){
-    const b = cv.getBoundingClientRect(), s = b.width / W;
-    mark = { x: (e.clientX - b.left)/s - W/2, xd: Math.max(0, (e.clientY - b.top)/s) };
-    readout(); schedule();
+  /* ---------- Syvyyskäyrä ---------- */
+  const dc = $('depthc'), dctx = dc.getContext('2d');
+  let depthInfo = null, hoverT = null;
+  function drawDepth(k, r){
+    const w = dc.clientWidth, h = 200, dpr = window.devicePixelRatio || 1;
+    if (dc.width !== Math.round(w*dpr)){ dc.width = Math.round(w*dpr); dc.height = Math.round(h*dpr); }
+    dctx.setTransform(dpr,0,0,dpr,0,0); dctx.clearRect(0,0,w,h);
+    const S = st.S, L = lineLength(S, k), T = Math.max(0.6, L - 0.6);
+    const m = {l:42, r:12, t:12, b:34}, pw = w - m.l - m.r, ph = h - m.t - m.b;
+    const pts = [];
+    for (let i=0;i<=90;i++){ const t = T*i/90; pts.push([t, xgAt(S, keeperAt(S, t, k), k).xg]); }
+    const ymax = Math.min(1, Math.ceil(Math.max(...pts.map(q => q[1]))*1.15*20)/20 || 0.05);
+    const PX = t => m.l + t/T*pw, PY = v => m.t + ph - v/ymax*ph;
+    depthInfo = {T, m, pw, pts, k};
+    // ei ehdi -alue
+    const km = Math.min(k.kmax, T);
+    if (km < T){ dctx.fillStyle = pal.rule; dctx.globalAlpha = 0.55; dctx.fillRect(PX(km), m.t, PX(T) - PX(km), ph); dctx.globalAlpha = 1;
+      dctx.fillStyle = pal.ink2; dctx.font = '500 12px Barlow, sans-serif'; dctx.textAlign = 'right'; dctx.fillText('ei ehdi', PX(T) - 6, m.t + 14); }
+    // ruudukko ja akselit
+    dctx.strokeStyle = pal.rule; dctx.lineWidth = 1; dctx.fillStyle = pal.ink2; dctx.font = '400 11px Barlow, sans-serif';
+    const ystep = ymax > 0.5 ? 0.2 : ymax > 0.2 ? 0.1 : ymax > 0.1 ? 0.05 : 0.02;
+    dctx.textAlign = 'right';
+    for (let v=0; v<=ymax+1e-9; v+=ystep){ dctx.beginPath(); dctx.moveTo(m.l, PY(v)); dctx.lineTo(m.l+pw, PY(v)); dctx.stroke(); dctx.fillText(f2(v), m.l - 6, PY(v) + 4); }
+    const xstep = T > 20 ? 5 : T > 8 ? 2 : 1;
+    dctx.textAlign = 'center';
+    for (let t=0; t<=T+1e-9; t+=xstep) dctx.fillText(String(t), PX(t), m.t + ph + 15);
+    dctx.fillText('maalivahdin etäisyys maalista (m)', m.l + pw/2, h - 3);
+    // käyrä
+    dctx.strokeStyle = pal.accent || pal.keeper; dctx.lineWidth = 2; dctx.lineJoin = 'round';
+    dctx.beginPath(); pts.forEach(([t,v],i) => i ? dctx.lineTo(PX(t), PY(v)) : dctx.moveTo(PX(t), PY(v))); dctx.stroke();
+    // paras mahdollinen tässä tilanteessa
+    const opt = (() => { const m0 = st.manual; st.manual = false; const o = optimal(S, k, 30); st.manual = m0; return o; })();
+    dctx.fillStyle = pal.keeper; dctx.strokeStyle = pal.panel; dctx.lineWidth = 2;
+    dctx.beginPath(); dctx.arc(PX(opt.t), PY(opt.xg), 5, 0, Math.PI*2); dctx.fill(); dctx.stroke();
+    dctx.fillStyle = pal.ink; dctx.font = '500 12px Barlow, sans-serif';
+    dctx.textAlign = PX(opt.t) > m.l + pw*0.7 ? 'right' : 'left';
+    dctx.fillText(`paras ${f1(opt.t)} m, xG ${f3(opt.xg)}`, PX(opt.t) + (dctx.textAlign === 'left' ? 9 : -9), PY(opt.xg) - 8);
+    // oma maalivahti, jos se on linjalla
+    if (st.manual){
+      const Gk = keeperAt(S, 0, k), ln = k.fk ? 1 : Math.hypot(S.x - Gk.x, S.y - Gk.y) || 1;
+      const ux = k.fk ? 1 : (S.x - Gk.x)/ln, uy = k.fk ? 0 : (S.y - Gk.y)/ln;
+      const tp = (st.K.x - Gk.x)*ux + (st.K.y - Gk.y)*uy, lat = Math.abs((st.K.x - Gk.x)*uy - (st.K.y - Gk.y)*ux);
+      if (tp >= 0 && tp <= T){
+        dctx.strokeStyle = pal.keeper; dctx.setLineDash([4,3]); dctx.lineWidth = 1.5;
+        dctx.beginPath(); dctx.moveTo(PX(tp), m.t); dctx.lineTo(PX(tp), m.t + ph); dctx.stroke(); dctx.setLineDash([]);
+        if (lat > 0.3){ dctx.fillStyle = pal.ink2; dctx.textAlign = PX(tp) > m.l + pw*0.6 ? 'right' : 'left';
+          dctx.fillText(`${f1(lat)} m sivussa linjasta`, PX(tp) + (dctx.textAlign === 'left' ? 5 : -5), m.t + ph - 6); }
+      }
+    }
+    // osoitin
+    if (hoverT !== null && hoverT <= T){
+      const v = xgAt(S, keeperAt(S, hoverT, k), k).xg;
+      dctx.strokeStyle = pal.ink2; dctx.lineWidth = 1; dctx.beginPath(); dctx.moveTo(PX(hoverT), m.t); dctx.lineTo(PX(hoverT), m.t+ph); dctx.stroke();
+      dctx.fillStyle = pal.ink; dctx.strokeStyle = pal.panel; dctx.lineWidth = 2;
+      dctx.beginPath(); dctx.arc(PX(hoverT), PY(v), 4.5, 0, Math.PI*2); dctx.fill(); dctx.stroke();
+      const label = `${f1(hoverT)} m: xG ${f3(v)}`;
+      dctx.font = '500 12px Barlow, sans-serif'; const tw = dctx.measureText(label).width + 12;
+      let bx = PX(hoverT) + 8; if (bx + tw > w - 2) bx = PX(hoverT) - 8 - tw;
+      dctx.fillStyle = pal.panel; dctx.strokeStyle = pal.rule; dctx.lineWidth = 1;
+      dctx.beginPath(); dctx.rect(bx, m.t + 20, tw, 22); dctx.fill(); dctx.stroke();
+      dctx.fillStyle = pal.ink; dctx.textAlign = 'left'; dctx.fillText(label, bx + 6, m.t + 35);
+    }
   }
-  let down = false;
-  cv.addEventListener('pointerdown', e => { down = true; cv.setPointerCapture(e.pointerId); point(e); });
-  cv.addEventListener('pointermove', e => { if (down) point(e); });
-  cv.addEventListener('pointerup', () => { down = false; });
+  const depthT = e => { if (!depthInfo) return null; const b = dc.getBoundingClientRect(); const t = (e.clientX - b.left - depthInfo.m.l)/depthInfo.pw*depthInfo.T; return clamp(t, 0, depthInfo.T); };
+  dc.addEventListener('pointermove', e => { hoverT = depthT(e); schedule(); });
+  dc.addEventListener('pointerleave', () => { hoverT = null; schedule(); });
+  dc.addEventListener('pointerdown', e => {
+    const t = depthT(e); if (t === null) return;
+    const k = knobs(params()); const K = keeperAt(st.S, t, k);
+    st.K = {x:K.x, y:K.y}; st.manual = true; hoverT = t; syncOutputs(); regrid(false);
+  });
 
+  /* ---------- Kentän vuorovaikutus ---------- */
+  let drag = null;
+  const toField = e => { const b = cv.getBoundingClientRect(), s = b.width/W; return {x: clamp((e.clientY - b.top)/s - TOP, 0, DEPTH), y: clamp((e.clientX - b.left)/s - W/2, -W/2, W/2)}; };
+  cv.addEventListener('pointerdown', e => {
+    const P = toField(e), b = cv.getBoundingClientRect(), s = b.width/W;
+    const k = knobs(params()), K = solve(st.S, k, 14).K;
+    const dK = Math.hypot(P.x - K.x, P.y - K.y)*s, dS = Math.hypot(P.x - st.S.x, P.y - st.S.y)*s;
+    drag = (dK < 18 && dK < dS) ? 'K' : 'S';
+    if (drag === 'K' && !st.manual){ st.manual = true; st.K = {x:K.x, y:K.y}; syncOutputs(); }
+    cv.setPointerCapture(e.pointerId); move(P);
+  });
+  cv.addEventListener('pointermove', e => { if (drag) move(toField(e)); });
+  const end = () => { if (drag === 'K') regrid(false); drag = null; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  function move(P){
+    if (drag === 'K'){ st.K = {x: Math.max(0, P.x), y: P.y}; regrid(true); }
+    else if (!knobs(params()).pen){ st.S = P; schedule(); }
+  }
   cv.addEventListener('keydown', e => {
-    const k = {ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
-    if (!k) return; e.preventDefault();
-    mark = mark || {x:0, xd:11};
-    mark.x = Math.max(-W/2, Math.min(W/2, mark.x + k[0])); mark.xd = Math.max(0, Math.min(DEPTH, mark.xd + k[1]));
-    readout(); schedule();
+    const d = {ArrowLeft:[0,-0.5],ArrowRight:[0,0.5],ArrowUp:[-0.5,0],ArrowDown:[0.5,0]}[e.key];
+    if (!d) return; e.preventDefault();
+    if (e.shiftKey){
+      if (!st.manual){ st.K = {...solve(st.S, knobs(params()), 14).K}; st.manual = true; syncOutputs(); }
+      st.K = {x: clamp(st.K.x + d[0], 0, DEPTH), y: clamp(st.K.y + d[1], -W/2, W/2)}; regrid(false);
+    } else { st.S = {x: clamp(st.S.x + d[0], 0, DEPTH), y: clamp(st.S.y + d[1], -W/2, W/2)}; schedule(); }
   });
 
-  function syncOutputs(){ ids.forEach(k => el[k].nextElementSibling.textContent = fmt(parseFloat(el[k].value))); }
-  ids.forEach(k => el[k].addEventListener('input', () => { syncOutputs(); readout(); schedule(); }));
-
-  document.getElementById('diff').addEventListener('click', e => {
-    diffMode = !diffMode; e.currentTarget.setAttribute('aria-pressed', diffMode); legend(); schedule();
+  /* ---------- Säätimet ---------- */
+  SL.forEach(id => {
+    $(id).addEventListener('input', () => { syncOutputs(); regrid(true); });
+    $(id).addEventListener('change', () => regrid(false));
   });
-  document.getElementById('reset').addEventListener('click', () => {
-    ids.forEach(k => el[k].value = 0.5); syncOutputs(); readout(); schedule();
-  });
-  document.querySelectorAll('[data-p]').forEach(btn => btn.addEventListener('click', () => {
-    btn.dataset.p.split(',').forEach((v, i) => el[ids[i]].value = v); syncOutputs(); readout(); schedule();
+  document.querySelectorAll('[data-group]').forEach(b => b.addEventListener('click', () => {
+    if (b.disabled) return;
+    document.querySelectorAll(`[data-group="${b.dataset.group}"]`).forEach(x => x.setAttribute('aria-pressed', x === b));
+    if (b.dataset.group === 'tilanne'){
+      if (b.dataset.value === 'pilkku'){ st.S = {x:11, y:0}; st.manual = false; }
+      if (b.dataset.value === 'vapaa' && st.S.x < 16.5 && Math.abs(st.S.y) < 20.16){ st.S = {x:22, y:-6}; }
+      if (b.dataset.value !== 'avoin') st.manual = false;
+    }
+    syncOutputs(); regrid(false);
   }));
+  $('mode-auto').addEventListener('click', () => { st.manual = false; syncOutputs(); regrid(false); });
+  $('mode-manual').addEventListener('click', () => { if (!st.manual){ st.K = {...solve(st.S, knobs(params()), 14).K}; st.manual = true; } syncOutputs(); regrid(false); });
+  document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => {
+    b.dataset.preset.split(',').forEach(kv => { const [k, v] = kv.split(':'); $(k).value = v; });
+    syncOutputs(); regrid(false);
+  }));
+  $('diff').addEventListener('click', e => { st.diff = !st.diff; e.currentTarget.setAttribute('aria-pressed', st.diff); legend(); regrid(false); });
+  $('reset').addEventListener('click', () => {
+    SL.forEach(id => $(id).value = BASE[id]);
+    GR.forEach(g => document.querySelectorAll(`[data-group="${g}"]`).forEach(x => x.setAttribute('aria-pressed', x.dataset.value === BASE[g])));
+    st.manual = false; syncOutputs(); regrid(false);
+  });
 
-  window.addEventListener('resize', schedule);
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', schedule);
-  syncOutputs(); legend(); draw();
+  // välilehdet
+  const tabs = [$('tab-p'), $('tab-t')], panels = [$('panel-p'), $('panel-t')];
+  const selectTab = i => tabs.forEach((t, j) => { t.setAttribute('aria-selected', i === j); t.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(i));
+    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){ const n = (i + 1) % 2; selectTab(n); tabs[n].focus(); } });
+  });
+
+  let rw = 0;
+  window.addEventListener('resize', () => { if (cv.clientWidth !== rw){ rw = cv.clientWidth; baseGrid = null; regrid(false); } else schedule(); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { readPalette(); legend(); needHeat = true; schedule(); });
+
+  readPalette(); legend(); syncOutputs(); rw = cv.clientWidth; draw();
 })();
 </script>
 </body>
