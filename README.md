@@ -49,7 +49,9 @@ Sivu toimii avaamalla `index.html` selaimessa. Asennuksia tai käännösvaihetta
 - Pelaajapainikkeet asettavat laukojan ja maalivahdin arvot. Arvot ovat havainnollistavia arvioita, eivät mittauksia.
 - *Näytä ero keskitasoon* värittää kartan erotuksena keskitasosta. *Esimerkkitilanne* palauttaa kirjoituksen lopun esimerkin.
 - *Kopioi linkki tilanteeseen* tekee linkin, joka avaa simulaattorin juuri samaan tilanteeseen: pallo, säätimet, valinnat, näkymä sekä vedetyt maalivahti ja puolustajat. Tila on osoitteen kyselyosassa (`?s=…&p=…&g=…&k=…&d=…`).
-- *Oikeat laukaukset* lataa kuusi finaalilaukausta (MM 2022, EM 2024) tilannekuvineen. Pelaajat ovat keskitasoa, ja ruudulla näkyy mallin arvo, StatsBombin xG ja lopputulos.
+- *Oikeat laukaukset* lataa seitsemän finaalilaukausta (MM 2022, EM 2024) tilannekuvineen: viisi maalia, yksi torjunta ja yksi ohilaukaus. Pelitilanne, syötön tyyppi ja laukaisutapa on poimittu StatsBombin tapahtumadatasta, laukoja ja maalivahti saavat karkeasti arvioidut profiilit, ja henkinen paine on finaalissa 0,6 ja jatkoajalla 0,8. Ruudulla näkyy mallin arvo keskitason pelaajilla (sama kuin arvioinnissa), arvo profiileilla ja pelitilanteella, StatsBombin xG ja lopputulos. Osa profiileista (Messi, Mbappé, Emiliano Martínez, Pickford) on valittavissa myös pelaajapainikkeista.
+- *Syöttö jalkaan* on tavallinen syöttö. Sen kertoimet ovat samat kuin omalla kuljetuksella, mutta se kuvaa tilannetta oikein.
+- Kvanttilaukaus-välilehdellä on *virusten xG-simulaattori*: kaksoisrakokoe fullereeneilla mikrostadionilla (mittakaava 1 : 220 000 000). Potkun nopeus ja aukkojen väli muuttavat juovien väliä Λ = hL/(mvd), ja maaliodottama heiluu, kun juovat liukuvat maalin yli.
 - Syvyyskäyrä näyttää, miten maaliodottama muuttuu maalivahdin etäisyyden mukana. Käyrää napauttamalla maalivahti siirtyy.
 - Välilehdet ovat simulaattorin alla ja pysyvät näkyvissä vieritettäessä. Jokainen välilehti muistaa oman vierityskohtansa. Lihavoitu käsite vie Käsitteet-välilehdelle, ja *Palaa tekstiin* palauttaa samaan kohtaan. Välilehdille voi linkittää suoraan: `index.html#kvantti` ja `index.html#kasitteet`.
 
@@ -310,6 +312,8 @@ Idea, mallin rakenne ja muuttujien valinta ovat kirjoittajan (Juuso Jaakola). Te
 - Kvanttivälilehden täydellinen lähdeluettelo on sivulla.
 
 ## Versiohistoria
+
+- **28.9.2026 (3):** oikeiden laukausten pelitilanteet tapahtumadatasta, pelaajaprofiilit (osa valittavissa), seitsemäs laukaus (Lautaro Martínezin ohilaukaus), syöttövaihtoehto *Syöttö jalkaan*; kvanttivälilehdelle tarina virusten mikrostadionista, kuvat K1 (muuri kahdella aukolla) ja K2 (päätyraja laukojan silmin neljässä tilanteessa) sekä virusten xG-simulaattori.
 
 - **28.9.2026 (2):** ulkoinen testi kuudella turnauksella (17,8 % vs. StatsBomb 18,7 %); jaettava tilannelinkki; kuusi finaalilaukausta simulaattoriin; analyysiskriptit kansioon `analyysi/`.
 
