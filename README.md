@@ -4,9 +4,9 @@
 
 Juuso Jaakola, 2026
 
-Interaktiivinen simulaattori ja blogikirjoitus, joka rakentaa jalkapallon maaliodottaman (xG) fysiikasta: kulmasta, pallon lentoajasta, maalivahdin ulottuvuudesta, puolustajien varjoista ja sattumasta. Malli on sovitettu 38 318 oikeaan laukaukseen (StatsBomb Open Data, kausi 2015/16). Se selittää dataa lähes yhtä hyvin kuin StatsBombin oma koneoppimismalli, mutta jokainen sen luku tarkoittaa jotain fysikaalista.
+Interaktiivinen simulaattori ja blogikirjoitus, joka rakentaa jalkapallon maaliodottaman (xG) fysiikasta: kulmasta, pallon lentoajasta, maalivahdin ulottuvuudesta, puolustajien varjoista, pallon kaaresta ja pompusta sekä sattumasta. Malli on sovitettu 38 318 oikeaan laukaukseen (StatsBomb Open Data, kausi 2015/16). Se selittää dataa yhtä hyvin kuin StatsBombin oma koneoppimismalli, mutta jokainen sen luku tarkoittaa jotain fysikaalista.
 
-Sivulla on kolme välilehteä: **Kirjoitus** (malli ja sen sovitus), **Kvanttilaukaus** (miten klassinen laukaus eroaa elektronien laukauksista laboratorion varjostimelle) ja **Käsitteet**. Tämän ohjeen käsitteet on koottu kohtaan [11. Käsitteet](#11-käsitteet).
+Sivulla on kolme välilehteä: **Kirjoitus** (malli ja sen sovitus), **Kvanttilaukaus** (virukset potkivat fullereeneja kahden aukon läpi: miten klassinen laukaus eroaa kvanttilaukauksesta) ja **Käsitteet**. Tämän ohjeen käsitteet on koottu kohtaan [11. Käsitteet](#11-käsitteet).
 
 ---
 
@@ -20,7 +20,7 @@ Projekti on mallinrakennusharjoitus teoreettisen fysiikan hengessä:
 2. sovitetaan muutama vakio dataan
 3. katsotaan, mitä malli ennustaa ja mitä se jättää selittämättä.
 
-Kirjoituksessa on kolme tasoa: data ruudukkona, yksinkertainen perusfunktio ja fysikaalinen malli simulaattorina. Kvanttilaukaus-välilehti käyttää maaliodottamaa vertailukohtana: xG:n todennäköisyys on tietämättömyyttä yksityiskohdista (Gibbsin joukko, sään ensemble-ennusteet), kun taas elektronien kaksoisrakokokeessa amplitudit summautuvat ja toisen raon avaaminen voi vähentää osumia maaliin. Välilehti käsittelee Ballentinen ensemble-tulkintaa, piilomuuttujien ansaa, Bellin ja Kochenin–Speckerin tuloksia sekä sitä, mitä mikromaailmasta voi kokea arjessa.
+Kirjoituksessa on kolme tasoa: data ruudukkona, yksinkertainen perusfunktio ja fysikaalinen malli simulaattorina. Kvanttilaukaus-välilehti käyttää maaliodottamaa vertailukohtana: xG:n todennäköisyys on tietämättömyyttä yksityiskohdista (Gibbsin joukko, sään ensemble-ennusteet), kun taas fullereenien kaksoisrakokokeessa amplitudit summautuvat ja toisen raon avaaminen voi vähentää osumia maaliin. Välilehti käsittelee Ballentinen ensemble-tulkintaa, piilomuuttujien ansaa, Bellin ja Kochenin–Speckerin tuloksia sekä sitä, mitä mikromaailmasta voi kokea arjessa.
 
 ## 2. Tiedostot ja käyttö
 
@@ -28,8 +28,10 @@ Kirjoituksessa on kolme tasoa: data ruudukkona, yksinkertainen perusfunktio ja f
 |---|---|
 | `index.html` | Koko sivu: teksti, simulaattori, malli ja ruudukon data yhdessä tiedostossa |
 | `README.md` | Tämä ohje |
-| `analyysi/` | Skriptit, joilla luvut voi toistaa: datan haku, piirteet, malli, sovitus, arviointi ja bootstrap (kohta 12) |
-| `maaliodottama-muistio.pdf` | Tukijoiden kaksisivuinen muistio ja vastaukset kahteen kysymykseen (vastike, ei jaeta sivulla) |
+| `analyysi/` | Skriptit, joilla luvut voi toistaa: datan haku, piirteet, malli, sovitus, pystysuunta, arviointi ja bootstrap (kohta 12) |
+| `muistio.tex` | Tukijoiden muistio LaTeX-lähdekoodina (Overleaf, pdfLaTeX); vastike, ei jaeta sivulla |
+| `maaliodottama-muistio.pdf` | Muistion käännetty versio |
+| `tutkimus_ja_suunnittelu.tex` | Tutkimus- ja julkaisusuunnitelma: tutkimuskysymykset, julkaisukanavat, levitys, jatkokehitys ja aikataulu |
 
 Sivu toimii avaamalla `index.html` selaimessa. Asennuksia tai käännösvaihetta ei tarvita. Fontit ladataan Google Fontsista, mutta sivu toimii ilmankin.
 
@@ -87,19 +89,34 @@ Maaliin on kolme reittiä: sattuma *p*₀, laukaus maalivahdin ja puolustajien o
 
 **5.2 Aika ja ulottuvuus.** `t_f = (L/v₀)(e^(s/L) − 1)`, `Δt = t_f − t_k`, `R = r₀ + v_k·Δt`. Ilmanvastus (vaimennusmatka *L* = 80 m) pidentää lentoaikaa. Maalivahti reagoi ajassa *t*_k ja syöksyy sen jälkeen nopeudella *v*_k. Laukojan silmin hän peittää kulman ±arctan(*R*/*s*).
 
-**5.3 Torjunnan pettäminen.** `ε = ε_max · e^(−m/τ)`. Palloon ehtiminen ei ole torjunta: mitä pienempi aikamarginaali *m*, sitä useammin torjunta pettää. Lähellä maaliviivaa osittainen torjunta jatkaa helpommin maaliin, ja ulos tulleen maalivahdin ohi pääsee läheltä myös jalkojen välistä.
+**5.3 Vuoto.** `ε = ε_max · e^(−m/τ)`. Palloon ehtiminen ei ole torjunta: vuoto ε on todennäköisyys, että pallo menee maaliin, vaikka maalivahti ehtii siihen. Mitä pienempi aikamarginaali *m*, sitä suurempi vuoto. Lähellä maaliviivaa osittainen torjunta jatkaa helpommin maaliin, ja ulos tulleen maalivahdin ohi pääsee läheltä myös jalkojen välistä.
 
-**5.4 Puolustajien varjot ja paine.** `α_d = arctan(r_d / s_d)`, `σ_p → σ_p·g(r)`, `g(r) = 1 + k_i·1,16·(e^(−r/0,6 m) − e^(−2,7 m/0,6 m))`, `k_i = 1 − 0,5·(i_p − 0,35)`, `r = min(r_vapaa, lähin puolustaja)`, `r_vapaa = max(5 m·(1 − paine), 0,1 m)`. Jokainen puolustaja peittää laukojan silmin kulmavälin, josta hän pysäyttää osuuden *q*_d. Lähellä oleva puolustaja peittää suuren kulman, ja laukoja tähtää varjojen ohi. Paine on lähimmän vastustajan etäisyys *r*: kyljessä kiinni (0,1 m) keskitasoisen laukojan hajonta kaksinkertaistuu (×2,0), puolen metrin päästä se kasvaa 1,5-kertaiseksi ja yli kahden metrin päässä vaikutus on lähes nolla. Sijoitusäly ei muuta vapaata tilaa vaan pienentää paineen haittaa kertoimella *k*_i (arvio).
+**5.4 Puolustajien varjot ja paine.** `α_d = arctan(r_d / s_d)`, `σ_p → σ_p·g(r)`, `g(r) = 1 + k_i·1,87·(e^(−r/0,6 m) − e^(−2,7 m/0,6 m))`, `k_i = 1 − 0,5·(i_p − 0,35)`, `r = min(r_vapaa, lähin puolustaja)`, `r_vapaa = max(5 m·(1 − paine), 0,1 m)`. Jokainen puolustaja peittää laukojan silmin kulmavälin, josta hän pysäyttää osuuden *q*_d. Lähellä oleva puolustaja peittää suuren kulman, ja laukoja tähtää varjojen ohi. Paine on lähimmän vastustajan etäisyys *r*: kyljessä kiinni (0,1 m) keskitasoisen laukojan hajonta kasvaa 2,6-kertaiseksi, puolen metrin päästä 1,8-kertaiseksi ja yli kahden metrin päässä vaikutus on pieni. Sijoitusäly ei muuta vapaata tilaa vaan pienentää paineen haittaa kertoimella *k*_i (arvio).
 
-**5.5 Tähtäys ja hajonta.** `P_laukaus = V · Σᵢ εᵢ · [Φ((bᵢ − μ)/σ_tot) − Φ((aᵢ − μ)/σ_tot)]`. Maalin näkökulma jakautuu väleihin: vapaa maali, maalivahdin vyöhykkeet ja puolustajien varjot. Laukoja valitsee suunnan μ, joka tekee summasta suurimman. Toteutunut suunta vaihtelee normaalijakauman mukaan (suuntahajonta σ_p), ja *V* on todennäköisyys pysyä riman alla. Kirjoituksen kuva 3 näyttää laukauksen laukojan silmin matemaattisella päätyrajalla: maahan suuntautuvat laukaukset pomppaavat, ja pomppu lasketaan peilikuvamenetelmällä. Kun pystyhajonta on 2,9 m, pomput mukaan lukien riman alle jää 59 % laukauksista, saman verran kuin *V* antaa 25 metristä. Tulkinta on jälkikäteinen.
+**5.5 Tähtäys ja hajonta.** `P_laukaus = V · Σᵢ εᵢ · [Φ((bᵢ − μ)/σ_tot) − Φ((aᵢ − μ)/σ_tot)]`. Maalin näkökulma jakautuu väleihin: vapaa maali, maalivahdin vyöhykkeet ja puolustajien varjot. Laukoja valitsee suunnan μ, joka tekee summasta suurimman. Toteutunut suunta vaihtelee normaalijakauman mukaan (suuntahajonta σ_p), ja *V* on todennäköisyys alittaa rima suoraan tai pompun kautta (5.6).
 
-**5.6 Vippaus (lob).** Pallo nostetaan kaarella ulos tulleen maalivahdin yli. Vippaus onnistuu, jos maalivahti ei ehdi perääntyä viivalle ennen kuin pallo putoaa. Kierrettä malli ei tunne.
+**5.6 Korkeus: kaari, pomppu ja rima.**
 
-**5.7 Tyhjä maali, laukauksen kolmio ja käsisääntö.** `P_laukaus = w·P_maalivahti + (1 − w)·P_tyhjä`, `w = max(0, 1 − s⊥/4 m)`. Maalivahdin vaikutus hiipuu neljän metrin matkalla laukauksen kolmion ulkopuolella ja katoaa pallon takana. Yli puoli metriä rangaistusalueen ulkopuolella maalivahti on kenttäpelaaja ilman käsiä.
+```
+sin β = (z − r + g·t_f²/2) / (v₀·t_f),   β ~ N(β_a, σ_β)
+z_a = max(r, 0,175 m + 0,18·(d − 16 m)),   σ_β = √((k_v·σ)² + (σ_z / (v₀·t_f))²)
+V = (1 − q(d)) · Φ((β_H − β_a) / σ_β),   q(d) = 0,0017 + 0,135·e^(−d/8 m)
+v_z → −e·v_z maahan osuessa,   e = 0,6
+```
 
-**5.8 Sattuma ja kantama.** `p₀ = 0,065 · e^(−d/10,7 m) · e^(−(Δy/15 m)²) · Φ((R_max − d)/5 m)`, `R_max = L·ln(1 + (0,85·v_p)²/(gL))`. Kimmokkeet ja virheet antavat pienen pohjan, joka on suurin maalin edessä. Kantama katkaisee kaukaiset vedot: keskitasoisella laukojalla (28 m/s) se on 43 m.
+Jalka osuu palloon keskeltä tai alta, joten pallo lähtee lähes aina ylöspäin. Rata on paraabeli, jonka lentoaika *t*_f tulee ilmanvastuksesta (5.2). Kulma β, jolla pallon keskipiste (säde *r* = 0,11 m) on maaliviivalla korkeudella *z*, saadaan heittoliikkeestä. Maahan osuva pallo pomppaa: pystynopeus kääntyy ja kertautuu restituutiolla *e* = 0,6 (FIFAn tekonurmivaatimus: kahdesta metristä pudotettu pallo nousee 0,60–0,85 m, joten *e* = √(*h*/2 m) ≈ 0,55–0,65). Alaspäin potkaistu pallo kimpoaa heti jalan juuressa. Pompun jälkeen pallo jää matalaksi (25 metristä 2σ-alue enintään 0,4 m), joten pomppulaukaus alittaa riman aina ja *V* saadaan suljetussa muodossa. Osuus *q*(*d*) epäonnistuu ja lentää korkealle, useimmin läheltä.
 
-**Tilannevalinnat** kytkeytyvät samoihin suureisiin. Esimerkiksi pusku kasvattaa hajontaa, hidastaa palloa ja lyhentää kantaman 13,6 metriin. Vapaapotku poistaa puolustajat vetolinjalta mutta lisää muurin. Paineen säädin asettaa vapaan tilan viidestä metristä 0,1 metriin.
+Kuusi pystysuunnan vakiota on sovitettu 21 548 jalkalaukauksen loppukorkeuteen (StatsBombin `end_location`-korkeus viidessä luokassa, skripti `analyysi/pysty.py`): tähtäyskorkeus *z*_a (maata pitkin alle 16 metristä, sitten +0,18 m metriä kohti), pystyhajonnan suhde vaakahajontaan *k*_v = 0,45, lisähajonta σ_z = 0,58 m ja taivaalle lähtevien osuus *q*(*d*). Tähtäys maalin puoliväliin (1,22 m) kaikilta etäisyyksiltä hylättiin: häviö 1,554 vastaan 1,514 (vertailuna pelkkä korkeusluokkien jakauma 1,541). Data vahvistaa epäsymmetrian: 22–27 metristä riman yli 34 % ja maata pitkin (alle 0,3 m) 21 %, mutta 11–14 metristä 17 % ja 34 %. Kuva 3 näyttää laukojan näkymän päätyrajalle (pompanneet peilattuina maan alle, litistynyt alue), lähikuvan maalista ja lintuperspektiivin ensimmäisistä maakosketuksista. 25 metristä 45 % lentää riman yli, 20 % alittaa riman suoraan ja 35 % pomppaa ennen päätyrajaa.
+
+Aiempi versio laski pompun peilikuvamenetelmällä. Se oli väärin: peilikuvassa pallo suuntautui maahan yhtä usein kuin ylös, painovoima vetää palloa alas myös pompun jälkeen, ja pompussa katoaa energiaa. Puskuille *V* on edelleen kulmasääntö `Φ(0,6·arctan(H/d)/(0,7σ))`.
+
+**5.7 Vippaus (lob).** Pallo nostetaan kaarella ulos tulleen maalivahdin yli. Vippaus onnistuu, jos maalivahti ei ehdi perääntyä viivalle ennen kuin pallo putoaa. Kierrettä malli ei tunne.
+
+**5.8 Tyhjä maali, laukauksen kolmio ja käsisääntö.** `P_laukaus = w·P_maalivahti + (1 − w)·P_tyhjä`, `w = max(0, 1 − s⊥/4 m)`. Maalivahdin vaikutus hiipuu neljän metrin matkalla laukauksen kolmion ulkopuolella ja katoaa pallon takana. Yli puoli metriä rangaistusalueen ulkopuolella maalivahti on kenttäpelaaja ilman käsiä.
+
+**5.9 Sattuma ja kantama.** `p₀ = 0,051 · e^(−d/11,0 m) · e^(−(Δy/15 m)²) · Φ((R_max − d)/5 m)`, `R_max = L·ln(1 + (0,85·v_p)²/(gL))`. Kimmokkeet ja virheet antavat pienen pohjan, joka on suurin maalin edessä. Kantama katkaisee kaukaiset vedot: keskitasoisella laukojalla (28 m/s) se on 43 m.
+
+**Tilannevalinnat** kytkeytyvät samoihin suureisiin. Esimerkiksi pusku kasvattaa hajontaa, hidastaa palloa ja lyhentää kantaman 14,0 metriin. Vapaapotku poistaa puolustajat vetolinjalta mutta lisää muurin. Paineen säädin asettaa vapaan tilan viidestä metristä 0,1 metriin.
 
 ## 6. Sovitus ja arviointi
 
@@ -107,19 +124,48 @@ Vakiot on sovitettu **suurimman uskottavuuden menetelmällä**. Jokaiselle lauka
 
 | Sovitettu vakio | Arvo | Merkitys |
 |---|---|---|
-| ε_max | 0,462 | torjunnan pettämisen yläraja (keskitasolla 0,36) |
-| P0 | 0,065 | sattumien taso maalin edessä |
-| P0L | 10,7 m | sattumien vaimenemismatka |
-| puskun hajonta | × 2,18 | puskun suuntahajonta suhteessa jalkaan |
-| puskun kantama | 13,6 m | kuinka kauas pusku kantaa |
-| tyhjän maalin hajonta | × 0,85 | rauhallinen sijoitus tyhjään maaliin |
-| r_d | 0,57 m | puolustajan varjon puolileveys |
-| q_d | 0,75 | blokin varmuus varjossa |
+| ε_max | 0,485 | vuodon yläraja (keskitasolla 0,39) |
+| P0 | 0,051 | sattumien taso maalin edessä |
+| P0L | 11,0 m | sattumien vaimenemismatka |
+| puskun hajonta | × 1,93 | puskun suuntahajonta suhteessa jalkaan |
+| puskun kantama | 14,0 m | kuinka kauas pusku kantaa |
+| tyhjän maalin hajonta | × 0,83 | rauhallinen sijoitus tyhjään maaliin |
+| r_d | 0,63 m | puolustajan varjon puolileveys |
+| q_d | 0,72 | blokin varmuus varjossa |
 | ohitus läheltä | 0,99 | ulos tulleen maalivahdin läpimeno (sallitun välin rajalla) |
-| vapaapotkun hajonta | × 0,43 | vapaapotkun tarkkuus |
-| paineen voimakkuus | 1,16 | kuinka paljon lähellä oleva vastustaja kasvattaa hajontaa |
+| vapaapotkun hajonta | × 0,46 | vapaapotkun tarkkuus |
+| paineen voimakkuus | 1,87 | kuinka paljon lähellä oleva vastustaja kasvattaa hajontaa |
 
-Käsin on asetettu keskitasoisen laukojan arvot (σ_p = 21°, *v*_p = 28 m/s, sijoitusäly 0,35), torjunnan aikavakio τ = 1,0 s, paineen vaimenemismatka 0,6 m ja neutraali etäisyys 2,7 m. Data ei erottele niitä muista vakioista (katso *degeneraatio* kohdassa 11). Reaktioaika, syöksynopeus, rimaehto ja ilmanvastus ovat fysikaalisia arvioita. Rangaistuspotkun hajonta on kalibroitu niin, että xG on 0,75.
+**Epävarmuus (bootstrap).** Sovitus toistettiin 40 kertaa aineistoilla, joissa ottelut arvottiin takaisinpanolla (`boot_par.sh`, yhteenveto `boot_summary.py`). Välit ovat 2,5 %:n ja 97,5 %:n persentiilit. Ne ovat suuntaa antavia, koska jokainen toisto lähti koko aineiston sovituksesta ja käytti 250 Nelder–Mead-askelta. Sallitun välin rajalla oleva ohitustermi ei juuri liiku.
+
+| Vakio | Sovitus | 95 %:n väli |
+|---|---|---|
+| ε_max | 0,485 | 0,393–0,522 |
+| P0 | 0,051 | 0,040–0,081 |
+| P0L | 11,0 m | 7,2–17,0 m |
+| puskun hajonta | × 1,93 | 1,82–2,18 |
+| puskun kantama | 14,0 m | 12,5–20,8 m |
+| tyhjän maalin hajonta | × 0,83 | 0,64–0,93 |
+| r_d | 0,63 m | 0,55–0,76 m |
+| q_d | 0,72 | 0,64–0,79 |
+| vapaapotkun hajonta | × 0,46 | 0,34–0,56 |
+| paineen voimakkuus | 1,87 | 1,41–2,40 |
+
+Tiukimmin data määrää puolustajan varjon, blokin varmuuden ja puskun hajonnan. Paineen voimakkuus on selvästi nollasta poikkeava, mutta sen suuruus on epävarma. Puskun kantama ja sattumien vaimenemismatka ovat löyhästi määrättyjä, koska kaukaa ammuttuja puskuja ja maaleja on vähän.
+
+Pystysuunnan vakiot on sovitettu erikseen loppukorkeuksiin (5.6):
+
+| Sovitettu vakio | Arvo | Merkitys |
+|---|---|---|
+| ZA | 0,175 m | tähtäyskorkeus 16 metristä |
+| ZB | 0,180 | tähtäyskorkeuden kasvu metriä kohti |
+| KV | 0,449 | pystyhajonnan suhde vaakahajontaan |
+| SZ | 0,579 m | korkeuden lisähajonta (kierre, lepatus, kimmokkeet, kirjausvirhe) |
+| SK0, SK1 | 0,0017, 0,135 | taivaalle lähtevien osuus q(d) = SK0 + SK1·e^(−d/8 m) |
+
+Kokeilin myös yhteissovitusta, jossa pystysuunnan vakiot sovitettiin maaleihin yhdessä xG-vakioiden kanssa. Tähtäyskorkeuden kasvu muuttui negatiiviseksi, mikä on epäfysikaalista, joten pystysuunta sovitetaan korkeuksiin, joista se on suoraan mitattu.
+
+Käsin on asetettu keskitasoisen laukojan arvot (σ_p = 21°, *v*_p = 28 m/s, sijoitusäly 0,35), torjunnan aikavakio τ = 1,0 s, paineen vaimenemismatka 0,6 m ja neutraali etäisyys 2,7 m. Data ei erottele niitä muista vakioista (katso *degeneraatio* kohdassa 11). Reaktioaika, syöksynopeus, restituutio ja ilmanvastus ovat fysikaalisia arvioita. Rangaistuspotkun hajonta on kalibroitu niin, että xG on 0,75 (kerroin 0,174).
 
 **Arviointi logaritmisella häviöllä.** Parannus kertoo, kuinka paljon malli pienentää häviötä verrattuna siihen, että jokainen laukaus saa arvon 0,095.
 
@@ -128,20 +174,20 @@ Käsin on asetettu keskitasoisen laukojan arvot (σ_p = 21°, *v*_p = 28 m/s, si
 | Etäisyys | 10,9 % |
 | Kulma | 10,4 % |
 | Perusfunktio | 11,8 % |
-| Simulaattori, pelkkä paikka ja laukaisutapa | 11,9 % |
-| Simulaattori, todelliset maalivahdin ja puolustajien paikat | 20,9 % |
+| Simulaattori, pelkkä paikka ja laukaisutapa | 12,0 % |
+| Simulaattori, todelliset maalivahdin ja puolustajien paikat | 21,1 % |
 | StatsBombin xG | 21,0 % |
 
 **Kalibrointi ryhmittäin** (toteutunut / malli):
 
 | Ryhmä | Toteutunut | Malli |
 |---|---|---|
-| Puskut | 10,7 % | 10,7 % |
-| Vapaapotkut | 6,4 % | 6,6 % |
-| Volleyt | 10,5 % | 10,4 % |
-| 16,5–22 m | 4,8 % | 4,6 % |
-| Ei puolustajia lähellä | 26,4 % | 22,6 % |
-| 2 puolustajaa | 6,6 % | 6,9 % |
+| Puskut | 10,7 % | 10,6 % |
+| Vapaapotkut | 6,4 % | 6,1 % |
+| Volleyt | 10,5 % | 11,0 % |
+| 16,5–22 m | 4,8 % | 4,7 % |
+| Ei puolustajia lähellä | 26,4 % | 24,5 % |
+| 2 puolustajaa | 6,6 % | 7,1 % |
 
 
 ### 6.1 Ulkoinen testi
@@ -153,54 +199,56 @@ Malli ajettiin sellaisenaan, ilman uudelleensovitusta, kuuteen turnaukseen, joit
 | Etäisyys | 10,9 % | 8,5 % | 6,5–10,9 % |
 | Kulma | 10,4 % | 8,2 % | 5,9–10,6 % |
 | Perusfunktio | 11,8 % | 9,4 % | 7,5–12,0 % |
-| Simulaattori, pelkkä paikka ja laukaisutapa | 11,9 % | 10,2 % | 7,6–13,6 % |
-| Simulaattori, todelliset paikat | 20,9 % | 17,8 % | 14,8–20,6 % |
+| Simulaattori, pelkkä paikka ja laukaisutapa | 12,0 % | 10,0 % | 7,5–13,7 % |
+| Simulaattori, todelliset paikat | 21,1 % | 17,8 % | 14,7–20,8 % |
 | StatsBombin xG | 21,0 % | 18,7 % | 16,1–21,6 % |
 
-Fysiikkamalli on perusfunktiota 8,4 prosenttiyksikköä parempi (väli 5,9–9,6), ja StatsBomb on fysiikkamallia 0,9 yksikköä edellä (väli 0,0–1,9). StatsBombin malli ei välttämättä ole aidosti ulkopuolinen, koska sen opetusaineistoa ei ole julkaistu.
+Fysiikkamalli on perusfunktiota 8,4 prosenttiyksikköä parempi (väli 5,8–9,7), ja StatsBomb on fysiikkamallia 0,9 yksikköä edellä (väli 0,0–2,0). StatsBombin malli ei välttämättä ole aidosti ulkopuolinen, koska sen opetusaineistoa ei ole julkaistu.
 
 | Turnaus | Laukauksia | Maaleja | Perusfunktio | Simulaattori | StatsBomb |
 |---|---|---|---|---|---|
-| MM 2018 | 1638 | 8,2 % | 10,6 % | 14,9 % | 16,9 % |
-| MM 2022 | 1430 | 10,6 % | 12,5 % | 21,8 % | 21,5 % |
-| EM 2020 | 1234 | 9,9 % | 10,0 % | 19,1 % | 22,3 % |
-| EM 2024 | 1304 | 7,5 % | 6,8 % | 15,6 % | 16,4 % |
-| Copa América 2024 | 741 | 8,5 % | 5,1 % | 16,6 % | 17,5 % |
-| Afrikan MM 2023 | 1162 | 8,4 % | 7,8 % | 17,6 % | 16,2 % |
+| MM 2018 | 1638 | 8,2 % | 10,6 % | 14,6 % | 16,9 % |
+| MM 2022 | 1430 | 10,6 % | 12,5 % | 22,1 % | 21,5 % |
+| EM 2020 | 1234 | 9,9 % | 10,0 % | 19,4 % | 22,3 % |
+| EM 2024 | 1304 | 7,5 % | 6,8 % | 15,8 % | 16,4 % |
+| Copa América 2024 | 741 | 8,5 % | 5,1 % | 16,8 % | 17,5 % |
+| Afrikan MM 2023 | 1162 | 8,4 % | 7,8 % | 17,1 % | 16,2 % |
 
 **Kalibrointi turnauksissa** (simulaattori todellisilla paikoilla):
 
 | Ryhmä | Laukauksia | Toteutunut | Malli | StatsBomb |
 |---|---|---|---|---|
-| Puskut | 1370 | 10,0 % | 10,5 % | 11,1 % |
-| Vapaapotkut | 319 | 4,4 % | 6,6 % | 3,9 % |
-| Volleyt | 1413 | 9,3 % | 10,6 % | 10,6 % |
-| Alle 11 m | 2125 | 17,6 % | 18,6 % | 18,0 % |
-| 11–16,5 m | 1835 | 9,6 % | 9,2 % | 10,0 % |
-| 16,5–22 m | 1716 | 4,2 % | 4,3 % | 4,7 % |
-| Yli 22 m | 1833 | 2,6 % | 2,5 % | 2,2 % |
-| Ei puolustajia lähellä | 969 | 23,7 % | 21,8 % | 22,9 % |
-| 2 puolustajaa | 1869 | 6,8 % | 7,4 % | 7,1 % |
-| Lähin vastustaja alle 1 m | 1283 | 9,2 % | 10,4 % | 10,8 % |
+| Puskut | 1370 | 10,0 % | 10,3 % | 11,1 % |
+| Vapaapotkut | 319 | 4,4 % | 6,1 % | 3,9 % |
+| Volleyt | 1413 | 9,3 % | 11,3 % | 10,6 % |
+| Alle 11 m | 2125 | 17,6 % | 19,3 % | 18,0 % |
+| 11–16,5 m | 1835 | 9,6 % | 10,2 % | 10,0 % |
+| 16,5–22 m | 1716 | 4,2 % | 4,4 % | 4,7 % |
+| Yli 22 m | 1833 | 2,6 % | 2,3 % | 2,2 % |
+| Ei puolustajia lähellä | 969 | 23,7 % | 23,6 % | 22,9 % |
+| 2 puolustajaa | 1869 | 6,8 % | 7,6 % | 7,1 % |
+| Lähin vastustaja alle 1 m | 1283 | 9,2 % | 9,9 % | 10,8 % |
 
-Vapaapotkuissa malli on liian optimistinen (ero noin 1,6 keskihajontaa). Kymmenyksittäin ennuste ja toteuma eroavat enintään 1,3 prosenttiyksikköä.
+Vapaapotkuissa malli on liian optimistinen (ero noin 1,3 keskihajontaa). Kymmenyksittäin ennuste ja toteuma eroavat yhdeksässä ryhmässä enintään 1,7 prosenttiyksikköä, mutta ylimmässä kymmenyksessä malli antaa 39,6 % ja toteuma on 36,5 %. Sama näkyy alle 11 metrin ja volleylaukauksissa: uusi pystymalli päästää matalat lähilaukaukset riman alle varmemmin kuin vanha kulmasääntö, ja turnauksissa se on hieman liian optimistinen.
 
 ## 7. Keskeiset tulokset
 
-- **Paine riippuu siitä, miten se mitataan.** Kyllä tai ei -merkintänä paineen oma vaikutus katoaa, kun puolustajien paikat otetaan mukaan. Lähimmän vastustajan etäisyytenä mitattuna se palaa, mutta vain lähellä: kyljessä kiinni oleva vastustaja kaksinkertaistaa hajonnan ja pudottaa maaliodottamaa yli 40 %, mutta kahden metrin jälkeen vaikutus on lähes nolla.
-- **Puolustaja on 1,1 metrin varjo**, joka pysäyttää kolme neljästä siihen osuvasta laukauksesta. Rangaistusalueen rajalta keskeltä veto on ilman puolustajia 0,091 ja yhden puolustajan kanssa 0,054.
-- **Paras maalivahdin paikka on 0,8–1,0 metriä viivan edessä** keskeltä ammuttuja 11–16,5 metrin vetoja vastaan. Kauempaa ammuttua vetoa vastaan kannattaa tulla pidemmälle.
-- **Yksilöt ratkaisevat.** Samasta paikasta veto on Rayaa vastaan 0,047 ja divarin varamaalivahtia vastaan 0,089.
+- **Paine riippuu siitä, miten se mitataan.** Kyllä tai ei -merkintänä paineen oma vaikutus katoaa, kun puolustajien paikat otetaan mukaan. Lähimmän vastustajan etäisyytenä mitattuna se palaa, mutta vain lähellä: kyljessä kiinni oleva vastustaja kasvattaa hajonnan 2,6-kertaiseksi ja pudottaa maaliodottamaa 59 %, mutta kahden metrin jälkeen vaikutus on pieni.
+- **Puolustaja on 1,3 metrin varjo**, joka pysäyttää lähes kolme neljästä siihen osuvasta laukauksesta. Rangaistusalueen rajalta keskeltä veto on ilman puolustajia 0,108 ja yhden puolustajan kanssa 0,057.
+- **Paras maalivahdin paikka on 0,7–1,0 metriä viivan edessä** keskeltä ammuttuja 11–16,5 metrin vetoja vastaan. Kauempaa ammuttua vetoa vastaan kannattaa tulla pidemmälle.
+- **Yksilöt ratkaisevat.** Samasta paikasta veto on Rayaa vastaan 0,048 ja divarin varamaalivahtia vastaan 0,095.
 - **Tyhjä maali ei ole varma.** Datassa 55 % laukauksista, joissa maalivahti oli yli kolme metriä pallon takana, meni sisään.
-- **Kaukolaukauksista lähes puolet on mallissa sattumaa.** 25 metristä 0,006 kokonaisarvosta 0,014 tulee sattumien pohjasta.
+- **Kaukolaukauksista yli kolmannes on mallissa sattumaa.** 25 metristä 0,005 kokonaisarvosta 0,014 tulee sattumien pohjasta.
+- **Kaukaa pallo nousee, läheltä se tulee maata pitkin.** 22–27 metristä 34 % laukauksista ylittää riman ja 21 % tulee maata pitkin, 11–14 metristä 17 % ja 34 %. Pompun jälkeen pallo jää matalaksi, joten ilmassa päätyrajan ylittää 25 metristä 65 % ja ennen sitä pomppaa 35 %.
+- **Syöttö kannattaa useammin kuin luulisi.** Rangaistusalueen rajalta (0,057) kannattaa syöttää kuuden metrin päähän vapaalle kaverille, jos syöttö onnistuu yli 15 %:ssa.
 - **Tulos kestää uuden aineiston.** Kuudessa turnauksessa, joita sovituksessa ei käytetty, fysiikkamalli pienensi häviötä 17,8 %, perusfunktio 9,4 % ja StatsBomb 18,7 %.
 - **Hyvä sovitus ei todista mekanismia.** Tarkempi laukoja ja vuotavampi maalivahti selittävät samat maalit lähes yhtä hyvin.
 
 ## 8. Rajoitukset
 
 - Vakiot on sovitettu yhteen seurakauteen. Ulkoinen testi on tehty turnauksilla, jotka ovat pieniä ja erilaisia kuin sarjaottelut. Toista seurakautta malli ei ole vielä kohdannut.
-- Vapaapotkuissa malli oli turnauksissa liian optimistinen (6,6 % vastaan toteutunut 4,4 %).
-- Maali on yksiulotteinen: korkeus näkyy vain rimaehtona, vippauksena ja sylivälin vaikutuksena. Pomppu on mukana vain rimaehdon tulkintana (kuva 3).
+- Vapaapotkuissa malli oli turnauksissa liian optimistinen (6,1 % vastaan toteutunut 4,4 %), ja parhaiden paikkojen kymmenyksessä 39,6 % vastaan 36,5 %.
+- Korkeus on mukana vain rimaehtona: maalivahti torjuu yhtä hyvin ylä- ja alakulmaan, tähtäyskorkeus on sovitettu suora viiva (noin 29 metristä alkaen riman yläpuolella) ja lähtökulma normaalijakautunut. Kierrettä ja tuulta ei ole, ja pompussa vaakanopeus säilyy.
 - Puolustajat ovat samanlevyisiä kiekkoja, jotka eivät liiku. Paine on pelkkä etäisyys: malli ei tiedä, onko painostaja edessä, sivulla vai takana.
 - Osa termeistä on muodoltaan arvauksia: vippaus, maaliviivan läpimeno ja ohitus läheltä. Ohituksen kerroin asettui sallitun välin rajalle, mikä viittaa puuttuvaan rakenteeseen.
 - Pelaajaprofiilit, henkinen paine, maalivahdin häirintä ja syötön tyyppi ovat arvioita ilman dataa.
@@ -218,16 +266,17 @@ Vapaapotkuissa malli on liian optimistinen (ero noin 1,6 keskihajontaa). Kymmeny
 
 Tehtävät vievät mallia kohti tutkimustasoa. Jokaisessa on tavoite, toimenpide ja mittari, jolla onnistumista arvioidaan.
 
-1. **Erillinen testiaineisto.** Turnaustesti on tehty (kohta 6.1). Seuraava askel: sovita malli kolmeen sarjaan ja testaa neljännellä, tai käytä ristiinvalidointia. Jaa aineisto otteluittain, ei laukauksittain, koska saman ottelun laukaukset riippuvat toisistaan. *Mittari:* testiaineiston parannus verrattuna 20,9 %:iin.
-2. **Epävarmuus näkyviin.** Arvo otteluita takaisinpoiminnalla (bootstrap) ja sovita malli uudelleen satoja kertoja. Anna jokaiselle vakiolle ja parannukselle 95 %:n luottamusväli. Piirrä häviö aikavakion τ ja paineen vaimenemismatkan funktiona (profiiliuskottavuus). *Mittari:* kuinka leveitä välit ovat ja mitkä vakiot data todella määrää.
+1. **Erillinen testiaineisto.** Turnaustesti on tehty (kohta 6.1). Seuraava askel: sovita malli kolmeen sarjaan ja testaa neljännellä, tai käytä ristiinvalidointia. Jaa aineisto otteluittain, ei laukauksittain, koska saman ottelun laukaukset riippuvat toisistaan. *Mittari:* testiaineiston parannus verrattuna 21,1 %:iin.
+2. **Epävarmuus näkyviin.** Ensimmäiset 40 bootstrap-toistoa on tehty (kohta 6). Arvo otteluita takaisinpoiminnalla satoja kertoja ja aloita jokainen sovitus eri lähtöarvoista. Anna jokaiselle vakiolle ja parannukselle 95 %:n luottamusväli. Piirrä häviö aikavakion τ ja paineen vaimenemismatkan funktiona (profiiliuskottavuus). *Mittari:* kuinka leveitä välit ovat ja mitkä vakiot data todella määrää.
 3. **Kalibrointi ja jäännöskartta.** Piirrä luotettavuuskäyrä: jaa laukaukset kymmeneen ryhmään ennusteen mukaan ja vertaa ennustetta toteutuneeseen. Laske jokaiseen ruutuun standardoitu jäännös (havaittu − malli) / √(n·p·(1 − p)). *Mittari:* missä ruuduissa jäännös on yli 2, eli missä fysiikka puuttuu.
-4. **Kaksiulotteinen maali.** StatsBombin aineistossa on laukauksen loppupiste korkeuksineen. Sovita suuntahajonta erikseen vaaka- ja pystysuunnassa ja korvaa rimaehto *V* todellisella korkeusjakaumalla. *Mittari:* paraneeko häviö, ja pieneneekö ylärajalle asettuneen ohitustermin tarve?
+4. **Kaksiulotteinen maalivahti.** Pystysuunta on nyt mukana rimaehtona (5.6). Seuraava askel: anna maalivahdin ulottuvuuden riippua korkeudesta (yläkulmat vaikeampia kuin alakulmat) ja anna laukojan valita tähtäyskorkeus tilanteen mukaan. Kokeile myös vinoa lähtökulman jakaumaa. *Mittari:* korjaantuuko ylimmän kymmenyksen ja lähilaukausten ylioptimismi, ja pieneneekö ylärajalle asettuneen ohitustermin tarve?
 5. **Pelaajakohtaiset arvot.** Kerää useampi kausi ja sovita jokaiselle laukojalle oma σ_p hierarkkisella bayesiläisellä mallilla, joka kutistaa vähäisten havaintojen arvot kohti keskiarvoa. *Mittari:* kuinka monta laukausta tarvitaan, jotta huippulaukojan hajonta erottuu keskitasosta, ja vastaavatko sivun pelaajaprofiilit dataa?
 6. **Maalivahtien torjuntakyky.** Sovita ε_max maalivahtikohtaisesti niistä laukauksista, jotka menivät kohti maalia. Vertaa laukauksen jälkeiseen xG:hen (*post-shot xG*). *Mittari:* toistuuko maalivahdin ero kaudesta toiseen, vai onko se satunnaisvaihtelua?
 7. **Kimmokemalli sattuman tilalle.** Mallinna, kuinka suuri osa puolustajan varjoon osuneista laukauksista kimpoaa maaliin. Käytä StatsBombin blokkausmerkintöjä. *Mittari:* pieneneekö sattumien pohja *p*₀, ja saavatko kaukolaukaukset fysikaalisen selityksen?
 8. **Mallivertailu.** Poista vippaus, maaliviivan läpimeno ja ohitus läheltä yksi kerrallaan ja sovita malli uudelleen. Vertaa uskottavuusosamäärätestillä tai informaatiokriteereillä (AIC, BIC). *Mittari:* mitkä termit ansaitsevat paikkansa, kun parametrien määrästä rangaistaan?
 9. **Liikkuvat pelaajat.** Käytä StatsBomb 360 -aineistoa tai seurantadataa, jossa näkyy pelaajien liike. Anna puolustajan varjon kasvaa ajan myötä ja maalivahdin asettua todelliseen paikkaansa. *Mittari:* toistuuko tulos, että paine vaikuttaa vain alle kahden metrin päästä, ja riippuuko vaikutus painostajan suunnasta?
-10. **Ennakkoon kirjatut ennusteet ja toisto.** Kirjaa hypoteesit ennen uuden datan katsomista: paras syvyys 0,8–1,0 m, paineen vaikutus vain alle kahden metrin päästä, varjon leveys noin 1,1 m. Testaa ne uudella kaudella tai sarjalla, kirjoita lyhyt raportti (menetelmät, tulokset, rajoitukset) ja julkaise koodi. *Mittari:* säilyvätkö tulokset aineistossa, jota ei käytetty mallin rakentamiseen?
+10. **Ennakkoon kirjatut ennusteet ja toisto.** Kirjaa hypoteesit ennen uuden datan katsomista: paras syvyys 0,7–1,0 m, paineen vaikutus vain alle kahden metrin päästä, varjon leveys noin 1,3 m, tähtäyskorkeus maata pitkin alle 16 metristä. Testaa ne uudella kaudella tai sarjalla, kirjoita lyhyt raportti (menetelmät, tulokset, rajoitukset) ja julkaise koodi. *Mittari:* säilyvätkö tulokset aineistossa, jota ei käytetty mallin rakentamiseen?
+11. **Kierre.** Lisää potkutekniikkaan kaartokyky: laukoja valitsee suoran tai kaartuvan radan, joka kiertää puolustajan varjon tai muurin mutta hidastaa palloa ja kasvattaa hajontaa. *Mittari:* korjaantuuko vapaapotkujen ylioptimismi?
 
 ## 11. Käsitteet
 
@@ -258,7 +307,9 @@ Tehtävät vievät mallia kohti tutkimustasoa. Jokaisessa on tavoite, toimenpide
 - **Tilannekuva (freeze frame):** laukaisuhetken kuva pelaajien paikoista.
 - **Tila ja karkeistettu tila:** fysiikassa tila on kaikki, mitä järjestelmästä tiedetään ja mistä sen käyttäytyminen lasketaan. Karkeistettu tila kertoo vain olennaisimmat suureet, kuten lämpötila molekyylien liikkeestä tai xG laukauksesta.
 - **Gibbsin joukko ja ensemble-ennuste:** ajateltu joukko kopioita samasta makroskooppisesta tilasta (Gibbs 1902). Sääennusteissa malli ajetaan monta kertaa hieman eri alkutiloista.
-- **Peilikuvamenetelmä:** rajapinnan vaikutus korvataan peilikuvalla. Kuvassa 3 maahan suuntautuva laukaus peilataan maan pinnan yläpuolelle.
+- **Restituutiokerroin:** osuus pystynopeudesta, joka säilyy pompussa. Kun *e* = 0,6, pallo nousee 36 % pudotuskorkeudesta.
+- **Peilikuvamenetelmä:** rajapinnan vaikutus korvataan peilikuvalla. Aiempi versio laski pompun näin, mutta painovoiman ja energiahäviön takia se ei ole pompulle tarkka. Kuvassa 3 pompanneet laukaukset on edelleen piirretty maan alle peilattuina, mutta niiden korkeus tulee heittoliikkeestä.
+- **Vuoto:** todennäköisyys, että pallo menee maaliin, vaikka maalivahti ehtii siihen.
 - **Amplitudi ja Bornin sääntö:** kvanttimekaniikassa reitillä on kompleksinen amplitudi, ja todennäköisyys on amplitudien summan itseisarvon neliö.
 - **Hilbertin avaruus:** vektoriavaruus, jonka alkiot ovat kvanttitiloja.
 - **Interferenssi ja dekoherenssi:** amplitudit voivat vahvistaa tai kumota toisensa. Kun reittitieto karkaa ympäristöön, interferenssi katoaa (dekoherenssi).
@@ -267,7 +318,7 @@ Tehtävät vievät mallia kohti tutkimustasoa. Jokaisessa on tavoite, toimenpide
 
 ## 12. Toistettavuus
 
-Kansiossa `analyysi/` ovat skriptit, joilla kirjoituksen luvut voi laskea alusta. Ne vaativat Python 3:n ja Node.js:n, mutta eivät muita kirjastoja.
+Kansiossa `analyysi/` ovat skriptit, joilla kirjoituksen luvut voi laskea alusta. Ne vaativat Python 3:n ja Node.js:n. Pystysuunnan sovitus tarvitsee lisäksi numpy- ja scipy-kirjastot.
 
 | Tiedosto | Tehtävä |
 |---|---|
@@ -275,8 +326,10 @@ Kansiossa `analyysi/` ovat skriptit, joilla kirjoituksen luvut voi laskea alusta
 | `features.py` | Laskee mallin piirteet: paikka metreinä, maalivahti, puolustajat, lähin vastustaja |
 | `model.js` | Malli, sama kuin sivun simulaattorissa |
 | `fit.js` | Sovittaa 11 vakiota (Nelder–Mead), valinnaisesti bootstrap-otokseen |
+| `pysty.py` | Sovittaa pystysuunnan kuusi vakiota loppukorkeuksiin ja tulostaa korkeusluokat etäisyyksittäin |
 | `evaluate.js` | Arvioi mallit opetus- ja testiaineistossa sekä laskee kalibroinnin ja bootstrap-välit |
-| `boot.sh` | Toistaa sovituksen otteluittain takaisinpoimituilla aineistoilla |
+| `boot.sh`, `boot_par.sh` | Toistaa sovituksen otteluittain takaisinpoimituilla aineistoilla (peräkkäin tai rinnakkain) |
+| `boot_summary.py`, `boot_summary.json` | Bootstrap-toistojen yhteenveto: vakioiden 95 %:n välit |
 | `run_all.sh` | Ajaa koko ketjun: data, piirteet ja arviointi |
 | `ext_results.json` | Arvioinnin tulokset |
 
@@ -296,6 +349,8 @@ Idea, mallin rakenne ja muuttujien valinta ovat kirjoittajan (Juuso Jaakola). Te
 
 - Data: [StatsBomb Open Data](https://github.com/statsbomb/open-data), kausi 2015/16 sekä testinä MM 2018 ja 2022, EM 2020 ja 2024, Copa América 2024 ja Afrikan mestaruuskilpailut 2023.
 - Muuttujaluettelo ja rangaistuspotkun 0,79: [Opta Analyst, What Is Expected Goals (xG)?](https://theanalyst.com/articles/what-is-expected-goals-xg)
+- FIFA (2006). *FIFA Quality Concept: Handbook of Requirements for Football Turf*. Zürich: FIFA. (Pystysuuntainen pomppu kentällä 0,60–0,85 m.)
+- FIFA (2015). *FIFA Quality Programme for Football Turf: Handbook of Test Methods*. Zürich: FIFA. (Pudotuskorkeus 2,00 m.)
 - Box, G. E. P. (1976). Science and statistics. *Journal of the American Statistical Association*, 71(356), 791–799.
 - Gibbs, J. W. (1902). *Elementary Principles in Statistical Mechanics*. New York: Scribner’s.
 - Jordet, G., Hartman, E., Visscher, C. & Lemmink, K. A. P. M. (2007). Kicks from the penalty mark in soccer. *Journal of Sports Sciences*, 25(2), 121–129.
@@ -312,6 +367,8 @@ Idea, mallin rakenne ja muuttujien valinta ovat kirjoittajan (Juuso Jaakola). Te
 - Kvanttivälilehden täydellinen lähdeluettelo on sivulla.
 
 ## Versiohistoria
+
+- **29.9.2026:** pystysuunnan fysiikka: lähtökulma, paraabelirata, pomppu restituutiolla 0,6 ja rimaehto suljetussa muodossa; kuusi pystyvakiota sovitettu 21 548 loppukorkeuteen ja xG-vakiot sovitettu uudelleen (sovitusaineistossa 21,1 %, turnauksissa 17,8 %); uusi kuva 3 (pompanneet peilattuina ja litistyneinä, lähikuva ja lintuperspektiivi); peilikuvamenetelmä poistettu laskusta; *torjunnan pettäminen* on nyt *vuoto*; uusi kysymys 2 (laukaista vai syöttää); kvanttivälilehden mitat nanometreinä, muuri nuhavirusten torneista; muistio LaTeX-lähdekoodina ja tutkimus- ja julkaisusuunnitelma.
 
 - **28.9.2026 (3):** oikeiden laukausten pelitilanteet tapahtumadatasta, pelaajaprofiilit (osa valittavissa), seitsemäs laukaus (Lautaro Martínezin ohilaukaus), syöttövaihtoehto *Syöttö jalkaan*; kvanttivälilehdelle tarina virusten mikrostadionista, kuvat K1 (muuri kahdella aukolla) ja K2 (päätyraja laukojan silmin neljässä tilanteessa) sekä virusten xG-simulaattori.
 
